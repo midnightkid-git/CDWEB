@@ -1,0 +1,40 @@
+.card{
+  width: max-content;
+  .title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .price{
+      font-size: 14px;
+      color: var(--primary-color);
+    }
+  }
+  .label{
+    font-size: 24px;
+  }
+  .thumbnail{
+    width: 300px;
+    height: 300px;
+  }
+    .actions{
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .action{
+        color: black;
+      }
+      .size-item{
+        margin-right: 20px;
+      }
+  }
+}
+
+:host::ng-deep{
+  .card{
+    .pi{
+      color: var(--text-secondary-color);
+    }
+  }
+}

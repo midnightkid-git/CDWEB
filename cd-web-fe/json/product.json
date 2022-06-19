@@ -1,0 +1,170 @@
+// api/v1/product (GET)
+// param
+{
+  "productLabel":"asdasd",//Optional
+  "categoryId": "asdas", //Optional
+  "size": "XL", //Optional
+  "minPrice":0, //Optional
+  "maxPrice":100, //Optional
+  "limit": 10,
+  "start": 0
+}
+// response
+{
+  "data": [
+    {
+      "productId": "asbas",
+      "productLabel": "ABCASDASD",
+      "price":75,
+      "size": [
+        {
+          "sizeType": "XL",
+          "totalItem": 1
+        },
+        {
+          "sizeType": "M",
+          "totalItem": 0
+        },
+        {
+          "sizeType": "L",
+          "totalItem": 5
+        }
+      ],
+      "totalItem": 6,
+      "categoryId": "asgas",
+      "categoryLabel": "Vest",
+      "thumbnails":[
+        "abc.jpg"
+      ]
+    },
+    {
+      "productId": "asbasdasas",
+      "productLabel": "ABCAsg235SDASD",
+      "price":75,
+      "size": [
+        {
+          "sizeType": "XL",
+          "totalItem": 12
+        },
+        {
+          "sizeType": "M",
+          "totalItem": 2
+        },
+        {
+          "sizeType": "L",
+          "totalItem": 0
+        }
+      ],
+      "totalItem": 14,
+      "categoryId": "asgas",
+      "categoryLabel": "Vest",
+      "thumbnails":[
+        "abc.jpg"
+      ]
+    }
+  ],
+  "total": 40
+}
+// api/v1/product/{id} (GET)
+// response
+{
+  "productId": "asbas",
+  "productLabel": "ABCASDASD",
+  "price":75,
+  "size": [
+    {
+      "sizeType": "XL",
+      "totalItem": 0
+    },
+    {
+      "sizeType": "M",
+      "totalItem": 2
+    },
+    {
+      "sizeType": "L",
+      "totalItem": 14
+    }
+  ],
+  "totalItem": 16,
+  "categoryId": "asgas",
+  "categoryLabel": "Vest",
+  "thumbnails":[
+    "abc.jpg"
+  ]
+}
+
+
+// api/v1/product/{id} (DELETE)
+// response
+{
+  "status":200,
+  "message":"Delete successfully"
+}
+
+// api/v1/product/{id} (PUT)
+// param
+{
+  "productLabel": "ABCASDASD",
+  "price":75,
+  "size": [
+    {
+      "sizeType": "XL",
+      "totalItem": 0
+    },
+    {
+      "sizeType": "M",
+      "totalItem": 2
+    },
+    {
+      "sizeType": "L",
+      "totalItem": 14
+    }
+  ],
+  "categoryId": "asgas",
+  "categoryLabel": "Vest",
+  "thumbnails":[
+    "abc.jpg"
+  ]
+
+}
+// response
+{
+  "status":200,
+  "message":"Edit successfully"
+}
+
+// api/v1/product (POST)
+//param
+{
+  "productLabel": "ABCASDASD",
+  "price":75,
+  "size": [
+    {
+      "sizeType": "XL",
+      "totalItem": 0
+    },
+    {
+      "sizeType": "M",
+      "totalItem": 2
+    },
+    {
+      "sizeType": "L",
+      "totalItem": 14
+    }
+  ],
+  "categoryId": "asgas",
+  "categoryLabel": "Vest",
+  "thumbnails":[
+    "abc.jpg"
+  ]
+}
+//response
+{
+  {
+    "status":200,
+    "message":"Create successfully"
+  }
+}
+
+
+

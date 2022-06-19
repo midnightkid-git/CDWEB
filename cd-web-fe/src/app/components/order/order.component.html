@@ -1,0 +1,28 @@
+<div class="order">
+  <p-steps [model]="steps" [activeIndex]="activeIndex"></p-steps>
+  <div class="list-cart-item">
+    <div *ngFor="let item of cart.listProducts" class="item">
+      <app-cart-item [isEdit]="false" [item]="item" ></app-cart-item>
+    </div>
+    <div class="total">
+    </div>
+  </div>
+  <div #sidebar [ngStyle]="{top:isSidebarSticky ? '0' : sidebarOffset+'px'}" [ngClass]="isSidebarSticky? 'sticky' :''" class="sidebar-container">
+    <h2 class="title">Order detail</h2>
+    <div class="detail-info">
+      <ng-container *ngFor="let info of detailInfo" [ngSwitch]="info.id">
+      <div class="info-item" >
+        <div class="header">
+          {{info.header}}:
+        </div>
+        <div *ngSwitchCase="'price'" class="content">
+          ${{info.info}}
+        </div>
+        <div *ngSwitchDefault="" class="content">
+          {{info.info}}
+        </div>
+      </div>
+    </ng-container>
+    </div>
+  </div>
+</div>

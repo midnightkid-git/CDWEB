@@ -1,0 +1,84 @@
+.banner{
+  background: url('../../../assets/banner.jpg');
+  background-size: cover;
+  background-position-y: -30px;
+  width: 100vw;
+  height: 100vh;
+  // background-position: fixed;
+  &__content{
+    // width: 100%;
+    margin-right: unset;
+    padding-left: 15%;
+    top:45%;
+    position: relative;
+    // justify-content: center;
+    .button-buy-now{
+      margin-top: 30px;
+    }
+    .title{
+      font-size: 36px;
+      width: 50%;
+    }
+  }
+}
+.link{
+  font-size: 24px;
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+.content{
+  &__item{
+    margin-top: 50px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    // align-items: center;
+    &__label{
+      width: 30%;
+      font-size: 50px;
+      position: relative;
+
+    }
+  }
+  .item-1{
+    .content__item__label{
+      left: 100px;
+      top: 100px;
+    }
+  }
+  .item-2{
+    top: -100px;
+    display: flex;
+    text-align: right;
+    position: relative;
+    .content__item__label{
+      left: -120px;
+      top: 190px;
+      height: fit-content;
+    }
+    // top: -200px;
+    // justify-content: center;
+  }
+  .item-3{
+    display: flex;
+    justify-content: center;
+    .banner-image{
+      background: url('../../../assets/collections/accessories.jpg');
+      width: 1100px;
+      background-size: cover;
+      background-position-y: 600px ;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .wrapper{
+        text-align: center;
+      }
+      h5{
+        font-size: 50px;
+        color: var(--secondary-color-text);
+      }
+    }
+    margin-bottom: 50px;
+  }
+}

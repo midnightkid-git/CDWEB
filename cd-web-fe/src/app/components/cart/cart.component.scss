@@ -1,0 +1,71 @@
+$bannerHeight : 130px;
+.cart{
+  .banner{
+    background: url('../../../assets/banners/cart.jpg');
+    background-size: cover;
+    background-position-y:-330px ;
+    height: $bannerHeight;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    .banner-title{
+    text-decoration: underline;
+    font-size: 32px;
+     margin-left: 50px;
+      color: var(--primary-color);
+    }
+  }
+  .list-cart-item{
+    width: 65%;
+    margin-left: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-left: 15px;
+    padding: 15px;
+    background-color: var(--primary-color-text);
+    border-radius: 15px;
+  }
+  .sidebar-container{
+    position: absolute;
+    right: 0;
+    width: 30%;
+    background-color: var(--primary-color-text);
+    padding: 15px;
+    border-radius: 15px;
+    .title{
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    .detail-info{
+      margin-top: 20px;
+      .info-item{
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .actions{
+      border-top: 1px solid var(--primary-color);
+      margin-top: 20px;
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+      .order-btn{
+        width: 50%;
+      }
+    }
+  }
+  .sticky{
+    position: fixed;
+    top:0;
+  }
+}
+
+:host::ng-deep{
+  .order-btn{
+    span{
+    color: var(--secondary-color-text);
+  }
+  }
+}

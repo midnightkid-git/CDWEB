@@ -1,0 +1,71 @@
+// api/v1/cart (GET) (Using header to get cart of user)
+// response
+{
+  "listProducts":[
+    {
+      "productId":"asbsa",
+      "productLabel":"ASGGAS",
+      "thumbnails":["sgagas/img.jpg"],
+      "size":"XL",
+      "totalItem":2,
+      "itemLeft":10,
+      "price":15,
+      "totalPrice":30,
+      "categoryId": "asgas",
+      "categoryLabel": "Vest"
+    },
+    {
+      "productId":"asbsa",
+      "productLabel":"ASGGAS",
+      "thumbnails":["sgagas/img.jpg"],
+      "size":"L",
+      "totalItem":1,
+      "itemLeft":10,
+      "price":15,
+      "totalPrice":15,
+      "categoryId": "asgas",
+      "categoryLabel": "Vest"
+    },
+    {
+      "productId":"itemabc",
+      "productLabel":"ASGGAS",
+      "thumbnails":["sgagas/img.jpg"],
+      "size":"L",
+      "totalItem":1,
+      "itemLeft":7,
+      "price":25,
+      "totalPrice":25,
+      "categoryId": "asgas",
+      "categoryLabel": "Vest"
+    }
+  ],
+  "totalPrice":70
+}
+
+// api/v1/cart (POST) (Add a product to cart) compare the the productId and size
+// param
+
+{
+  {
+    "productId":"itemabc",
+    "size":"L",
+    "totalItem":1,
+  }
+}
+
+// api/v1/order (POST) (Order the shopping cart)
+// param
+{
+  {
+    "name":"Huong",
+    "address":"abc",
+    "phoneNumber":"abc"
+  }
+}
+// response
+{
+  {
+    "status":200,
+    "messages":"Order successfully"
+  }
+}

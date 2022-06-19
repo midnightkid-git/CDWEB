@@ -1,0 +1,22 @@
+<div class="detail-card">
+  <div class="left-container">
+    <p-carousel [value]="item.thumbnails" [numVisible]="3" [numScroll]="1">
+      <ng-template let-thumbnail pTemplate="item">
+          <p-image [src]="thumbnail" height="350px" [preview]="true"></p-image>
+      </ng-template>
+  </p-carousel>
+  </div>
+  <div class="right-container">
+    <h2 class="label right-item">{{item.productLabel}}</h2>
+    <p class="right-item">Category: <a class="category" href="#">{{item.categoryLabel}}</a></p>
+    <p class="right-item">Price: <span class="price">${{item.price}}</span></p>
+    <div class="sizes right-item">
+      <ng-container *ngFor="let size of item.size">
+    <p-radioButton class="size-item"  name="size" [value]="size" [(ngModel)]="selectedSize" [label]="size.sizeType"></p-radioButton>
+  </ng-container>
+  </div>
+  <p class="right-item">Item left: <span class="size-total-item" [ngClass]="item.totalItem == 0 || selectedSize?.totalItem === 0 ? 'error' : ''">{{selectedSize ? selectedSize.totalItem : item.totalItem }}</span></p>
+    <button [disabled]="!selectedSize || selectedSize?.totalItem === 0" class="right-item add-to-cart" pButton><span class="pi pi-shopping-cart"></span> Add to cart</button>
+  </div>
+
+</div>

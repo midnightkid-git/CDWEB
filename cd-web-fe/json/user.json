@@ -1,0 +1,29 @@
+// api/v1/login (Post)
+// Param
+{
+  "username":"huongnx2",
+  "password":"1234568"
+}
+// Response JWT include
+{
+  "username":"huongnx2",
+  "address":"ABC",
+  "phoneNumber":"213154712",
+  "role":"User"
+}
+// api/v1/register (Post)
+// Param
+{
+  "username":"huongnx2",
+  "fullName":"Nguyen Xuan Huong",
+  "password":"235aff4",
+  "address":"ABCD",
+  "phoneNumber":"125126436"
+}
+// Response
+{
+  "status":200,
+  "message":"Register successfully"
+}
+
+

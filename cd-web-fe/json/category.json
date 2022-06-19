@@ -1,0 +1,42 @@
+// api/v1/category (GET)
+// response
+[
+  {
+    "categoryId":"asasg",
+    "categoryLabel":"VEST"
+  },
+  {
+    "categoryId":"asasg",
+    "categoryLabel":"VEST"
+  }
+]
+
+// api/v1/category/{id} (PUT)
+// param
+{
+  "categoryLabel":"Slacks"
+}
+// response
+{
+  "status":200,
+  "message":"Edit successfully"
+}
+
+// api/v1/category (POST)
+// param
+{
+  "categoryLabel":"Vest"
+}
+// response
+{
+  "status":200,
+  "message":"Create successfully"
+}
+
+// api/v1/category/{id} (DELETE)
+// response
+{
+  "status":200,
+  "message":"Delete successfully"
+}
+

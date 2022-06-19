@@ -1,0 +1,7 @@
+<div class="wrapper">
+<div class="list-orders">
+  <div *ngFor="let item of listOrders" [routerLink]="'/order/'+item.orderId"  class="order-item">
+    <app-order-card [item]="item"></app-order-card>
+  </div>
+</div>
+</div>

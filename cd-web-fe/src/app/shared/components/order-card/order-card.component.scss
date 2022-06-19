@@ -1,0 +1,32 @@
+.order-card{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  .left-container{
+
+  }
+  .right-container{
+    display: flex;
+    flex-direction: column;
+    .total-price{
+      color: var(--primary-color);
+      font-size: 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.Packaging{
+  color: var(--yellow-300);
+}
+.Completed{
+  color: var(--green-300);
+}
+.Delivering{
+  color: var(--blue-300);
+}
+.Failed{
+  color: var(--red-300);
+}

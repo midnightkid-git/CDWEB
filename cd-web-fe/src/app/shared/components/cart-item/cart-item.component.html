@@ -1,0 +1,24 @@
+<div class="cart-item">
+  <div class="container">
+    <div class="left-container">
+      <div class="image" [ngStyle]="{background:'url('+ item.thumbnails[0] + ')','background-size': 'cover'}">
+      </div>
+    </div>
+    <div class="right-container">
+      <h2 class="label">{{item.productLabel}}</h2>
+      <p class="right-item">Category: <a class="category inf" href="#">{{item.categoryLabel}}</a></p>
+      <p class="right-item">Price: <span class="price inf">${{item.price}}</span></p>
+      <p class="right-item">Size: <span class="size inf">{{item.size}}</span></p>
+      <p-inputNumber [disabled]="!isEdit" class="right-item" [min]="1" [max]="item.itemLeft" [(ngModel)]="item.totalItem" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1"
+      decrementButtonClass="p-button-text" incrementButtonClass="p-button-text" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+      </p-inputNumber>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="list-btn">
+    <button  *ngIf="isEdit" pButton class="p-button-rounded p-button-outlined remove-button" icon="pi pi-times"></button>
+  </div>
+    <div class="total-price"><h3>Total price: <span class="total-price-inf">${{item.totalPrice}}</span> </h3>
+    </div>
+  </div>
+</div>

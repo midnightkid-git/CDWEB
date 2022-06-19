@@ -1,0 +1,47 @@
+.footer {
+  background-color: var(--primary-color-text);
+  color: var(--primary-color-text);
+
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .left-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .logo {
+      height: 40px;
+    }
+  }
+
+  .content {
+    margin-top: 30px;
+    width: 60%;
+  }
+  .right-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .social-media{
+      display: flex;
+      .icons{
+        margin-left: 15px;
+      }
+    }
+    .phone{
+      align-items: center;
+      display: flex;
+      margin-top: 15px;
+      .phone-number{
+        margin-left: 10px;
+        color: var(--primary-color);
+      }
+    }
+
+  }
+}

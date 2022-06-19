@@ -1,0 +1,16 @@
+<nav class="header" >
+  <div class="header__left">
+    <img class="logo" src="../../../assets/logo.png">
+  </div>
+  <div class="header__center actions">
+    <ng-container *ngFor="let navItem of navItems">
+      <button routerLinkActive="nav-activated" [routerLink]="navItem.routerLink"
+        pButton class="p-button-text nav-item">{{navItem.label}}</button>
+    </ng-container>
+  </div>
+  <div class="header__right">
+    <i pButton routerLink="/cart" class="p-button-text p-button-rounded" routerLinkActive="cart-activated" icon="pi pi-shopping-cart icon"></i>
+    <button type="button"  class="p-button-text p-button-rounded" [label]="userName" pButton icon="pi pi-user" (click)="menu.toggle($event)"></button>
+    <p-menu class="user-menu" #menu [popup]="true" [model]="menuItems"></p-menu>
+  </div>
+</nav>

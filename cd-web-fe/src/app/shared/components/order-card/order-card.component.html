@@ -1,0 +1,11 @@
+<div class="order-card">
+  <div class="left-container">
+    <h3>#{{item.orderId}}</h3>
+    <h5>Phone number: {{item.phoneNumber}}</h5>
+    <h5>Adress: {{item.address}}</h5>
+  </div>
+  <div class="right-container">
+    <h5  >Status: <span [ngClass]="item.status">{{item.status}}</span></h5>
+    <h5 class="total-price" >{{item.totalPrice}}$</h5>
+  </div>
+</div>

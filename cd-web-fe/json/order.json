@@ -1,0 +1,84 @@
+// api/v1/order (GET)
+// response
+[
+  {
+    "orderId":"asbasd",
+    "status":"Delivering",
+    "address":"abc",
+    "phoneNumber":"xyz",
+    "listProducts":[
+      {
+        "productId":"asbsa",
+        "productLabel":"ASGGAS",
+        "thumbnail":"sgagas/img.jpg",
+        "size":"XL",
+        "totalItem":2,
+        "price":15,
+        "totalPrice":30
+      },
+      {
+        "productId":"asbsa",
+        "productLabel":"ASGGAS",
+        "thumbnail":"sgagas/img.jpg",
+        "size":"L",
+        "totalItem":1,
+        "price":15,
+        "totalPrice":15
+      },
+      {
+        "productId":"itemabc",
+        "productLabel":"ASGGAS",
+        "thumbnail":"sgagas/img.jpg",
+        "size":"L",
+        "totalItem":1,
+        "price":25,
+        "totalPrice":25
+      }
+    ],
+    "totalPrice":70
+
+  }
+]
+
+// api/v1/order/{id} (GET)
+// response
+  {
+    "orderId":"asbasd",
+    "status":"Delivering",
+    "address":"abc",
+    "phoneNumber":"xyz",
+    "listProducts":[
+      {
+        "productId":"asbsa",
+        "productLabel":"ASGGAS",
+        "thumbnail":"sgagas/img.jpg",
+        "size":"XL",
+        "totalItem":2,
+        "price":15,
+        "totalPrice":30
+      },
+      {
+        "productId":"asbsa",
+        "productLabel":"ASGGAS",
+        "thumbnail":"sgagas/img.jpg",
+        "size":"L",
+        "totalItem":1,
+        "price":15,
+        "totalPrice":15
+      },
+      {
+        "productId":"itemabc",
+        "productLabel":"ASGGAS",
+        "thumbnail":"sgagas/img.jpg",
+        "size":"L",
+        "totalItem":1,
+        "price":25,
+        "totalPrice":25
+      }
+    ],
+    "totalPrice":70
+  }
+// api/v1/order/{id} (PUT)
+{
+  "status":"Completed"
+}

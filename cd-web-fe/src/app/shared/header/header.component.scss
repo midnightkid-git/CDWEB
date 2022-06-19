@@ -1,0 +1,39 @@
+.nav-activated{
+  background-color: var(--primary-color);
+  color: black;
+}
+.nav-item{
+  margin-left: 10px;
+}
+
+.header{
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .logo{
+    display: flex;
+    align-items: center;
+    height: 30px;
+  }
+  &__right{
+    .icon{
+      margin-left: 20px;
+    }
+  }
+}
+:host::ng-deep{
+  .cart-activated{
+    background-color: var(--primary-color);
+    .pi{
+      color:var(--primary-color-text);
+    }
+  }
+  .header__right{
+    .p-splitbutton{
+    }
+    .user-menu{
+    }
+  }
+
+}

@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  color:var(--text-color);
+}
+
+body{
+  background-color: var(--surface-a);
+}
+i{
+  color: var(--primary-color);
+}
+.p-inputnumber-buttons-horizontal .p-inputnumber-input {
+  width: 50px;
+  text-align: center;
+}
+
+
