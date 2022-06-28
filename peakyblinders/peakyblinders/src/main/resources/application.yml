@@ -5,12 +5,14 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/peakyblinders
     username: postgres
-    password: 123
+    password: 261172
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+token:
+  life-time-hours: 24
