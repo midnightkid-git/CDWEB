@@ -1,16 +1,65 @@
-<nav class="header" >
+<nav class="header">
   <div class="header__left">
     <img class="logo" src="../../../assets/logo.png">
   </div>
   <div class="header__center actions">
     <ng-container *ngFor="let navItem of navItems">
-      <button routerLinkActive="nav-activated" [routerLink]="navItem.routerLink"
-        pButton class="p-button-text nav-item">{{navItem.label}}</button>
+      <button routerLinkActive="nav-activated" [routerLink]="navItem.routerLink" pButton
+        class="p-button-text nav-item">{{navItem.label}}</button>
     </ng-container>
   </div>
   <div class="header__right">
-    <i pButton routerLink="/cart" class="p-button-text p-button-rounded" routerLinkActive="cart-activated" icon="pi pi-shopping-cart icon"></i>
-    <button type="button"  class="p-button-text p-button-rounded" [label]="userName" pButton icon="pi pi-user" (click)="menu.toggle($event)"></button>
+    <i pButton routerLink="/cart" class="p-button-text p-button-rounded" routerLinkActive="cart-activated"
+      icon="pi pi-shopping-cart icon"></i>
+    <button type="button" class="p-button-text p-button-rounded" [label]="userName" pButton icon="pi pi-user"
+      (click)="menu.toggle($event)"></button>
     <p-menu class="user-menu" #menu [popup]="true" [model]="menuItems"></p-menu>
   </div>
 </nav>
+<p-dialog [closable]="true" [closeOnEscape]="true" [header]="displayRegisterPopup? 'Register' : 'Login'" [(visible)]="displayRegisterPopup || displayLoginPopup"
+  [style]="{width: '35  vw'}">
+  <form *ngIf="userForm" [formGroup]="userForm" (submit)="onSubmitForm()" class="form-container">
+    <div class="wrapper">
+      <div class="form-item">
+        <h4 class="label">
+          Username
+        </h4>
+        <input formControlName="userName" pInputText class="input">
+      </div>
+      <div class="form-item">
+        <h4 class="label">
+          Password
+        </h4>
+        <input  formControlName="passWord" pInputText type="password" class="input">
+      </div>
+      <ng-container *ngIf="displayRegisterPopup">
+        <div class="form-item">
+          <h4 class="label">
+            Full name
+          </h4>
+          <input  formControlName="fullName" pInputText type="text" class="input">
+        </div>
+        <div class="form-item">
+          <h4 class="label">
+            Phone Number
+          </h4>
+          <input  formControlName="phoneNumber" pInputText type="text" class="input">
+        </div>
+      </ng-container>
+      <div *ngIf="!displayRegisterPopup" class="form-item">
+        <h6>
+          If you don't have account, <span class="link-register" (click)="openRegisterPopup()">Create new one</span>
+        </h6>
+      </div>
+      <div *ngIf="displayRegisterPopup" class="form-item">
+        <h6>
+          If you already have account, <span class="link-register" (click)="openLoginPopup()">Log in</span>
+        </h6>
+      </div>
+      <div class="submit-item">
+        <button [disabled]="!userForm.valid" class="submit-button" type="submit" pButton [label]="displayLoginPopup? 'Login': 'Register'"></button>
+        <button class="close-button" pButton (click)="displayRegisterPopup = false; displayLoginPopup = false;" label="Close"></button>
+      </div>
+    </div>
+  </form>
+</p-dialog>

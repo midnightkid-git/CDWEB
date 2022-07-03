@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListOrdersComponent } from './components/list-orders/list-orders.component';
 import { OrderCardComponent } from './shared/components/order-card/order-card.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { OrderCardComponent } from './shared/components/order-card/order-card.co
     BrowserModule,
     ScrollingModule,
     AppRoutingModule,
+    HttpClientModule,
     PrimengModule,
     ReactiveFormsModule,
     FormsModule,

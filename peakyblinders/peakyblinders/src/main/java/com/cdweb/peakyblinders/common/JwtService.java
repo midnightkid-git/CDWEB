@@ -59,7 +59,9 @@ public class JwtService {
                 .withSubject(appUser.getUsername())
                 .withExpiresAt(calendar.getTime())
                 .withIssuedAt(new Date())
-                .withClaim("fullName", appUser.getFullName());
+                .withClaim("fullName", appUser.getFullName())
+                .withClaim("phoneNumber", appUser.getPhoneNumber())
+                .withClaim("role",appUser.getRole());
         return creator.sign(algorithm);
     }
 }

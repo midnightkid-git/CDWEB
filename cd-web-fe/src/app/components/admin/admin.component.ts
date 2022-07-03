@@ -21,7 +21,7 @@ export class AdminComponent implements OnInit {
       label: 'Orders',
       icon: 'pi pi-book'
     },
-    {
+  {
       label: 'Users',
       icon: 'pi pi-users'
     }

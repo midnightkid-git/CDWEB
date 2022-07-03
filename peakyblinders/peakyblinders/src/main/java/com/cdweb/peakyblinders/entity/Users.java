@@ -21,6 +21,8 @@ public class Users extends BaseEntity {
 
     private String phoneNumber;
 
+    private String role;
+
     private boolean isActive;
 //
 //    @OneToMany(mappedBy = "users")

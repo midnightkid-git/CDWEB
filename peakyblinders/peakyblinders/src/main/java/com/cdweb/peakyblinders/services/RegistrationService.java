@@ -27,6 +27,7 @@ public class RegistrationService {
                 .fullName(request.getFullName())
                 .phoneNumber((request.getPhoneNumber()))
                 .isActive(true)
+                .role("Basic")
                 .build());
         return AuthResponse.builder()
                 .accessToken(jwtService.generateToken(user))
