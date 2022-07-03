@@ -2,7 +2,7 @@ package com.cdweb.peakyblinders.services;
 
 
 import com.cdweb.peakyblinders.common.JwtService;
-import com.cdweb.peakyblinders.entity.Users;
+import com.cdweb.peakyblinders.models.Users;
 import com.cdweb.peakyblinders.payloads.AuthRequest;
 import com.cdweb.peakyblinders.payloads.AuthResponse;
 import com.cdweb.peakyblinders.repositories.UsersRepository;

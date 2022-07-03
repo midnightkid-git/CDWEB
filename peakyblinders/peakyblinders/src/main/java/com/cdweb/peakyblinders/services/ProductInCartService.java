@@ -1,15 +1,10 @@
 package com.cdweb.peakyblinders.services;
 
 import com.cdweb.peakyblinders.converter.ProductInCartConverter;
-import com.cdweb.peakyblinders.converter.SizeConverter;
 import com.cdweb.peakyblinders.models.Cart;
-import com.cdweb.peakyblinders.models.Product;
 import com.cdweb.peakyblinders.models.ProductInCart;
-import com.cdweb.peakyblinders.models.Size;
 import com.cdweb.peakyblinders.repositories.ProductInCartRepository;
-import com.cdweb.peakyblinders.repositories.SizeRepository;
-import com.cdweb.peakyblinders.response.ProductInCartResponse;
-import com.cdweb.peakyblinders.response.SizeResponse;
+import com.cdweb.peakyblinders.payloads.response.ProductInCartResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

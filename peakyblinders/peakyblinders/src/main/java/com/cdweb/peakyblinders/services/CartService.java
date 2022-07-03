@@ -5,9 +5,9 @@ import com.cdweb.peakyblinders.converter.ProductInCartConverter;
 import com.cdweb.peakyblinders.models.Cart;
 import com.cdweb.peakyblinders.repositories.CartRepository;
 import com.cdweb.peakyblinders.repositories.ProductInCartRepository;
-import com.cdweb.peakyblinders.request.CartRequest;
-import com.cdweb.peakyblinders.response.CartResponse;
-import com.cdweb.peakyblinders.response.ProductInCartResponse;
+import com.cdweb.peakyblinders.payloads.request.CartRequest;
+import com.cdweb.peakyblinders.payloads.response.CartResponse;
+import com.cdweb.peakyblinders.payloads.response.ProductInCartResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

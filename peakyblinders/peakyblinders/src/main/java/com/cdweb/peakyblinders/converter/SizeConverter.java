@@ -1,8 +1,8 @@
 package com.cdweb.peakyblinders.converter;
 
 import com.cdweb.peakyblinders.models.Size;
-import com.cdweb.peakyblinders.request.SizeRequest;
-import com.cdweb.peakyblinders.response.SizeResponse;
+import com.cdweb.peakyblinders.payloads.request.SizeRequest;
+import com.cdweb.peakyblinders.payloads.response.SizeResponse;
 import org.springframework.stereotype.Component;
 
 @Component

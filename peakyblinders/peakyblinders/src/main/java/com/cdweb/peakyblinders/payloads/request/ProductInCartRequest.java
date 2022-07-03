@@ -1,4 +1,4 @@
-package com.cdweb.peakyblinders.request;
+package com.cdweb.peakyblinders.payloads.request;
 
 import com.cdweb.peakyblinders.models.Cart;
 import lombok.Getter;

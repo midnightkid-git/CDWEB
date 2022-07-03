@@ -1,6 +1,6 @@
 package com.cdweb.peakyblinders.repositories;
 
-import com.cdweb.peakyblinders.entity.Users;
+import com.cdweb.peakyblinders.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

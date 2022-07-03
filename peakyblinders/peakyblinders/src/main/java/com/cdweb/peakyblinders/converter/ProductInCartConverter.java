@@ -1,8 +1,8 @@
 package com.cdweb.peakyblinders.converter;
 
 import com.cdweb.peakyblinders.models.ProductInCart;
-import com.cdweb.peakyblinders.request.ProductInCartRequest;
-import com.cdweb.peakyblinders.response.ProductInCartResponse;
+import com.cdweb.peakyblinders.payloads.request.ProductInCartRequest;
+import com.cdweb.peakyblinders.payloads.response.ProductInCartResponse;
 import org.springframework.stereotype.Component;
 
 @Component

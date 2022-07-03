@@ -2,7 +2,7 @@ package com.cdweb.peakyblinders.filter;
 
 import com.cdweb.peakyblinders.common.Constant;
 import com.cdweb.peakyblinders.common.JwtService;
-import com.cdweb.peakyblinders.entity.Users;
+import com.cdweb.peakyblinders.models.Users;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.cdweb.peakyblinders.response;
+package com.cdweb.peakyblinders.payloads.response;
 
 import lombok.Builder;
 import lombok.Getter;

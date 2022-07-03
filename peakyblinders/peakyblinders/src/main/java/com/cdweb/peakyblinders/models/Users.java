@@ -1,4 +1,4 @@
-package com.cdweb.peakyblinders.entity;
+package com.cdweb.peakyblinders.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

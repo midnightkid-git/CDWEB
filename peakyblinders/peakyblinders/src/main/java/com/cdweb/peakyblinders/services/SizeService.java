@@ -4,9 +4,8 @@ import com.cdweb.peakyblinders.converter.SizeConverter;
 import com.cdweb.peakyblinders.models.Product;
 import com.cdweb.peakyblinders.models.Size;
 import com.cdweb.peakyblinders.repositories.SizeRepository;
-import com.cdweb.peakyblinders.response.SizeResponse;
+import com.cdweb.peakyblinders.payloads.response.SizeResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

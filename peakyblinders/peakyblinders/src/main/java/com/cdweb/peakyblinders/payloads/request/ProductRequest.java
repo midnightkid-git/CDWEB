@@ -1,7 +1,5 @@
-package com.cdweb.peakyblinders.response;
+package com.cdweb.peakyblinders.payloads.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,14 +7,12 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
-public class ProductResponse {
-    private int productId;
+public class ProductRequest {
     private String productName;
     private int price;
     private int categoryId;
     private String categoryName;
 //    private List<String> thumbnails;
-    private List<SizeResponse> size;
+    List<SizeRequest> sizes;
 
 }
