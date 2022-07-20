@@ -1,0 +1,37 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/peakyblinders
+    username: postgres
+    password: 261172
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    userName: nhatt4393@gmail.com
+    password: wmkwxhfldmucrtoj
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: true
+            required: true
+          connection-timeout: 5000
+          timeout: 5000
+          write timeout: 5000
+token:
+#  access-life-time: 1
+  access-life-time: 500
+  refresh-life-time: 1440
+remember_me:
+  expired_days: 30
+
