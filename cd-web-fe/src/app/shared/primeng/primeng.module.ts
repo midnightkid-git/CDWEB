@@ -14,8 +14,18 @@ import { SliderModule } from 'primeng/slider';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 const PRIMENG = [
+  ConfirmDialogModule,
+  ToastModule,
+  TableModule,
+  ToolbarModule,
+  CheckboxModule,
   DialogModule,
   ButtonModule,
   MenubarModule,

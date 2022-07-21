@@ -7,7 +7,7 @@ spring:
     password: 261172
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -15,8 +15,8 @@ spring:
     show-sql: true
   mail:
     host: smtp.gmail.com
-    userName: nhatt4393@gmail.com
-    password: wmkwxhfldmucrtoj
+    userName: inayakun@gmail.com
+    password: oxkcntvujnamhwbc
     port: 587
     properties:
       mail:

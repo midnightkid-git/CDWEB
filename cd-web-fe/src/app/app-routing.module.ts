@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
+import { ProductsComponent } from './components/admin/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DetailItemComponent } from './components/detail-item/detail-item.component';
 import { HomeComponent } from './components/home/home.component';
@@ -46,17 +47,27 @@ const routes: Routes = [
   {
     canActivate: [AdminGuard],
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    children: [
+      {
+        path: 'products',
+        component: ProductsComponent
+      }
+    ]
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: "full"
+    path: 'products',
+    component: ProductsComponent
   },
-  {
-    path: '**',
-    redirectTo: 'home'
-  }
+  // {
+  //   path: '',
+  //   redirectTo: 'home',
+  //   pathMatch: "full"
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: 'home'
+  // }
 ];
 
 @NgModule({

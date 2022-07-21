@@ -57,9 +57,16 @@
   .wrapper {
     width: 90%;
     .form-item {
+
       display: flex;
       align-items: center;
       margin: 15px;
+      .check-remember{
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 10px;
+      }
       .link-register{
         text-decoration: underline;
         color: var(--primary-color);
@@ -74,4 +81,14 @@
       }
     }
   }
+}
+
+:host::ng-deep{
+  .check-remember{
+    .p-checkbox-box{
+      height: 15px;
+      width: 15px;
+    }
+  }
+
 }

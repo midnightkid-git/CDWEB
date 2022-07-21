@@ -33,6 +33,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request, HttpServletResponse response) {
         try {
+            System.out.println(request.toString());
             AuthResponse authResponse = authService.loginForUser(request);
             Users user = jwtService.getUserFromToken(authResponse.getAccessToken());
             String refresh_token = jwtService.generateRefreshToken(user, request.getIsRememberMe());
@@ -62,15 +63,15 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest request) {
         try {
-            UserResponse userResponse = authService.register(request);
             Boolean exists = authService.existsByUserName(request.getUsername());
-            if(exists){
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Fail", "Username is already exist", exists));
-            }
             Boolean existsEmail = authService.existsByGmail(request.getGmail());
-            if(existsEmail){
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Fail", "Email is already exist", existsEmail));
+            if(exists){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Fail", "Username is already exist", null));
+            }else
+            if(existsEmail) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Fail", "Email is already exist", null));
             }
+            UserResponse userResponse = authService.register(request);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, userResponse));
         } catch (IllegalArgumentException ex) {
             log.error("API /register: {}", ex.getMessage());

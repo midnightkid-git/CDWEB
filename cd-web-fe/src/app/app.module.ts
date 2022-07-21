@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListOrdersComponent } from './components/list-orders/list-orders.component';
 import { OrderCardComponent } from './shared/components/order-card/order-card.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductsComponent } from './components/admin/products/products.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     AdminComponent,
     ListOrdersComponent,
     OrderCardComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,

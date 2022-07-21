@@ -11,17 +11,18 @@ export class AdminComponent implements OnInit {
   public listMenu: MenuItem[] = [
     {
       label: 'Dashboard',
-      icon: 'pi pi-percentage'
+      icon: 'pi pi-percentage',
     },
     {
       label: 'Products',
-      icon: 'pi pi-database'
+      icon: 'pi pi-database',
+      routerLink: '/admin/products'
     },
     {
       label: 'Orders',
       icon: 'pi pi-book'
     },
-  {
+    {
       label: 'Users',
       icon: 'pi pi-users'
     }

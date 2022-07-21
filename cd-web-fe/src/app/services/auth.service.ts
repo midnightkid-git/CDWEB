@@ -8,22 +8,35 @@ import jwt_decode from "jwt-decode";
 })
 export class AuthService {
   public token = new BehaviorSubject('')
-  public user: any;
+  get user() {
+    return this.token.toPromise().then((accessToken: any) => {
+      let decoded: any = jwt_decode(accessToken);
+      return decoded;
+    })
+
+  }
   constructor(
     private http: HttpClient
   ) { }
 
   login(param: any) {
-    return this.http.post(`${environment.apiUrl}/login`, param).toPromise().then((_token: any) => {
-      let decoded: any = jwt_decode(_token.accessToken);
-      this.user = decoded;
-      this.token.next(_token.accessToken);
-      window.sessionStorage.setItem("accesstoken", _token.accessToken);
+    return this.http.post(`${environment.apiUrl}/auth/login`, param).toPromise().then((_res: any) => {
+      this.token.next(_res.data.accessToken);
     })
   }
 
+  adminLogin(param: any) {
+    return this.http.post(`${environment.apiUrl}/auth/admin/login`, param).toPromise().then((_res: any) => {
+      this.token.next(_res.data.accessToken);
+    })
+  }
+
+  verifyOtp(param: any) {
+    return this.http.post(`${environment.apiUrl}/auth/confirm`, param).toPromise();
+  }
+
   register(param: any): any {
-    return this.http.post(`${environment.apiUrl}/register`, param).toPromise();;
+    return this.http.post(`${environment.apiUrl}/auth/register`, param).toPromise();;
   }
 
   logout() {

@@ -11,5 +11,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+
 token:
   life-time-hours: ${TOKEN_LIFE_TIME_HOURS}
+
+
+

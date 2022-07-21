@@ -24,13 +24,13 @@
         <h4 class="label">
           Username
         </h4>
-        <input formControlName="userName" pInputText class="input">
+        <input formControlName="username" pInputText class="input">
       </div>
       <div class="form-item">
         <h4 class="label">
           Password
         </h4>
-        <input  formControlName="passWord" pInputText type="password" class="input">
+        <input  formControlName="password" pInputText type="password" class="input">
       </div>
       <ng-container *ngIf="displayRegisterPopup">
         <div class="form-item">
@@ -41,16 +41,22 @@
         </div>
         <div class="form-item">
           <h4 class="label">
-            Phone Number
+            Gmail
           </h4>
-          <input  formControlName="phoneNumber" pInputText type="text" class="input">
+          <input  formControlName="gmail" pInputText type="text" class="input">
         </div>
       </ng-container>
       <div *ngIf="!displayRegisterPopup" class="form-item">
+        <div class="wrapper">
+          <div class="check-remember">
+        <p-checkbox [value]="isRemember" [(ngModel)]="isRemember" inputId="remember"></p-checkbox>
+        <label for="remember">Remember me</label>
+      </div>
         <h6>
           If you don't have account, <span class="link-register" (click)="openRegisterPopup()">Create new one</span>
         </h6>
       </div>
+    </div>
       <div *ngIf="displayRegisterPopup" class="form-item">
         <h6>
           If you already have account, <span class="link-register" (click)="openLoginPopup()">Log in</span>
@@ -61,5 +67,14 @@
         <button class="close-button" pButton (click)="displayRegisterPopup = false; displayLoginPopup = false;" label="Close"></button>
       </div>
     </div>
+  </form>
+</p-dialog>
+<p-dialog [closable]="true" [closeOnEscape]="true" header="OTP Verify" *ngIf="displayOtpPopup" [(visible)]="displayOtpPopup"
+  [style]="{width: '35  vw'}">
+  <form *ngIf="otpForm" [formGroup]="otpForm" (submit)="onSubmitVerifyOtp()" class="form-container">
+        <input formControlName="otp" pInputText class="input">
+        <div class="submit-item">
+          <button [disabled]="!otpForm.valid" class="submit-button" type="submit" pButton label="Submit"></button>
+        </div>
   </form>
 </p-dialog>
