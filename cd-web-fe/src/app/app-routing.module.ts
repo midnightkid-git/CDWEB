@@ -59,15 +59,15 @@ const routes: Routes = [
     path: 'products',
     component: ProductsComponent
   },
-  // {
-  //   path: '',
-  //   redirectTo: 'home',
-  //   pathMatch: "full"
-  // },
-  // {
-  //   path: '**',
-  //   redirectTo: 'home'
-  // }
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: "full"
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 ];
 
 @NgModule({

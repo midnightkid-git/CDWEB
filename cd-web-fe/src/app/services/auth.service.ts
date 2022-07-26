@@ -13,20 +13,27 @@ export class AuthService {
       let decoded: any = jwt_decode(accessToken);
       return decoded;
     })
-
   }
+
   constructor(
     private http: HttpClient
   ) { }
 
+  decodeToken(token: any) {
+    let decoded: any = jwt_decode(token);
+    return decoded;
+  }
+
   login(param: any) {
     return this.http.post(`${environment.apiUrl}/auth/login`, param).toPromise().then((_res: any) => {
+      window.sessionStorage.setItem("basicToken", _res.data.accessToken)
       this.token.next(_res.data.accessToken);
     })
   }
 
   adminLogin(param: any) {
     return this.http.post(`${environment.apiUrl}/auth/admin/login`, param).toPromise().then((_res: any) => {
+      window.sessionStorage.setItem("adminToken", _res.data.accessToken)
       this.token.next(_res.data.accessToken);
     })
   }
@@ -40,7 +47,7 @@ export class AuthService {
   }
 
   logout() {
-    window.sessionStorage.setItem("accesstoken", '')
+    window.sessionStorage.setItem("basicToken", '')
     this.token.next('')
   }
 

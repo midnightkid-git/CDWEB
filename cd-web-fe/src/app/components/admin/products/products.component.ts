@@ -24,11 +24,11 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.initMockData();
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
-    ];
+    // this.statuses = [
+    //   { label: 'INSTOCK', value: 'instock' },
+    //   { label: 'LOWSTOCK', value: 'lowstock' },
+    //   { label: 'OUTOFSTOCK', value: 'outofstock' }
+    // ];
   }
 
   initMockData() {

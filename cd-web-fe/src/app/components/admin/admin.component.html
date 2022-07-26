@@ -1,6 +1,6 @@
 <div class="admin">
-  <div class="sidebar">
-    <p-menu [model]="listMenu"></p-menu>
-  </div>
-  <router-outlet></router-outlet>
+    <p-menu class="sidebar" [model]="listMenu"></p-menu>
+    <div class="content">
+ <router-outlet></router-outlet>
+</div>
 </div>

@@ -1,3 +1,17 @@
 .admin{
   display: flex;
+  width: 100%;
+  .sidebar{
+    width: 20%;
+  }
+  .content{
+    width: 75%;
+  }
+}
+:host::ng-deep{
+  .admin-manager{
+    .p-button-label,.p-button-icon{
+      color: var(--secondary-color);
+    }
+  }
 }

@@ -1,4 +1,5 @@
 Products
+<div class="admin-manager">
 <p-toast></p-toast>
 <div class="card">
     <p-toolbar styleClass="mb-4">
@@ -30,7 +31,7 @@ Products
                 <th >Price</th>
                 <th>Category</th>
                 <th>Quanity</th>
-                <th>Status</th>
+                <th>Brand</th>
                 <th></th>
             </tr>
         </ng-template>
@@ -43,8 +44,8 @@ Products
                 <td><img [src]="" [alt]="product.productName" width="100" class="shadow-4" /></td>
                 <td>{{product.originalPrice | currency:'USD'}}</td>
                 <td>{{product.categoryName}}</td>
-                <td>>{{product.originalQuantity}}</td>
-                <td>>{{product.brandName}}</td>
+                <td>{{product.originalQuantity}}</td>
+                <td>{{product.brandName}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
@@ -68,8 +69,9 @@ Products
             <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small>
         </div>
         <div class="field">
-            <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="product.description" required rows="3" cols="20"></textarea>
+            <label for="image">Image</label>
+            <br>
+            <input type="file" id="image" [(ngModel)]="product.imageLinks[0]" required>
         </div>
         <div class="field">
             <label for="inventoryStatus">Inventory Status</label>
@@ -89,15 +91,11 @@ Products
                 </div>
                 <div class="field-radiobutton col-6">
                     <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category2">Clothing</label>
+                    <label for="category2">Vests</label>
                 </div>
                 <div class="field-radiobutton col-6">
                     <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category3">Electronics</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category4">Fitness</label>
+                    <label for="category3">Slacks</label>
                 </div>
             </div>
         </div>
@@ -120,4 +118,5 @@ Products
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-confirmDialog></p-confirmDialog>
+</div>

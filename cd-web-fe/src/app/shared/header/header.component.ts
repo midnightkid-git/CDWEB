@@ -46,7 +46,8 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Register',
       command: () => this.openRegisterPopup()
-    }
+    },
+    { label: 'Administrator', routerLink: ['/admin'] }
   ]
   public userHeader = ''
   public displayUserPopup: boolean = true;

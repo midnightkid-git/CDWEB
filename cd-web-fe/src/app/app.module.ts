@@ -22,6 +22,11 @@ import { ListOrdersComponent } from './components/list-orders/list-orders.compon
 import { OrderCardComponent } from './shared/components/order-card/order-card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductsComponent } from './components/admin/products/products.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,17 +45,31 @@ import { ProductsComponent } from './components/admin/products/products.componen
     OrderCardComponent,
     ProductsComponent,
   ],
+
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ScrollingModule,
     AppRoutingModule,
     HttpClientModule,
-    PrimengModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserAnimationsModule,
+    PrimengModule,
+    AngularFireModule.initializeApp(
+      {
+        apiKey: "AIzaSyD93GOBqxi37SxFNUMU5Nm8pGzFgYEEBTM",
+        authDomain: "peakyblinders-12eb8.firebaseapp.com",
+        projectId: "peakyblinders-12eb8",
+        storageBucket: "peakyblinders-12eb8.appspot.com",
+        messagingSenderId: "817951574350",
+        appId: "1:817951574350:web:184c1d78d092a822fdb61f"
+      }),
+    AngularFireStorageModule
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    ConfirmationService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

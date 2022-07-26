@@ -21,7 +21,6 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 const PRIMENG = [
-  ConfirmDialogModule,
   ToastModule,
   TableModule,
   ToolbarModule,
@@ -39,7 +38,8 @@ const PRIMENG = [
   StepsModule,
   SliderModule,
   SplitButtonModule,
-  MenuModule
+  MenuModule,
+  ConfirmDialogModule,
 ]
 
 
