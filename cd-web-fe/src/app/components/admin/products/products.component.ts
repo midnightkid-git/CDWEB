@@ -18,6 +18,8 @@ export class ProductsComponent implements OnInit {
 
   submitted?: boolean;
 
+  selectedImage: any;
+
   statuses: any[] = [];
 
   constructor(private productsService: ProductsService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
@@ -29,6 +31,10 @@ export class ProductsComponent implements OnInit {
     //   { label: 'LOWSTOCK', value: 'lowstock' },
     //   { label: 'OUTOFSTOCK', value: 'outofstock' }
     // ];
+  }
+
+  addAttribute() {
+
   }
 
   initMockData() {
@@ -107,6 +113,14 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  validateProduct() {
+    if (!this.product.name || !this.product.category || !this.product.price || !this.product.quantity || !this.product.brandName || !this.selectedImage) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   hideDialog() {
     this.productDialog = false;
     this.submitted = false;
@@ -114,15 +128,15 @@ export class ProductsComponent implements OnInit {
 
   saveProduct() {
     this.submitted = true;
-
     if (this.product.name.trim()) {
       if (this.product.id) {
         this.products[this.findIndexById(this.product.id)] = this.product;
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
       }
       else {
+        console.log(this.product)
         this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
+        this.product.imageLinks = [this.selectedImage];
         this.products.push(this.product);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
       }

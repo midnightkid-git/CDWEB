@@ -1,6 +1,7 @@
 package com.cdweb.backend.payloads.responses;
 
 
+import com.cdweb.backend.entities.ProductSizes;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +20,7 @@ public class ProductResponse {
     private int originalQuantity;
     private int discount;
     private List<String> imageLinks;
-    private List<AttributeAndVariantsResponse> attributeAndVariants;
-    private List<ProductCombinationResponse> combinations;
+    private List<ProductSizeRespone> listSizes;
     private String brandName;
     private String categoryName;
     private Date createdDate;

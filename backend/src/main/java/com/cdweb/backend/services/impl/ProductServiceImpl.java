@@ -1,7 +1,6 @@
 package com.cdweb.backend.services.impl;
 
 import com.cdweb.backend.common.Utils;
-import com.cdweb.backend.converters.ProductAttributeConverter;
 import com.cdweb.backend.converters.ProductConverter;
 import com.cdweb.backend.entities.*;
 import com.cdweb.backend.payloads.requests.AttributeAndVariantsRequest;
@@ -33,46 +32,41 @@ public class ProductServiceImpl implements IProductService {
 
     private final BrandRepository brandRepository;
 
-    private final IAttributeService attributeService;
-
-    private final IVariantService variantService;
-
-    private final IProductAttributeService productAttributeService;
 
     private final IThumbnailService productGalleryService;
-
-    private final IProductAttributeVariantService productAttributeVariantService;
-
-    private final IProductCombinationService productCombinationService;
 
 
     @Override
     public List<ProductResponse> findAllForAdmin(Pageable pageable) {
         List<ProductResponse> response = new ArrayList<>();
         List<Products> entities = productRepository.findByIsActiveTrueOrderByModifiedDateDesc(pageable).getContent();
-       if (entities.size() > 0) {
-           entities.forEach(entity -> {
-               if (entity.isActive()) {
-                   List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
-                   List<AttributeResponse> attributes = attributeService.findByProductIdAndIsActive(entity.getId());
-                   List<AttributeAndVariantsResponse> attrAndVarRs= new ArrayList<>();
-                   attributes.forEach(a -> {
-                       List<String> variants = variantService.findByProductIdAndIsActive(entity.getId(), a.getId())
-                               .stream().map(VariantResponse :: getVariantName).collect(Collectors.toList());
-                       AttributeAndVariantsResponse attrAndVar = AttributeAndVariantsResponse.builder()
-                               .attributeId(a.getId())
-                               .attributeName(a.getAttributeName())
-                               .variantNames(variants)
-                               .build();
-                       attrAndVarRs.add(attrAndVar);
-                   });
-                   List<ProductCombinationResponse> proComRs = productCombinationService.findByProductAndIsActiveTrue(entity);
-                   ProductResponse product = productConverter.toResponse(entity, productThumbnails, attrAndVarRs, proComRs);
-                   response.add(product);
-               }
-           });
-       }
-        return response;
+        if(entities.size() > 0){
+            entities.forEach((entity) -> {
+                List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
+                List<String> imageLinks = new ArrayList<>();
+                List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
+                entity.getSizes().forEach((size) -> {
+                    productSizeRespone.add(ProductSizeRespone.builder()
+                                    .quantity(size.getQuantity())
+                                    .sizeName(size.getSizes().getSizeName())
+                            .build());
+                });
+                productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
+                ProductResponse responseProduct = ProductResponse.builder()
+                        .id(entity.getId())
+                        .productName(entity.getProductName())
+                        .description(entity.getDescription())
+                        .originalPrice(String.valueOf(entity.getOriginalPrice()))
+                        .originalQuantity(entity.getOriginalQuantity())
+                        .discount(entity.getDiscount())
+                        .imageLinks(imageLinks)
+                        .listSizes(productSizeRespone)
+                        .build();
+                response.add(responseProduct);
+            });
+            return response;
+        }
+        return null;
     }
 
     @Override
@@ -84,8 +78,15 @@ public class ProductServiceImpl implements IProductService {
                 if (entity.isActive()) {
                     List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
                     List<String> imageLinks = new ArrayList<>();
+                    List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
+                    entity.getSizes().forEach((size) -> {
+                        productSizeRespone.add(ProductSizeRespone.builder()
+                                .quantity(size.getQuantity())
+                                .sizeName(size.getSizes().getSizeName())
+                                .build());
+                    });
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
-                    ProductResponse product = ProductResponse.builder()
+                    ProductResponse responseProduct = ProductResponse.builder()
                             .id(entity.getId())
                             .productName(entity.getProductName())
                             .description(entity.getDescription())
@@ -93,25 +94,9 @@ public class ProductServiceImpl implements IProductService {
                             .originalQuantity(entity.getOriginalQuantity())
                             .discount(entity.getDiscount())
                             .imageLinks(imageLinks)
+                            .listSizes(productSizeRespone)
                             .build();
-                    List<ProductCombinationResponse> proComRs = productCombinationService.findByProductAndIsActiveTrue(entity);
-                    if (proComRs != null) {
-                        int quantity = 0;
-                       for(ProductCombinationResponse p : proComRs) {
-                           quantity += p.getQuantity();
-                       }
-                       product.setOriginalQuantity(quantity);
-                    }
-                    Double maxPrice = productCombinationService.maxPrice(entity.getId());
-                    Double minPrice = productCombinationService.minPrice(entity.getId());
-                    if (maxPrice!= null && minPrice != null){
-                        if(maxPrice.equals(minPrice)){
-                            product.setOriginalPrice(Utils.formatNumber(maxPrice));
-                        } else {
-                            product.setOriginalPrice(Utils.formatNumber(minPrice) + " - " + Utils.formatNumber(maxPrice));
-                        }
-                    }
-                    response.add(product);
+                    response.add(responseProduct);
                 }
             });
         }
@@ -131,18 +116,7 @@ public class ProductServiceImpl implements IProductService {
            List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
            List<String> imageLinks = new ArrayList<>();
            productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
-           List<AttributeResponse> attributes = attributeService.findByProductIdAndIsActive(entity.getId());
            List<AttributeAndVariantsResponse> attrAndVarRs= new ArrayList<>();
-           attributes.forEach(a -> {
-               List<String> variants = variantService.findByProductIdAndIsActive(entity.getId(), a.getId())
-                       .stream().map(VariantResponse :: getVariantName).collect(Collectors.toList());
-               AttributeAndVariantsResponse attrAndVar = AttributeAndVariantsResponse.builder()
-                       .attributeId(a.getId())
-                       .attributeName(a.getAttributeName())
-                       .variantNames(variants)
-                       .build();
-               attrAndVarRs.add(attrAndVar);
-           });
            Categories category = categoryRepository.findByIdAndIsActiveTrue(entity.getCategories().getId());
            Brands brand = brandRepository.findByIdAndIsActiveTrue(entity.getBrands().getId());
            ProductResponse product = ProductResponse.builder()
@@ -152,28 +126,10 @@ public class ProductServiceImpl implements IProductService {
                    .originalPrice(String.valueOf(entity.getOriginalPrice()))
                    .originalQuantity(entity.getOriginalQuantity())
                    .discount(entity.getDiscount())
-                   .attributeAndVariants(attrAndVarRs)
                    .imageLinks(imageLinks)
                    .categoryName(category.getName())
                    .brandName(brand.getName())
                    .build();
-           List<ProductCombinationResponse> proComRs = productCombinationService.findByProductAndIsActiveTrue(entity);
-           if (proComRs != null) {
-               int quantity = 0;
-               for(ProductCombinationResponse p : proComRs) {
-                   quantity += p.getQuantity();
-               }
-               product.setOriginalQuantity(quantity);
-           }
-           Double maxPrice = productCombinationService.maxPrice(entity.getId());
-           Double minPrice = productCombinationService.minPrice(entity.getId());
-           if (maxPrice!= null && minPrice != null){
-               if(maxPrice.equals(minPrice)){
-                   product.setOriginalPrice(Utils.formatNumber(maxPrice));
-               } else {
-                   product.setOriginalPrice(Utils.formatNumber(minPrice) + " - " + Utils.formatNumber(maxPrice));
-               }
-           }
            return product;
        }
        return null;
@@ -201,39 +157,10 @@ public class ProductServiceImpl implements IProductService {
                 listOfAttributeNames.add(a.getAttributeName());
                 attributesAndVariantsRequest.add(a);
             });
-            //lưu attribute
-            List<AttributeResponse> savedAttribute = attributeService.saveListAttribute(listOfAttributeNames);
-            //Lưu variant theo attribute
-            List<AttributeAndVariantsResponse> listVariantOfAttrRs = variantService.checkAndSaveListVariants(attributesAndVariantsRequest);
-
-            List<Attributes> listAttributes = new ArrayList<>();
-            savedAttribute.forEach(a -> {
-                Attributes attr = Attributes.builder()
-                        .attributeName(a.getAttributeName())
-                        .build();
-                attr.setId(a.getId());
-                listAttributes.add(attr);
-            });
-
-            //lưu product_attribute
-            List<ProductAttributes> productAttributes = productAttributeService.saveListProductAttribute(listAttributes, savedEntity);
-//            List<ProductAttributeResponse> productAttributeRs = productAttributes.stream()
-//                    .map(productAttributeConverter :: toResponse).collect(Collectors.toList());
-            List<Variants> variants = new ArrayList<>();
-
-            // tìm list variant theo tên và attributeName
-            listVariantOfAttrRs.forEach(variantOfAttribute -> variantOfAttribute.getVariantNames().forEach(variantName -> {
-                Attributes attributes = attributeService.findByAttributeNameAndIsActiveTrue(variantOfAttribute.getAttributeName());
-                Variants variantEntity = variantService.findByVariantNameAndAttributeIdAndIsActiveTrue(variantName,attributes.getId() );
-                variants.add(variantEntity);
-            }));
-
-            // so sanh attributeId của hai bảng product_attribute và bảng variant để lưu bảng product_attribute_variant
-            List<ProductAttributeVariantResponse> proAttrVarRs = productAttributeVariantService.save(productAttributes, variants);
 
             //lưu product combination
-            List<ProductCombinationResponse> proComRs = productCombinationService.saveListCombinations(savedEntity, request.getCombinations());
-            return productConverter.toResponse(savedEntity, thumbnailRespons, listVariantOfAttrRs, proComRs);
+//            return productConverter.toResponse(savedEntity, thumbnailRespons);
+            return null;
         }
         return null;
     }

@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class VariantRequest {
     private Long id;
-    private String variantName;
+    private Integer quantity;
     private Long attributeId;
 }

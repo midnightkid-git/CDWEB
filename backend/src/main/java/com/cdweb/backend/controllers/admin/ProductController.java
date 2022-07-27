@@ -28,7 +28,7 @@ public class ProductController {
 
 
     // this request is: http://localhost:8081/api/v1/products?page=1&limit=3
-    @GetMapping("/{page}/{limit}")
+    @GetMapping("getListProduct/{page}/{limit}")
     ResponseEntity<?> showAllProduct(@PathVariable("page") int page, @PathVariable("limit") int limit) {
         PageResponse<ProductResponse> response = new PageResponse<>();
         response.setPage(page);
