@@ -2,6 +2,7 @@ package com.cdweb.backend.services.impl;
 
 import com.cdweb.backend.common.Utils;
 import com.cdweb.backend.converters.ProductConverter;
+import com.cdweb.backend.converters.ProductSizeConverter;
 import com.cdweb.backend.entities.*;
 import com.cdweb.backend.payloads.requests.AttributeAndVariantsRequest;
 import com.cdweb.backend.payloads.requests.ProductRequest;
@@ -27,11 +28,13 @@ public class ProductServiceImpl implements IProductService {
     private final ProductRepository productRepository;
 
     private final ProductConverter productConverter;
+    private final ProductSizeConverter productSizeConverter;
 
     private final CategoryRepository categoryRepository;
 
     private final BrandRepository brandRepository;
 
+    private  final ProductSizeRepository productSizeRepository;
 
     private final IThumbnailService productGalleryService;
 
@@ -139,6 +142,7 @@ public class ProductServiceImpl implements IProductService {
     public ProductResponse save(ProductRequest request) {
         Products entity = productRepository.findByProductNameAndIsActiveTrue(request.getProductName());
         if (entity == null) {
+            List<ProductSizes> listSizesEntity = new ArrayList<>();
             Products newEntity = productConverter.toEntity(request);
             Categories category = categoryRepository.findByNameAndIsActiveTrue(request.getCategoryName());
             Brands brand = brandRepository.findByNameAndIsActiveTrue(request.getBrandName());
@@ -146,17 +150,14 @@ public class ProductServiceImpl implements IProductService {
             newEntity.setBrands(brand);
             newEntity.setActive(true);
 
+            productSizeConverter.toEntity(request).forEach((_x) -> {
+                ProductSizes savedProductSizes = productSizeRepository.save(_x);
+            });
             //lưu san phẩm
             Products savedEntity = productRepository.save(newEntity);
-            //Lưu hình
-            List<ThumbnailResponse> thumbnailRespons = productGalleryService.save(savedEntity, request.getImageLinks());
 
-            List<String> listOfAttributeNames = new ArrayList<>();
-            List<AttributeAndVariantsRequest> attributesAndVariantsRequest = new ArrayList<>();
-            request.getAttributes().forEach(a -> {
-                listOfAttributeNames.add(a.getAttributeName());
-                attributesAndVariantsRequest.add(a);
-            });
+            //Lưu hình
+            List<ThumbnailResponse> thumbnailResponse = productGalleryService.save(savedEntity, request.getImageLinks());
 
             //lưu product combination
 //            return productConverter.toResponse(savedEntity, thumbnailRespons);

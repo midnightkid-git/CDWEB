@@ -1,5 +1,6 @@
 package com.cdweb.backend.payloads.requests;
 
+import com.cdweb.backend.entities.ProductSizes;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,7 @@ public class ProductRequest {
     private int originalQuantity;
     private int discount;
     private List<String> imageLinks;
-    private List<AttributeAndVariantsRequest> attributes;
-    private List<ProductCombinationRequest> combinations;
+    private List<ProductSizeRequest> sizes;
     private String brandName;
     private String categoryName;
 }

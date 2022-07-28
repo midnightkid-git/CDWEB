@@ -44,7 +44,7 @@ public class ProductController {
                         new ResponseObject("Failed", "Have no product", null)) ;
     }
 
-    @PostMapping("")
+    @PostMapping("")    
     ResponseEntity<?> postProduct(@RequestBody ProductRequest request) {
         Boolean exists = productService.existsByProductNameAndIsActive(request.getProductName());
         if(exists){
