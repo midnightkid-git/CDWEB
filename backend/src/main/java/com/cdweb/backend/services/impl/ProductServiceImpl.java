@@ -57,6 +57,8 @@ public class ProductServiceImpl implements IProductService {
                 productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
                 ProductResponse responseProduct = ProductResponse.builder()
                         .id(entity.getId())
+                        .brandName(entity.getBrands().getName())
+                        .categoryName(entity.getCategories().getName())
                         .productName(entity.getProductName())
                         .description(entity.getDescription())
                         .originalPrice(String.valueOf(entity.getOriginalPrice()))
@@ -91,6 +93,8 @@ public class ProductServiceImpl implements IProductService {
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
                     ProductResponse responseProduct = ProductResponse.builder()
                             .id(entity.getId())
+                            .brandName(entity.getBrands().getName())
+                            .categoryName(entity.getCategories().getName())
                             .productName(entity.getProductName())
                             .description(entity.getDescription())
                             .originalPrice(String.valueOf(entity.getOriginalPrice()))
