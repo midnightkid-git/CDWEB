@@ -26,6 +26,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { environment } from 'src/environments/environment';
     ListOrdersComponent,
     OrderCardComponent,
     ProductsComponent,
+    SafeUrlPipe,
   ],
 
   imports: [

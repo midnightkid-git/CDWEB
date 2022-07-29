@@ -47,7 +47,9 @@ export class AuthService {
   }
 
   logout() {
+    window.sessionStorage.setItem("adminToken", '')
     window.sessionStorage.setItem("basicToken", '')
+
     this.token.next('')
   }
 
