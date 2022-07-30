@@ -20,12 +20,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListOrdersComponent } from './components/list-orders/list-orders.component';
 import { OrderCardComponent } from './shared/components/order-card/order-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductsComponent } from './components/admin/products/products.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
+import { LoadingComponent } from './shared/loading/loading.component';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { environment } from 'src/environments/environment';
     ListOrdersComponent,
     OrderCardComponent,
     ProductsComponent,
+    LoadingComponent,
   ],
 
   imports: [
@@ -69,6 +72,12 @@ import { environment } from 'src/environments/environment';
   providers: [
     MessageService,
     ConfirmationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+
+    }
   ],
   bootstrap: [AppComponent]
 })

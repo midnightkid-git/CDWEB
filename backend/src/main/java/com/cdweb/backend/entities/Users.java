@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Builder
 @Entity
@@ -25,6 +26,9 @@ public class Users extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "roles_id", nullable = false)
     private Roles roles;
+
+    @OneToMany(mappedBy = "user")
+    private Set<CartItem> cartItems;
 
     public boolean isOTPRequired() {
         if (this.getOtpCode() == null) {

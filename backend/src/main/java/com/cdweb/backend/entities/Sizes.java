@@ -17,10 +17,12 @@ import java.util.Set;
 @Setter
 public class Sizes{
     @Id
-    private Long id;
     private String sizeName;
 
     @OneToMany(mappedBy = "sizes")
     private Set<ProductSizes> sizes;
+
+    @OneToMany(mappedBy = "size")
+    private Set<CartItem> cartItems;
 
 }

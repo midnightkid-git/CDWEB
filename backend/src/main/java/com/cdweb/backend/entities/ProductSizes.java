@@ -23,7 +23,7 @@ public class ProductSizes {
 
     @ManyToOne
     @MapsId("sizeId")
-    @JoinColumn(name = "size_id")
+    @JoinColumn(name = "size")
     private Sizes sizes;
 
 }
