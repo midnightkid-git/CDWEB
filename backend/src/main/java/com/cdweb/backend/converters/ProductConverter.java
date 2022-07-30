@@ -45,4 +45,19 @@ public class ProductConverter {
                 .modifiedDate(entity.getModifiedDate())
                 .build();
     }
+
+    public ProductResponse toResponse(Products entity) {
+        return ProductResponse.builder()
+                .id(entity.getId())
+                .productName(entity.getProductName())
+                .description(entity.getDescription())
+                .originalPrice(String.valueOf(entity.getOriginalPrice()))
+                .originalQuantity(entity.getOriginalQuantity())
+                .discount(entity.getDiscount())
+                .categoryName(entity.getCategories().getName())
+                .brandName(entity.getBrands().getName())
+                .createdDate(entity.getCreatedDate())
+                .modifiedDate(entity.getModifiedDate())
+                .build();
+    }
 }

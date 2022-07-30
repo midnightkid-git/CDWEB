@@ -29,8 +29,9 @@ export class HeaderComponent implements OnInit {
     },
     {
       label: 'Log Out', icon: 'pi pi-arrow-left', command: () => {
-        this.menuItems = this.nonUserItems;
+        // this.menuItems = this.nonUserItems;
         this.authService.logout();
+        this.router.navigate(['/home']);
       }
     },
     { separator: true },
@@ -72,6 +73,8 @@ export class HeaderComponent implements OnInit {
   public isRemember: boolean = false;
 
   private userId: any;
+  public errorMessage: string = '';
+  public otpErrorMessage: string = '';
 
   constructor(
     private router: Router,
@@ -85,23 +88,24 @@ export class HeaderComponent implements OnInit {
   }
 
   checkLogin(): void {
-    this.authService.token.subscribe(_token => {
-      if (_token !== '') {
+    this.authService.isLogin$.subscribe(isLogin => {
+      if (isLogin) {
         this.authService.user.then((user => {
           console.log(user)
           this.userName = user.fullName;
           this.role = user.role;
-        }))
+        }));
         this.menuItems = this.userItems;
       } else {
         this.userName = '';
         this.role = '';
         this.menuItems = this.nonUserItems;
       }
-    })
+    });
   }
 
   openRegisterPopup() {
+    this.errorMessage = '';
     this.displayRegisterPopup = true;
     this.displayLoginPopup = false;
     this.userForm = this.fb.group({
@@ -109,23 +113,24 @@ export class HeaderComponent implements OnInit {
       password: ['', Validators.required],
       gmail: ['', Validators.required],
       fullName: ['', Validators.required]
-    }
-    )
+    });
   }
 
   openLoginPopup() {
+    this.errorMessage = '';
     this.displayLoginPopup = true;
     this.displayRegisterPopup = false;
     this.userForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
   }
 
   openOtpPopup() {
+    this.otpErrorMessage = '';
     this.otpForm = this.fb.group({
       otp: ['', Validators.required],
-    })
+    });
   }
 
   onSubmitForm(): void {
@@ -134,25 +139,29 @@ export class HeaderComponent implements OnInit {
         username: this.userForm.value.username,
         password: this.userForm.value.password,
         isRememberMe: this.isRemember
-      }
-      this.authService.adminLogin(param).then(() => {
+      };
+      this.authService.login(param).then(() => {
         this.displayLoginPopup = false;
+      }).catch((err) => { 
+        this.errorMessage = err.error.message;
       });
     }
+
     if (this.displayRegisterPopup == true) {
       const param = {
         username: this.userForm.value.username,
         password: this.userForm.value.password,
         gmail: this.userForm.value.gmail,
         fullName: this.userForm.value.fullName,
-        roleCode: 'ADMIN'
-      }
-      console.log(param)
+        roleCode: 'BASIC'
+      };
       this.authService.register(param).then((_x: any) => {
         this.userId = _x.data.id
         this.displayRegisterPopup = false;
         this.displayOtpPopup = true;
         this.openOtpPopup();
+      }).catch((err: any) => {
+        this.errorMessage = err.error.message;
       });
     }
   }
@@ -161,16 +170,18 @@ export class HeaderComponent implements OnInit {
     const param = {
       userId: this.userId,
       otpCode: this.otpForm.value.otp
-    }
+    };
     this.authService.verifyOtp(param).then((_x: any) => {
       console.log(_x)
       this.authService.token.next(_x.data.accessToken);
       this.displayOtpPopup = false;
-    })
+      this.openRegisterPopup();
+    }).catch((err: any) => {
+      this.otpErrorMessage = err.error.message;
+    });
   }
 
   onClickUserIcon(): void {
     this.userIconEmit.emit(true)
   }
-
 }

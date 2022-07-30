@@ -22,6 +22,7 @@ public interface IProductService {
 
     ProductResponse save(ProductRequest request);
 
+    ProductResponse update(ProductRequest request);
     boolean delete(Long[] ids);
 
     boolean existsByProductNameAndIsActive(String productName);

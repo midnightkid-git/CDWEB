@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-shop',
@@ -14,10 +15,11 @@ export class ShopComponent implements OnInit {
   public maxPrice: number = 1000;
   public rangeValues: any[] = [0, this.maxPrice];
   public isDisabledRange: boolean = false;
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.initMockData();
+    // this.initMockData();
+    this.getAllCategories();
     this.fetchParams();
   }
 
@@ -31,10 +33,40 @@ export class ShopComponent implements OnInit {
       const param = _param.get("category")
       if (param) {
         // Filter by category
+        this.getAllProducts();
       } else {
         // Get all item
+        this.getAllProducts();
       }
     })
+  }
+
+  getAllCategories(): void {
+    this.productService.getCategories().subscribe((res) => {
+      if (res && res.data) {
+        this.categories = res.data.map((category: any) => {
+          return { categoryId: category.code, categoryLabel: category.name };
+        });
+      }
+    });
+  }
+
+  getAllProducts(): void {
+    this.productService.getProducts().subscribe((res) => {
+      if (res && res.data) {
+        this.listProducts = res.data.data.map((product: any) => {
+          return {
+            productId: product.id,
+            productLabel: product.productName,
+            price: product.originalPrice,
+            size: product.listSizes,
+            categoryId: product.id,
+            categoryLabel: product.categoryName,
+            thumbnails: product.imageLinks
+          };
+        });
+      }
+    });
   }
 
   initMockData() {

@@ -29,6 +29,8 @@ import { environment } from 'src/environments/environment';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
+import { AdminRegisterComponent } from './components/admin/admin-register/admin-register.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     ProductsComponent,
     LoadingComponent,
     SafeUrlPipe,
+    AdminLoginComponent,
+    AdminRegisterComponent,
   ],
 
   imports: [
