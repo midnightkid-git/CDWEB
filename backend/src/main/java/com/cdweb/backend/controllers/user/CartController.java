@@ -49,7 +49,7 @@ public class CartController {
         cartService.removeItem(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Remove item successfully", null));
     }
-    
+
     private Users getUserFromRequest(HttpServletRequest httpRequest) {
         String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
         String token = authorizationHeader.substring(Constant.BEARER.length());
