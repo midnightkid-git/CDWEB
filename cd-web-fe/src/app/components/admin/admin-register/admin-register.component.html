@@ -1,0 +1,45 @@
+<div class="component-wraper">
+    <form *ngIf="userForm" [formGroup]="userForm" (submit)="onSubmitForm()" class="form-container">
+        <div class="wrapper">
+            <h1 class="form-title">Admin Register</h1>
+            <div class="form-item">
+                <h4 class="label">Username</h4>
+                <input formControlName="username" pInputText class="input">
+            </div>
+            <div class="form-item">
+                <h4 class="label">Password</h4>
+                <input formControlName="password" pInputText type="password" class="input">
+            </div>
+            <ng-container>
+                <div class="form-item">
+                    <h4 class="label">Full name</h4>
+                    <input formControlName="fullName" pInputText type="text" class="input">
+                </div>
+                <div class="form-item">
+                    <h4 class="label">Gmail</h4>
+                    <input formControlName="gmail" pInputText type="text" class="input">
+                </div>
+            </ng-container>
+            <div class="form-item">
+                <p class="error-message">{{errorMessage}}</p>
+            </div>
+            <div class="form-item">
+                <h6>If you already have account, <span class="link-register" (click)="navigateToLogin()">Log in</span></h6>
+            </div>
+            <div class="submit-item">
+                <button [disabled]="!userForm.valid" class="submit-button" type="submit" pButton [label]="'Register'"></button>
+            </div>
+        </div>
+    </form>
+
+    <p-dialog [closable]="true" [closeOnEscape]="true" header="OTP Verify" *ngIf="displayOtpPopup"
+        [(visible)]="displayOtpPopup" [style]="{width: '35  vw'}">
+        <form *ngIf="otpForm" [formGroup]="otpForm" (submit)="onSubmitVerifyOtp()" class="form-container">
+            <input formControlName="otp" pInputText class="input">
+            <div class="submit-item">
+                <button [disabled]="!otpForm.valid" class="submit-button" type="submit" pButton label="Submit"></button>
+            </div>
+        </form>
+        <p class="error-message">{{otpErrorMessage}}</p>
+    </p-dialog>
+</div>
