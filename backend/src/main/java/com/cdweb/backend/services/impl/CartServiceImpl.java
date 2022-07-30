@@ -50,7 +50,7 @@ public class CartServiceImpl implements ICartService {
         if(products != null){
             Long cartItemContainId = this.containSize(user,request);
             if(cartItemContainId != null){
-                CartItem newEntity = cartItemRepository.findById(cartItemContainId);
+                CartItem newEntity = cartItemRepository.findById(cartItemContainId).orElseThrow(()-> new IllegalArgumentException("not found cart by ID"));
                 newEntity.setQuantity(request.getQuantity());
             }else {
                 CartItem newEntity = cartConverter.toEntity(request);
@@ -66,7 +66,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public boolean removeItem(Long cartId) {
-        CartItem entity = cartItemRepository.findById(cartId);
+        CartItem entity = cartItemRepository.findById(cartId).orElseThrow(()-> new IllegalArgumentException("not found cart by ID"));
         if(entity != null){
             cartItemRepository.delete(entity);
             return true;
