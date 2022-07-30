@@ -46,10 +46,13 @@
           <input  formControlName="gmail" pInputText type="text" class="input">
         </div>
       </ng-container>
+      <div class="form-item">
+        <p class="error-message">{{errorMessage}}</p>
+      </div>
       <div *ngIf="!displayRegisterPopup" class="form-item">
         <div class="wrapper">
           <div class="check-remember">
-        <p-checkbox [value]="isRemember" [(ngModel)]="isRemember" inputId="remember"></p-checkbox>
+        <p-checkbox [value]="isRemember" [(ngModel)]="isRemember" [ngModelOptions]="{standalone: true}" inputId="remember"></p-checkbox>
         <label for="remember">Remember me</label>
       </div>
         <h6>
@@ -72,9 +75,10 @@
 <p-dialog [closable]="true" [closeOnEscape]="true" header="OTP Verify" *ngIf="displayOtpPopup" [(visible)]="displayOtpPopup"
   [style]="{width: '35  vw'}">
   <form *ngIf="otpForm" [formGroup]="otpForm" (submit)="onSubmitVerifyOtp()" class="form-container">
-        <input formControlName="otp" pInputText class="input">
-        <div class="submit-item">
-          <button [disabled]="!otpForm.valid" class="submit-button" type="submit" pButton label="Submit"></button>
-        </div>
+    <input formControlName="otp" pInputText class="input">
+    <div class="submit-item">
+      <button [disabled]="!otpForm.valid" class="submit-button" type="submit" pButton label="Submit"></button>
+    </div>
   </form>
+  <p class="error-message">{{otpErrorMessage}}</p>
 </p-dialog>

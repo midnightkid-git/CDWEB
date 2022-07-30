@@ -1,0 +1,32 @@
+<div class="component-wraper">
+    <form *ngIf="userForm" [formGroup]="userForm" (submit)="onSubmitForm()" class="form-container">
+        <div class="wrapper">
+            <h1 class="form-title">Admin Login</h1>
+            <div class="form-item">
+                <h4 class="label">Username</h4>
+                <input formControlName="username" pInputText class="input">
+            </div>
+            <div class="form-item">
+                <h4 class="label">Password</h4>
+                <input formControlName="password" pInputText type="password" class="input">
+            </div>
+            <div class="form-item">
+                <p class="error-message">{{errorMessage}}</p>
+            </div>
+            <div class="form-item">
+                <div class="wrapper">
+                    <div class="check-remember">
+                        <p-checkbox [value]="isRemember" [(ngModel)]="isRemember" [ngModelOptions]="{standalone: true}" inputId="remember"></p-checkbox>
+                        <label for="remember">Remember me</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <h6>If you don't have account, <span class="link-register" (click)="navigateToRegister()">Create new one</span></h6>
+            </div>
+            <div class="submit-item">
+                <button [disabled]="!userForm.valid" class="submit-button" type="submit" pButton [label]="'Login'"></button>
+            </div>
+        </div>
+    </form>
+</div>
