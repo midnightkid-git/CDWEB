@@ -60,7 +60,7 @@ public class ProductController {
     @PutMapping("/{id}")
     ResponseEntity<?> updateProduct(@RequestBody ProductRequest request, @PathVariable("id") Long id) {
         request.setId(id);
-        ProductResponse updatedProduct = productService.save(request);
+        ProductResponse updatedProduct = productService.update(request);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Update Product Successfully", updatedProduct));
     }
 

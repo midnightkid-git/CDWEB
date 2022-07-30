@@ -175,6 +175,37 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public ProductResponse update(ProductRequest request) {
+        Products entity = productRepository.findByIdAndIsActiveTrue(request.getId());
+        if (entity != null) {
+            Categories categories = categoryRepository.findByNameAndIsActiveTrue(request.getCategoryName());
+            Brands brands = brandRepository.findByNameAndIsActiveTrue(request.getBrandName());
+
+            entity.setProductName(request.getProductName());
+            entity.setDescription(request.getDescription());
+            entity.setOriginalPrice(request.getOriginalPrice());
+            entity.setDiscount(request.getDiscount());
+            entity.setCategories(categories);
+            entity.setBrands(brands);
+
+//            size
+//            productSizeConverter.toEntity(request).forEach((_x) -> {
+//                ProductSizes savedProductSizes = productSizeRepository.save(_x);
+//            });
+            //lưu san phẩm
+            Products updatedEntity = productRepository.save(entity);
+
+            //Lưu hình
+//            List<ThumbnailResponse> thumbnailResponse = productGalleryService.save(updatedEntity, request.getImageLinks());
+
+            //lưu product combination
+//            return productConverter.toResponse(savedEntity, thumbnailRespons);
+            return productConverter.toResponse(entity);
+        }
+        return null;
+    }
+
+    @Override
     public boolean delete(Long[] ids) {
         boolean exists = true;
         for (Long id : ids) {
