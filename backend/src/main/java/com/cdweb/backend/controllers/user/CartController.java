@@ -39,10 +39,17 @@ public class CartController {
     @PostMapping("")
     ResponseEntity<?> addItemToCart(HttpServletRequest httpServletRequest, @RequestBody CartItemRequest cartItemRequest ) {
         Users user = getUserFromRequest(httpServletRequest);
-        List<CartResponse> listCartItem = cartService.findByUserId(user);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, listCartItem));
+        CartResponse listCartItem = cartService.save(user,cartItemRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Add item successfully", listCartItem));
     }
 
+    @PostMapping("/{cartId}")
+    ResponseEntity<?> removeCartItem(HttpServletRequest httpServletRequest, @PathVariable("cartId") Long id) {
+        Users user = getUserFromRequest(httpServletRequest);
+        cartService.removeItem(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Remove item successfully", null));
+    }
+    
     private Users getUserFromRequest(HttpServletRequest httpRequest) {
         String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
         String token = authorizationHeader.substring(Constant.BEARER.length());
