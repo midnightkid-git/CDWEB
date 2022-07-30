@@ -135,7 +135,7 @@ export class HeaderComponent implements OnInit {
         password: this.userForm.value.password,
         isRememberMe: this.isRemember
       }
-      this.authService.login(param).then(() => {
+      this.authService.adminLogin(param).then(() => {
         this.displayLoginPopup = false;
       });
     }
@@ -145,7 +145,7 @@ export class HeaderComponent implements OnInit {
         password: this.userForm.value.password,
         gmail: this.userForm.value.gmail,
         fullName: this.userForm.value.fullName,
-        roleCode: 'BASIC'
+        roleCode: 'ADMIN'
       }
       console.log(param)
       this.authService.register(param).then((_x: any) => {

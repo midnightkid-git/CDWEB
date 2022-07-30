@@ -48,15 +48,21 @@ public class ProductServiceImpl implements IProductService {
                 List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
                 List<String> imageLinks = new ArrayList<>();
                 List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
+                List<ThumbnailResponse> thumbnailResponsese = new ArrayList<>();
                 entity.getSizes().forEach((size) -> {
                     productSizeRespone.add(ProductSizeRespone.builder()
                                     .quantity(size.getQuantity())
                                     .sizeName(size.getSizes().getSizeName())
                             .build());
                 });
+//                entity.getThumbnails().forEach(img->{
+//                    thumbnailResponsese.add(ThumbnailResponse.builder().imageLink(img.getImageLink()).build());
+//                });
                 productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
                 ProductResponse responseProduct = ProductResponse.builder()
                         .id(entity.getId())
+                        .brandName(entity.getBrands().getName())
+                        .categoryName(entity.getCategories().getName())
                         .productName(entity.getProductName())
                         .description(entity.getDescription())
                         .originalPrice(String.valueOf(entity.getOriginalPrice()))
@@ -91,6 +97,8 @@ public class ProductServiceImpl implements IProductService {
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
                     ProductResponse responseProduct = ProductResponse.builder()
                             .id(entity.getId())
+                            .brandName(entity.getBrands().getName())
+                            .categoryName(entity.getCategories().getName())
                             .productName(entity.getProductName())
                             .description(entity.getDescription())
                             .originalPrice(String.valueOf(entity.getOriginalPrice()))

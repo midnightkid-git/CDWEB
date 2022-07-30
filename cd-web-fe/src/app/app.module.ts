@@ -28,6 +28,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
     OrderCardComponent,
     ProductsComponent,
     LoadingComponent,
+    SafeUrlPipe,
   ],
 
   imports: [

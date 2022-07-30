@@ -1,6 +1,7 @@
 package com.cdweb.backend.configs;
 
 
+import com.cdweb.backend.common.Constant;
 import com.cdweb.backend.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -59,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**", "/api/v1/auth/**").permitAll()
-                .antMatchers("/api/v1/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/v1/admin/**").hasAnyAuthority(Constant.ROLE_ADMIN)
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(getCustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

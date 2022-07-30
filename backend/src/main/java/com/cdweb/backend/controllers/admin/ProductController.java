@@ -65,8 +65,8 @@ public class ProductController {
     }
 
     //delete
-    @DeleteMapping("")
-    ResponseEntity<?> deleteProduct(@RequestBody Long[] ids) {
+    @DeleteMapping("/{ids}")
+    ResponseEntity<?> deleteProduct(@PathVariable("ids") Long[] ids) {
         return ResponseEntity.status(HttpStatus.OK).body(productService.delete(ids) ?
                 new ResponseObject("Success", "Delete Product successfully", true) :
                 new ResponseObject("Failed", "Can not find product", false));
