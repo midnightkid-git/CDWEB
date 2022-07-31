@@ -10,20 +10,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductSizes {
+public class ProductSizes extends BaseEntity {
     private int quantity;
 
-    @EmbeddedId
-    ProductSizeKey id;
-
     @ManyToOne
-    @MapsId("productId")
     @JoinColumn(name = "products_id")
     private Products product;
 
     @ManyToOne
-    @MapsId("sizeId")
-    @JoinColumn(name = "size")
+    @JoinColumn(name = "size_id")
     private Sizes sizes;
 
 }

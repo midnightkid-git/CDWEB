@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductSizeRequest {
-    private Long size_id;
+    private String size_id;
     private int quantity;
 }

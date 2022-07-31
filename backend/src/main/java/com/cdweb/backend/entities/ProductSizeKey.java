@@ -9,11 +9,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
+@ToString
 public class ProductSizeKey implements Serializable {
 
     @Column(name = "products_id")
     private Long productId;
     @Column(name = "size")
-    private Long sizeId;
+    private String sizeId;
+
 
 }

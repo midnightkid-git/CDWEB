@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 public class Sizes{
     @Id
-    private String sizeName;
+    private String sizeId;
 
     @OneToMany(mappedBy = "sizes")
     private Set<ProductSizes> sizes;
