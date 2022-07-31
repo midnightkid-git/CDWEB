@@ -55,6 +55,41 @@
     .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
         display: none;
     }
+
+    /* Fix dropdown error */
+    .p-dialog-content {
+        overflow-y: unset;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight span {
+        color: #212529 !important;
+    }
+}
+
+.size {
+    &-group {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &-control {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-btn {
+        width: 50px;
+        border: 1px solid var(--primary-color);
+    
+        &-remove {
+            height: 36px;
+        }
+
+        &-add {
+            margin-top: 20px;
+        }
+    }
 }
 
 @media screen and (max-width: 960px) {

@@ -31,6 +31,7 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { AdminRegisterComponent } from './components/admin/admin-register/admin-register.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { AdminRegisterComponent } from './components/admin/admin-register/admin-
     ReactiveFormsModule,
     FormsModule,
     PrimengModule,
+    DropdownModule,
     AngularFireModule.initializeApp(
       {
         apiKey: "AIzaSyD93GOBqxi37SxFNUMU5Nm8pGzFgYEEBTM",
