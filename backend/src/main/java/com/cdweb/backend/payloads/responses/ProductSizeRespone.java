@@ -9,5 +9,5 @@ import lombok.Setter;
 @Builder
 public class ProductSizeRespone {
     private int quantity;
-    private String sizeName;
+    private String sizeId;
 }

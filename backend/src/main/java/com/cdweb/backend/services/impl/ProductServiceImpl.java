@@ -52,12 +52,12 @@ public class ProductServiceImpl implements IProductService {
                 entity.getSizes().forEach((size) -> {
                     productSizeRespone.add(ProductSizeRespone.builder()
                                     .quantity(size.getQuantity())
-                                    .sizeName(size.getSizes().getSizeName())
+                                    .sizeId(size.getSizes().getSizeId())
                             .build());
                 });
-//                entity.getThumbnails().forEach(img->{
-//                    thumbnailResponsese.add(ThumbnailResponse.builder().imageLink(img.getImageLink()).build());
-//                });
+                entity.getThumbnails().forEach(img->{
+                    thumbnailResponsese.add(ThumbnailResponse.builder().imageLink(img.getImageLink()).build());
+                });
                 productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
                 ProductResponse responseProduct = ProductResponse.builder()
                         .id(entity.getId())
@@ -91,7 +91,7 @@ public class ProductServiceImpl implements IProductService {
                     entity.getSizes().forEach((size) -> {
                         productSizeRespone.add(ProductSizeRespone.builder()
                                 .quantity(size.getQuantity())
-                                .sizeName(size.getSizes().getSizeName())
+                                .sizeId(size.getSizes().getSizeId())
                                 .build());
                     });
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
@@ -157,12 +157,13 @@ public class ProductServiceImpl implements IProductService {
             newEntity.setCategories(category);
             newEntity.setBrands(brand);
             newEntity.setActive(true);
+            //lưu san phẩm
+            Products savedEntity = productRepository.save(newEntity);
+            request.setId(savedEntity.getId());
 
             productSizeConverter.toEntity(request).forEach((_x) -> {
                 ProductSizes savedProductSizes = productSizeRepository.save(_x);
             });
-            //lưu san phẩm
-            Products savedEntity = productRepository.save(newEntity);
 
             //Lưu hình
             List<ThumbnailResponse> thumbnailResponse = productGalleryService.save(savedEntity, request.getImageLinks());

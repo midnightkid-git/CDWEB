@@ -3,12 +3,17 @@ package com.cdweb.backend.converters;
 import com.cdweb.backend.entities.ProductSizeKey;
 import com.cdweb.backend.entities.ProductSizes;
 import com.cdweb.backend.entities.Products;
+import com.cdweb.backend.entities.Sizes;
 import com.cdweb.backend.payloads.requests.ProductRequest;
 import com.cdweb.backend.payloads.responses.AttributeAndVariantsResponse;
 import com.cdweb.backend.payloads.responses.ProductCombinationResponse;
 import com.cdweb.backend.payloads.responses.ProductResponse;
 import com.cdweb.backend.payloads.responses.ThumbnailResponse;
+import com.cdweb.backend.repositories.ProductRepository;
+import com.cdweb.backend.repositories.ProductSizeRepository;
+import com.cdweb.backend.repositories.SizeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,20 +21,27 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ProductSizeConverter {
-
+    private final ProductRepository productRepository;
+    private final SizeRepository sizeRepository;
     public List<ProductSizes> toEntity(ProductRequest request) {
         List<ProductSizes> listEntity = new ArrayList<>();
         request.getSizes().forEach((_x) -> {
-            ProductSizeKey productSizeKey = ProductSizeKey.builder()
-                    .productId(request.getId())
-                    .sizeId(_x.getSize_id())
-                    .build();
+            Products products = productRepository.findById(request.getId()).get();
+            Sizes sizes = sizeRepository.findBySizeId(_x.getSize_id());
+//            ProductSizeKey productSizeKey = ProductSizeKey.builder()
+//                    .productId(request.getId())
+//                    .sizeId(_x.getSize_id())
+//                    .build();
             listEntity.add(ProductSizes.builder()
                             .quantity(_x.getQuantity())
-                            .id(productSizeKey)
+                            .product(products)
+                            .sizes(sizes)
                     .build());
+
         });
+
         return listEntity;
     }
     public ProductResponse toResponse(Products entity, List<ThumbnailResponse> productGalleries,
