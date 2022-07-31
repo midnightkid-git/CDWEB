@@ -102,3 +102,11 @@ INSERT INTO public.product_sizes (
 id, quantity, products_id, size_id) VALUES (
 '4'::bigint, '1'::integer, '2'::integer, 'XXL'::character varying)
  returning id;
+
+
+
+insert into public.users (id, full_name, gmail, is_active, password, username)
+values ('1','Admin','admin@gmail.com',true,'$2a$10$SLCw.jtvv2vWmAAddzPsdezrqlwL5HqytO6BJy4RSZMNOYT6Z1Gcy', 'admin')
+
+insert into public.users (id, full_name, gmail, is_active, password, username)
+values ('2','Basic','basic@gmail.com',true,'$2a$10$CtV/.C7JYv9Xz2ayGTV9O.0rQsTn5tq6Fpe5hmLeK6dgZF52Y9VKS', 'basic')
