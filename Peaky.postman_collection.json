@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a1a429ee-e893-4392-8f0e-77247ee82552",
+		"_postman_id": "7ca8b806-9f81-40f6-80a7-b4f38c560d5f",
 		"name": "Peaky",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16991352"
+		"_exporter_id": "17694510"
 	},
 	"item": [
 		{
@@ -371,6 +371,52 @@
 								"admin",
 								"order",
 								"27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Save product - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOnRydWUsInN1YiI6IjEiLCJyb2xlIjoiQURNSU4iLCJmdWxsTmFtZSI6IkFkbWluIiwiZXhwIjoxNjU5MzA0NjczLCJpYXQiOjE2NTkyNzQ2NzMsInVzZXJuYW1lIjoiYWRtaW4ifQ.McYhHXIyzU_5YLZX8pRZIWL6Wiq1lu8PT-dNaKfAS1k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"productName\": \"ao sieu nhan do\",\r\n    \"description\": \"ao sieu nhan do\",\r\n    \"originalPrice\": \"37.0\",\r\n    \"originalQuantity\": 0,\r\n    \"discount\": 30,\r\n    \"imageLinks\": [],\r\n    \"sizes\": [\r\n        {\r\n            \"size_id\": \"XL\",\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"size_id\": \"L\",\r\n            \"quantity\": 3\r\n        }\r\n\r\n    ],\r\n    \"brandName\": \"Nike\",\r\n    \"categoryName\": \"Slacks\",\r\n    \"createdDate\": null,\r\n    \"modifiedDate\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product"
 							]
 						}
 					},
