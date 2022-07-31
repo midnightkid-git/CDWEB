@@ -389,7 +389,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2Nlc3NfdG9rZW4iOnRydWUsInN1YiI6IjEiLCJyb2xlIjoiQURNSU4iLCJmdWxsTmFtZSI6IkFkbWluIiwiZXhwIjoxNjU5MzA0NjczLCJpYXQiOjE2NTkyNzQ2NzMsInVzZXJuYW1lIjoiYWRtaW4ifQ.McYhHXIyzU_5YLZX8pRZIWL6Wiq1lu8PT-dNaKfAS1k",
+									"value": "{{adminToken}}",
 									"type": "string"
 								}
 							]
