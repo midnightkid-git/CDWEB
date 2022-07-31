@@ -33,6 +33,7 @@ public class CartConverter {
                 .productName(cartItem.getProduct().getProductName())
                 .discount(cartItem.getProduct().getDiscount())
                 .quantity(cartItem.getQuantity())
+                .productPrice(cartItem.getProduct().getOriginalPrice())
                 .size(cartItem.getSize())
                 .cartId(cartItem.getId())
                 .build();

@@ -48,18 +48,17 @@ public class CartServiceImpl implements ICartService {
     public CartResponse save(Users user, CartItemRequest request) {
         Products products = productRepository.findByIdAndIsActiveTrue(request.getProductId());
         if(products != null){
-            Long cartItemContainId = this.containSize(user,request);
-            if(cartItemContainId != null){
-                CartItem newEntity = cartItemRepository.findById(cartItemContainId).orElseThrow(()-> new IllegalArgumentException("not found cart by ID"));
-                newEntity.setQuantity(request.getQuantity());
-            }else {
+            CartItem cartItem = this.updateCartItem(user,request);
+            if(cartItem == null){
                 CartItem newEntity = cartConverter.toEntity(request);
+                newEntity.setUser(user);
                 newEntity.setProduct(products);
                 newEntity.setQuantity(request.getQuantity());
                 newEntity.setSize(request.getSize());
                 cartItemRepository.save(newEntity);
                 return cartConverter.toResponse(newEntity);
             }
+            return cartConverter.toResponse(cartItem);
         }
         return null;
     }
@@ -83,14 +82,13 @@ public class CartServiceImpl implements ICartService {
     }
 
 
-    public Long containSize(Users user, CartItemRequest request){
-        AtomicReference<Long> containCartItemId = null;
-        user.getCartItems().forEach((_x) -> {
-            if((_x.getProduct().getId() == request.getProductId()) && (_x.getSize() == request.getSize())){
-                containCartItemId.set(_x.getId());
-            }
-        });
-        return containCartItemId.get();
+    public CartItem updateCartItem(Users user, CartItemRequest request){
+        CartItem cartItem = cartItemRepository.findByUser_IdAndProductIdAndSize(user.getId(), request.getProductId(), request.getSize());
+       if(cartItem != null){
+            cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
+            cartItem = cartItemRepository.save(cartItem);
+       }
+        return cartItem;
     }
 
 }

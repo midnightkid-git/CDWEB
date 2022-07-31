@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     List<CartItem> findByUser(Users user);
+
+    CartItem findByUser_IdAndProductIdAndSize(Long id, Long productId, String size);
 }
