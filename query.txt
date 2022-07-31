@@ -1,0 +1,104 @@
+INSERT INTO public.roles (
+role_code, id, role_name) VALUES (
+'ADMIN'::character varying, '1'::bigint, 'Admin'::character varying)
+ returning id;
+
+INSERT INTO public.roles (
+role_code, id, role_name) VALUES (
+'BASIC'::character varying, '2'::bigint, 'Basic'::character varying)
+ returning id;
+
+
+
+
+INSERT INTO public.categories (
+id, code, name, is_active) VALUES (
+'1'::bigint, 'Slacks'::character varying, 'Slacks'::character varying, true::boolean)
+ returning id;
+
+INSERT INTO public.categories (
+id, code, name, is_active) VALUES (
+'2'::bigint, 'Accessories'::character varying, 'Accessories'::character varying, true::boolean)
+ returning id;
+
+INSERT INTO public.categories (
+id, code, name, is_active) VALUES (
+'3'::bigint, 'Vests'::character varying, 'Vests'::character varying, true::boolean)
+ returning id;	
+
+
+
+
+INSERT INTO public.sizes (
+size_id) VALUES (
+'S'::character varying)
+ returning size_id;
+
+INSERT INTO public.sizes (
+size_id) VALUES (
+'M'::character varying)
+ returning size_id;
+
+INSERT INTO public.sizes (
+size_id) VALUES (
+'L'::character varying)
+ returning size_id;
+
+INSERT INTO public.sizes (
+size_id) VALUES (
+'XL'::character varying)
+ returning size_id;
+
+INSERT INTO public.sizes (
+size_id) VALUES (
+'XXL'::character varying)
+ returning size_id;
+
+
+
+
+INSERT INTO public.brands (
+id, code, is_active, name) VALUES (
+'1'::bigint, 'NIKE'::character varying, true::boolean, 'Nike'::character varying)
+ returning id;
+
+INSERT INTO public.brands (
+id, code, is_active, name) VALUES (
+'2'::bigint, 'ADIDAS'::character varying, true::boolean, 'Adidas'::character varying)
+ returning id;
+
+
+
+
+INSERT INTO public.products (
+id, discount, original_price, product_name, categories_id, is_active, original_quantity, brands_id) VALUES (
+'1'::bigint, '100'::integer, '200'::double precision, 'Tommy'::character varying, '1'::integer, true::boolean, '0'::integer, '1'::integer)
+ returning id;
+
+INSERT INTO public.products (
+id, discount, is_active, original_price, product_name, categories_id, original_quantity, brands_id) VALUES (
+'2'::bigint, '50'::integer, true::boolean, '200'::double precision, 'Shelby'::character varying, '2'::integer, '0'::integer, '2'::integer)
+ returning id;
+
+
+
+
+INSERT INTO public.product_sizes (
+id, quantity, products_id, size_id) VALUES (
+'1'::bigint, '5'::integer, '1'::integer, 'S'::character varying)
+ returning id;
+
+INSERT INTO public.product_sizes (
+id, quantity, products_id, size_id) VALUES (
+'2'::bigint, '3'::integer, '1'::integer, 'L'::character varying)
+ returning id;
+
+INSERT INTO public.product_sizes (
+id, quantity, products_id, size_id) VALUES (
+'3'::bigint, '4'::integer, '2'::integer, 'M'::character varying)
+ returning id;
+
+INSERT INTO public.product_sizes (
+id, quantity, products_id, size_id) VALUES (
+'4'::bigint, '1'::integer, '2'::integer, 'XXL'::character varying)
+ returning id;
