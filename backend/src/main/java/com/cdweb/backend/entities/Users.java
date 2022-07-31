@@ -30,6 +30,9 @@ public class Users extends BaseEntity{
     @OneToMany(mappedBy = "user")
     private Set<CartItem> cartItems;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Orders> orders;
+
     public boolean isOTPRequired() {
         if (this.getOtpCode() == null) {
             return false;

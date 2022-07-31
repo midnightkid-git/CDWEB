@@ -11,6 +11,18 @@ role_code, id, role_name) VALUES (
 
 
 
+INSERT into public.users (id, full_name, gmail, is_active, password, username)
+values ('1','Admin','admin@gmail.com',true,'$2a$10$SLCw.jtvv2vWmAAddzPsdezrqlwL5HqytO6BJy4RSZMNOYT6Z1Gcy', 'admin');
+
+INSERT into public.users (id, full_name, gmail, is_active, password, username)
+values ('2','Basic','basic@gmail.com',true,'$2a$10$CtV/.C7JYv9Xz2ayGTV9O.0rQsTn5tq6Fpe5hmLeK6dgZF52Y9VKS', 'basic');
+
+
+
+
+
+
+
 INSERT INTO public.categories (
 id, code, name, is_active) VALUES (
 '1'::bigint, 'Slacks'::character varying, 'Slacks'::character varying, true::boolean)
@@ -103,10 +115,19 @@ id, quantity, products_id, size_id) VALUES (
 '4'::bigint, '1'::integer, '2'::integer, 'XXL'::character varying)
  returning id;
 
+INSERT INTO public.thumbnails (
+id, image_link, is_active, products_id) VALUES (
+'1'::bigint, 'link1'::character varying, true::boolean, '1'::integer)
+ returning id;
+
+INSERT INTO public.thumbnails (
+id, image_link, is_active, products_id) VALUES (
+'2'::bigint, 'link2'::character varying, true::boolean, '1'::integer)
+ returning id;
+
+INSERT INTO public.thumbnails (
+id, image_link, is_active, products_id) VALUES (
+'3'::bigint, 'link3'::character varying, true::boolean, '2'::integer)
+ returning id;
 
 
-insert into public.users (id, full_name, gmail, is_active, password, username)
-values ('1','Admin','admin@gmail.com',true,'$2a$10$SLCw.jtvv2vWmAAddzPsdezrqlwL5HqytO6BJy4RSZMNOYT6Z1Gcy', 'admin')
-
-insert into public.users (id, full_name, gmail, is_active, password, username)
-values ('2','Basic','basic@gmail.com',true,'$2a$10$CtV/.C7JYv9Xz2ayGTV9O.0rQsTn5tq6Fpe5hmLeK6dgZF52Y9VKS', 'basic')

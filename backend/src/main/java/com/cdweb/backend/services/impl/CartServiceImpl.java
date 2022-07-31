@@ -1,18 +1,19 @@
 package com.cdweb.backend.services.impl;
 
 import com.cdweb.backend.converters.CartConverter;
+import com.cdweb.backend.converters.OrderConverter;
+import com.cdweb.backend.converters.OrderDetailConverter;
 import com.cdweb.backend.entities.*;
 import com.cdweb.backend.payloads.requests.CartItemRequest;
+import com.cdweb.backend.payloads.requests.OrderRequest;
 import com.cdweb.backend.payloads.responses.CartResponse;
-import com.cdweb.backend.repositories.CartItemRepository;
-import com.cdweb.backend.repositories.ProductRepository;
+import com.cdweb.backend.repositories.*;
 import com.cdweb.backend.services.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -21,7 +22,18 @@ public class CartServiceImpl implements ICartService {
 
     private final CartItemRepository cartItemRepository;
 
+    private final OrderRepository orderRepository;
+
     private final CartConverter cartConverter;
+
+    private final OrderConverter orderConverter;
+
+    private final OrderDetailConverter orderDetailConverter;
+
+    private final UserRepository userRepository;
+
+    private final OrderDetailRepository orderDetailRepository;
+
 
 
     private final ProductRepository productRepository;
@@ -74,21 +86,42 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public boolean removeCart(Users user) {
-        user.getCartItems().forEach((_x) -> {
-            cartItemRepository.delete(_x);
+    public boolean order(Users user, OrderRequest orderRequest) {
+        List<CartItem> listCartItem = cartItemRepository.findByUser(user);
+        final Double[] totalPrice = {0.0};
+        listCartItem.forEach((_x) -> {
+            totalPrice[0] = totalPrice[0] + _x.getProduct().getOriginalPrice() * _x.getQuantity() - _x.getProduct().getDiscount();
         });
-        return true;
+        Orders order = orderConverter.toEntity(user,orderRequest, totalPrice[0]);
+        Orders savedOrder = orderRepository.save(order);
+        if(listCartItem.size() > 0) {
+            listCartItem.forEach((_x) -> {
+                OrderDetail orderDetail = orderDetailConverter.toEntity(_x, savedOrder);
+                orderDetailRepository.save(orderDetail);
+                cartItemRepository.delete(_x);
+            });
+            return true;
+        }else
+            return false;
+
     }
+
 
 
     public CartItem updateCartItem(Users user, CartItemRequest request){
         CartItem cartItem = cartItemRepository.findByUser_IdAndProductIdAndSize(user.getId(), request.getProductId(), request.getSize());
        if(cartItem != null){
-            cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
-            cartItem = cartItemRepository.save(cartItem);
+           if((cartItem.getQuantity() + request.getQuantity()) == 0){
+               cartItemRepository.delete(cartItem);
+               return null;
+           }else{
+               cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
+               cartItem = cartItemRepository.save(cartItem);
+           }
        }
         return cartItem;
     }
+
+
 
 }

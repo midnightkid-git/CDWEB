@@ -5,10 +5,12 @@ import com.cdweb.backend.common.Constant;
 import com.cdweb.backend.common.JwtService;
 import com.cdweb.backend.entities.Users;
 import com.cdweb.backend.payloads.requests.CartItemRequest;
+import com.cdweb.backend.payloads.requests.OrderRequest;
 import com.cdweb.backend.payloads.requests.ProductRequest;
 import com.cdweb.backend.payloads.responses.CartResponse;
 import com.cdweb.backend.payloads.responses.ResponseObject;
 import com.cdweb.backend.services.ICartService;
+import com.cdweb.backend.services.IUsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +31,8 @@ public class CartController {
 
     private  final ICartService cartService;
 
+    private final IUsersService usersService;
+
     @GetMapping("")
     ResponseEntity<?> getCart(HttpServletRequest request) {
          Users user = getUserFromRequest(request);
@@ -43,11 +47,18 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Add item successfully", listCartItem));
     }
 
-    @PostMapping("/{cartId}")
+    @DeleteMapping("/{cartId}")
     ResponseEntity<?> removeCartItem(HttpServletRequest httpServletRequest, @PathVariable("cartId") Long id) {
         Users user = getUserFromRequest(httpServletRequest);
         cartService.removeItem(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Remove item successfully", null));
+    }
+
+    @PostMapping("/order")
+    ResponseEntity<?> orderCartItem(HttpServletRequest httpServletRequest,@RequestBody OrderRequest orderRequest) {
+        Users user = getUserFromRequest(httpServletRequest);
+        cartService.order(user,orderRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Order successfully", null));
     }
 
     private Users getUserFromRequest(HttpServletRequest httpRequest) {

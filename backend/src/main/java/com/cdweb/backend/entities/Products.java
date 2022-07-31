@@ -3,7 +3,9 @@ package com.cdweb.backend.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -29,7 +31,7 @@ public class Products extends BaseEntity {
     private Brands brands;
 
     @OneToMany(mappedBy = "product")
-    private Set<Thumbnails> thumbnails = new HashSet<>();
+    private List<Thumbnails> thumbnails = new ArrayList<>();
 //
     @OneToMany(mappedBy = "product")
     private Set<ProductSizes> sizes = new HashSet<>();
