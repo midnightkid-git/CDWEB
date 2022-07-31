@@ -96,14 +96,35 @@ Products
                 <label for="price">Price</label>
                 <p-inputNumber id="originalPrice" [(ngModel)]="product.originalPrice" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
             </div>
-            <div class="field col">
+            <!-- <div class="field col">
                 <label for="quantity">Quantity</label>
                 <p-inputNumber id="quantity" [(ngModel)]="product.originalQuantity"></p-inputNumber>
-            </div>
+            </div> -->
             <div class="field col">
-              <label for="brandName" >Brand</label>
-              <input type="text" pInputText id="brandName" [(ngModel)]="product['brandName']" required />
-          </div>
+                <label for="brandName">Brand</label>
+                <!-- <input type="text" pInputText id="brandName" [(ngModel)]="product['brandName']" required /> -->
+                <p-dropdown [options]="brands" [(ngModel)]="product.brandName" [ngModelOptions]="{standalone: true}" optionLabel="name" optionValue="name"></p-dropdown>
+            </div>
+            <div class="field col size-wrapper">
+                <form #sizeForm="ngForm">
+                    <div class="size-form">
+                        <ng-template ngFor let-sizeItem [ngForOf]="sizeArray" let-index="index" let-isLast="last">
+                            <div class="size-group">
+                                <div class="size-control">
+                                    <label>Size</label>
+                                    <p-dropdown name="size_{{ sizeItem.id }}" [options]="sizes" [(ngModel)]="sizeItem.size_id"  optionLabel="name" optionValue="name"></p-dropdown>
+                                </div>
+                                <div class="size-control">
+                                    <label>Quantity</label>
+                                    <p-inputNumber name="quantity_{{ sizeItem.id }}" [(ngModel)]="sizeItem.quantity"></p-inputNumber>
+                                </div>
+                                <button pButton pRipple label="&times;" class="p-button-text size-btn size-btn-remove" (click)="removeSize(index)"></button>
+                            </div>
+                        </ng-template>
+                    </div>
+                </form>
+                <button pButton pRipple label="+" class="p-button-text size-btn size-btn-add" (click)="addSize()"></button>
+            </div>
           <!-- <div class="field col">
             <div class="label" style="display: flex ; align-items: center;">
             <label>Attribute</label>  <button pButton pRipple icon="pi pi-plus" class="p-button-text" (click)="addAttribute()"></button>

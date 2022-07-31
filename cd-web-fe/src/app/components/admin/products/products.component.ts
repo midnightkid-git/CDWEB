@@ -17,11 +17,22 @@ export class ProductsComponent implements OnInit {
 
   selectedProducts: any[] = [];
 
+  brands: any[] = [];
+
   submitted?: boolean;
 
   selectedImage: any;
 
   statuses: any[] = [];
+
+  sizes: any[] = [
+    { name: 'XL' },
+    { name: 'L' },
+    { name: 'S' },
+    { name: 'M' },
+  ];
+
+  sizeArray: any[] = [];
 
   constructor(
     private productsService: ProductsService,
@@ -38,6 +49,10 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe((data) => {
       this.products = data.data.data;
       console.log('checking data', data);
+    });
+
+    this.productsService.getBrands().subscribe((data) => {
+      this.brands = data.data;
     });
   }
 
@@ -78,6 +93,11 @@ export class ProductsComponent implements OnInit {
     this.product = {};
     this.submitted = false;
     this.productDialog = true;
+    this.sizeArray = [{
+      id: Date.now(),
+      size_id: this.sizes[0].name,
+      quantity: 0
+    }];
   }
 
   deleteSelectedProducts() {
@@ -141,14 +161,16 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  validateProduct() {
+  validateProduct(): boolean {
     if (
       !this.product.productName ||
       !this.product.categoryName ||
       !this.product.originalPrice ||
       !this.product.originalQuantity ||
       !this.product.brandName ||
-      !this.selectedImage
+      !this.selectedImage ||
+      this.sizeArray.length <= 0 ||
+      this.sizeArray.some((size) => !size.quantity && size.quantity >= 0) //size quantity required
     ) {
       return false;
     } else {
@@ -162,8 +184,24 @@ export class ProductsComponent implements OnInit {
   }
   
   saveProduct() {
+    // Validate form
+    // if (!this.validateProduct()) {
+    //   this.messageService.add({
+    //     severity: 'error',
+    //     summary: 'Error',
+    //     detail: 'Form value is invalid',
+    //     life: 3000,
+    //   });
+    //   return;
+    // }
+
     this.submitted = true;
-    this.product.sizes = [];
+    this.product.sizes = this.sizeArray.map((size: any) => {
+      const result = {size_id: '', quantity: 0};
+      result['size_id'] = size.size_id;
+      result['quantity'] = size.quantity;
+      return result;
+    });
 
     if (this.product.productName.trim()) {
       if (this.product.id) {
@@ -222,5 +260,17 @@ export class ProductsComponent implements OnInit {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;
+  }
+
+  addSize(): void {
+    this.sizeArray.push({
+      id: Date.now(), // <--- uniqueness hook.
+      size_id: this.sizes[0].name,
+      quantity: 0
+    });
+  }
+
+  removeSize(index: number): void {
+    this.sizeArray.splice(index, 1);
   }
 }

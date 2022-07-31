@@ -27,4 +27,7 @@ export class ProductsService {
   deleteProduct(ids:any){
     return this.http.delete<any>(`${environment.apiUrl}/admin/product/${ids}`, this.httpOptions)
   }
+  getBrands() {
+    return this.http.get<any>(`${environment.apiUrl}/user/brand/no-token`, this.httpOptions);
+  }
 }
