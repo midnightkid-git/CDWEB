@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-card',
@@ -10,7 +12,8 @@ export class CardComponent implements OnInit {
   @Input() item: any
 
   public selectedSize: any;
-  constructor() { }
+
+  constructor(private productService: ProductService, private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -18,4 +21,15 @@ export class CardComponent implements OnInit {
   initMockProduct() {
   }
 
+  addToCart(): void {
+    const payload = { productId: this.item.productId, size: this.selectedSize.sizeId, quantity: this.selectedSize.quantity };
+    this.productService.addToCart(payload).subscribe((res) => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: res.message,
+        life: 3000,
+      });
+    });
+  }
 }
