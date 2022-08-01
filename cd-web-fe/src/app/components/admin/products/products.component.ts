@@ -25,12 +25,7 @@ export class ProductsComponent implements OnInit {
 
   statuses: any[] = [];
 
-  sizes: any[] = [
-    { name: 'XL' },
-    { name: 'L' },
-    { name: 'S' },
-    { name: 'M' },
-  ];
+  sizes: any[] = [{ name: 'XL' }, { name: 'L' }, { name: 'S' }, { name: 'M' }];
 
   sizeArray: any[] = [];
 
@@ -47,8 +42,11 @@ export class ProductsComponent implements OnInit {
     });
 
     this.productsService.getProducts().subscribe((data) => {
-      this.products = data.data.data;
-      console.log('checking data', data);
+      data.data.map((item: any) => {
+        if (item.active) {
+          this.products.push(item);
+        }
+      });
     });
 
     this.productsService.getBrands().subscribe((data) => {
@@ -58,63 +56,34 @@ export class ProductsComponent implements OnInit {
 
   addAttribute() {}
 
-  initMockData() {
-    this.products = [
-      {
-        id: 1,
-        productName: 'Áo Polo',
-        description:
-          'Sản phẩm được sản xuất chất liệu cotton, chất lượng, giá rẻ',
-        originalPrice: 50000.0,
-        originalQuantity: 20,
-        discount: 0,
-        imageLinks: ['link-hinh-1', 'link-hinh-2'],
-        attributeAndVariants: [
-          {
-            attributeId: 1,
-            attributeName: 'Kích Thước',
-            variantNames: ['M', 'S'],
-          },
-          {
-            attributeId: 2,
-            attributeName: 'Màu Sắc',
-            variantNames: ['Đỏ', 'Xanh'],
-          },
-        ],
-        brandName: 'Nike',
-        categoryName: 'Áo',
-        createdDate: '2022-06-21T04:42:33.197+00:00',
-        modifiedDate: '2022-06-21T04:42:33.197+00:00',
-      },
-    ];
-  }
-
   openNew() {
     this.product = {};
     this.submitted = false;
     this.productDialog = true;
-    this.sizeArray = [{
-      id: Date.now(),
-      size_id: this.sizes[0].name,
-      quantity: 0
-    }];
+    this.sizeArray = [
+      {
+        id: Date.now(),
+        size_id: this.sizes[0].name,
+        quantity: 0,
+      },
+    ];
   }
 
   deleteSelectedProducts() {
     let listProductToDel: any[] = [];
-    this.selectedProducts.forEach(e=>{
+    this.selectedProducts.forEach((e) => {
       listProductToDel.push(e.id);
-    })
+    });
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected products?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.productsService
-        .deleteProduct(listProductToDel)
-        .subscribe((data) => {
-          console.log('delete successfully', data);
-        });
+          .deleteProduct(listProductToDel)
+          .subscribe((data) => {
+            console.log('delete successfully', data);
+          });
         this.products = this.products.filter(
           (val) => !this.selectedProducts.includes(val)
         );
@@ -131,14 +100,15 @@ export class ProductsComponent implements OnInit {
 
   editProduct(product: any) {
     this.product = { ...product };
+    this.sizeArray = product.listSizes;
+    console.log(product.listSizes);
+    console.log(this.sizeArray);
     this.productDialog = true;
   }
 
   deleteProduct(product: any) {
     let listProductToDel: any[] = [];
-      this.selectedProducts.forEach(e=>{
-        listProductToDel.push(e.id);
-      })
+    listProductToDel.push(product.id);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + product.name + '?',
       header: 'Confirm',
@@ -182,7 +152,7 @@ export class ProductsComponent implements OnInit {
     this.productDialog = false;
     this.submitted = false;
   }
-  
+
   saveProduct() {
     // Validate form
     // if (!this.validateProduct()) {
@@ -197,7 +167,7 @@ export class ProductsComponent implements OnInit {
 
     this.submitted = true;
     this.product.sizes = this.sizeArray.map((size: any) => {
-      const result = {size_id: '', quantity: 0};
+      const result = { size_id: '', quantity: 0 };
       result['size_id'] = size.size_id;
       result['quantity'] = size.quantity;
       return result;
@@ -235,6 +205,7 @@ export class ProductsComponent implements OnInit {
           console.log('response', data);
           this.products = [...this.products];
           this.product = {};
+          this.productDialog = false;
         });
       }
     }
@@ -266,7 +237,7 @@ export class ProductsComponent implements OnInit {
     this.sizeArray.push({
       id: Date.now(), // <--- uniqueness hook.
       size_id: this.sizes[0].name,
-      quantity: 0
+      quantity: 0,
     });
   }
 
