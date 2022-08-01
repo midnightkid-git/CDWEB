@@ -13,6 +13,13 @@ export class ProductService {
     })
   };
 
+  httpOptions_Token = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + sessionStorage.getItem('basicToken')
+    })
+  };
+
   constructor(private http: HttpClient) {}
 
   getCategories() {
@@ -21,5 +28,13 @@ export class ProductService {
 
   getProducts() {
     return this.http.get<any>(`${environment.apiUrl}/user/product/no-token/1/1`, this.httpOptions);
+  }
+
+  getProduct(id: any) {
+    return this.http.get<any>(`${environment.apiUrl}/user/product/no-token/${id}`, this.httpOptions);
+  }
+
+  addToCart(param: any) {
+    return this.http.post<any>(`${environment.apiUrl}/user/cart`, param, this.httpOptions_Token);
   }
 }

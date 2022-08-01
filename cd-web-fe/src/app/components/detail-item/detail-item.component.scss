@@ -6,6 +6,7 @@
   justify-content: center;
   .left-container{
     margin-right: 15px;
+    width: 500px;
   }
   .right-container{
     margin-left: 15px;
@@ -46,5 +47,10 @@
       color: var(--text-secondary-color);
       margin-right: 15px;
     }
+  }
+
+  .p-image-preview-container>img {
+    width: 100%;
+    object-fit: cover;
   }
 }

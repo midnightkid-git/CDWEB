@@ -130,10 +130,17 @@ public class ProductServiceImpl implements IProductService {
        if (entity != null) {
            List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
            List<String> imageLinks = new ArrayList<>();
+           List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
            productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
            List<AttributeAndVariantsResponse> attrAndVarRs= new ArrayList<>();
            Categories category = categoryRepository.findByIdAndIsActiveTrue(entity.getCategories().getId());
            Brands brand = brandRepository.findByIdAndIsActiveTrue(entity.getBrands().getId());
+           entity.getSizes().forEach((size) -> {
+               productSizeRespone.add(ProductSizeRespone.builder()
+                       .quantity(size.getQuantity())
+                       .sizeId(size.getSizes().getSizeId())
+                       .build());
+           });
            ProductResponse product = ProductResponse.builder()
                    .id(entity.getId())
                    .productName(entity.getProductName())
@@ -144,6 +151,7 @@ public class ProductServiceImpl implements IProductService {
                    .imageLinks(imageLinks)
                    .categoryName(category.getName())
                    .brandName(brand.getName())
+                   .listSizes(productSizeRespone)
                    .build();
            return product;
        }
