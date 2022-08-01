@@ -14,7 +14,7 @@
       <div class="categories side-bar-item">
         <div class="label">
           <h3>Categories</h3>
-          <a routerLink="/shop" class="item-link">Show all</a>
+          <a routerLink="/shop" (click)="findByName('')" class="item-link">Show all</a>
         </div>
         <div class="list-category">
           <div
@@ -41,11 +41,11 @@
     </div>
     <div class="right-container">
       <div class="list-item">
-        <ng-container *ngFor="let item of filteredProducts">
+        <ng-container *ngFor="let item of filteredPageProducts">
           <app-card class="item" [item]="item"></app-card>
         </ng-container>
       </div>
-      <p-paginator [rows]="10" [totalRecords]="filteredProducts.length"></p-paginator>
+      <p-paginator [rows]="row" [totalRecords]="filteredProducts.length" (onPageChange)="changePage($event)"></p-paginator>
     </div>
   </div>
 </div>

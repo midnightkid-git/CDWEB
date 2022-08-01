@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-header',
@@ -28,11 +28,16 @@ export class HeaderComponent implements OnInit {
       label: 'Log Out', icon: 'pi pi-arrow-left', command: () => {
         // this.menuItems = this.nonUserItems;
         this.authService.logout();
+        this.messageServer.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'You have been logged out', life: 500
+        });
         this.router.navigate(['/home']);
       }
     },
     { separator: true },
-    { label: 'Administrator', icon: 'pi pi-cog', routerLink: ['/admin'] }
+    { label: 'Administrator', icon: 'pi pi-cog', routerLink: ['/admin/products'] }
   ];
   public nonUserItems: MenuItem[] = [
     {
@@ -76,7 +81,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageServer: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -139,8 +145,19 @@ export class HeaderComponent implements OnInit {
       };
       this.authService.login(param).then(() => {
         this.displayLoginPopup = false;
+        this.displayRegisterPopup = false;
+        this.messageServer.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Login successfully', life: 500
+        });
       }).catch((err) => {
         this.errorMessage = err.error.message;
+        this.messageServer.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Login failed', life: 500
+        });
       });
     }
 
@@ -154,11 +171,22 @@ export class HeaderComponent implements OnInit {
       };
       this.authService.register(param).then((_x: any) => {
         this.userId = _x.data.id
+        this.displayLoginPopup = false;
         this.displayRegisterPopup = false;
         this.displayOtpPopup = true;
         this.openOtpPopup();
+        this.messageServer.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Register successfully', life: 500
+        });
       }).catch((err: any) => {
         this.errorMessage = err.error.message;
+        this.messageServer.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Register successfully', life: 500
+        });
       });
     }
   }
@@ -172,9 +200,21 @@ export class HeaderComponent implements OnInit {
       console.log(_x)
       this.authService.token.next(_x.data.accessToken);
       this.displayOtpPopup = false;
+      this.displayLoginPopup = false;
+      this.displayRegisterPopup = false;
       this.openRegisterPopup();
+      this.messageServer.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Verify successfully', life: 500
+      });
     }).catch((err: any) => {
       this.otpErrorMessage = err.error.message;
+      this.messageServer.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Verify failed', life: 500
+      });
     });
   }
 

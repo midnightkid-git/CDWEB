@@ -16,7 +16,10 @@ export class ShopComponent implements OnInit {
   public rangeValues: any[] = [0, this.maxPrice];
   public isDisabledRange: boolean = false;
   public filteredProducts: any[] = []
+  public filteredPageProducts: any[] = [];
   public searchContent: string = ""
+  public row = 9
+  public start = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -29,13 +32,17 @@ export class ShopComponent implements OnInit {
     this.fetchParams();
   }
 
-  findByName() {
+  findByName(content?: any) {
+    if (content)
+      this.searchContent = content;
     this.filteredProducts = this.filteredProducts.filter(_x => {
       return _x.productLabel == this.searchContent;
     })
     if (this.searchContent == "") {
       this.fetchFilteredData();
     }
+    this.start = 0;
+    this.filteredPageProducts = this.filteredProducts.slice(this.start, this.start + this.row)
   }
 
   fetchFilteredData() {
@@ -78,6 +85,7 @@ export class ShopComponent implements OnInit {
 
   fetchParams(): void {
     this.activatedRoute.paramMap.subscribe((_param) => {
+      this.start = 0;
       this.filteredProducts = this.listProducts;
       const categoryParam = _param.get('category');
       const sizeParam = _param.get('size');
@@ -93,6 +101,7 @@ export class ShopComponent implements OnInit {
           })
         })
       }
+      this.filteredPageProducts = this.filteredProducts.slice(this.start, this.start + this.row)
 
 
     });
@@ -100,6 +109,11 @@ export class ShopComponent implements OnInit {
   }
   getProductByFilter() {
 
+  }
+
+  changePage(event: any) {
+    this.start = event.page * this.row;
+    this.filteredPageProducts = this.filteredProducts.slice(this.start, this.start + this.row)
   }
 
   getAllProducts(): void {
@@ -119,6 +133,7 @@ export class ShopComponent implements OnInit {
           };
         });
         this.filteredProducts = this.listProducts;
+        this.filteredPageProducts = this.filteredProducts.slice(0, 9);
         this.fetchParams();
       }
     });

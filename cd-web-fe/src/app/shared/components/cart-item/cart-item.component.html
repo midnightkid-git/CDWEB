@@ -5,15 +5,11 @@
       </div>
     </div>
     <div class="right-container">
-      <h2 class="label">{{item.productName}}</h2>
+      <a [routerLink]="'/detail-item/'+item.productId" class="label">{{item.productName}}</a>
       <!-- <p class="right-item">Category: <a class="category inf" href="#">{{item.categoryLabel}}</a></p> -->
       <p class="right-item">Price: <span class="price inf">${{item.productPrice || item.price}}</span></p>
       <p class="right-item">Size: <span class="size inf">{{item.size}}</span></p>
-      <p-inputNumber [disabled]="!isEdit" class="right-item" [min]="1" [max]="item.itemLeft" [(ngModel)]="item.quantity"
-        [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1"
-        decrementButtonClass="p-button-text" incrementButtonClass="p-button-text" incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus">
-      </p-inputNumber>
+      <p class="right-item">Quantity: <span class="size inf">{{item.quantity}}</span></p>
     </div>
   </div>
   <div class="actions">

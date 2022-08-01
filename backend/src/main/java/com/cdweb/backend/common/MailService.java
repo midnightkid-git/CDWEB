@@ -35,16 +35,16 @@ public class MailService{
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("accessories@gmail.com", "Accessories Shop");
+        helper.setFrom("peakyblinders@gmail.com", "By the order of Peaky blinders");
         helper.setTo(user.getGmail());
 
-        String subject = "Đây là mã xác nhận (OTP) của bạn - Nó có thời hạn 5 phút";
+        String subject = "Your OTP will be expired in 5 minute";
 
-        String content = "<p>Xin chào " + user.getFullName() + "</p>"
-                + "<p>Đây là mã xác nhận OTP của bạn: "
+        String content = "<p>Hello " + user.getFullName() + "</p>"
+                + "<p>Here is your OTP "
                 + "<p><b>" + OTP + "</b></p>"
                 + "<br>"
-                + "<p>Note: Mã xác nhận này chỉ có thời hạn trong 5 phút!</p>";
+                + "<p>Note: Your OTP will be expired in 5 minute!</p>";
 
         helper.setSubject(subject);
 
