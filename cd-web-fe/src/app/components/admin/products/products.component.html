@@ -1,131 +1,251 @@
 Products
 <div class="admin-manager">
-<p-toast></p-toast>
-<div class="card">
+  <p-toast></p-toast>
+  <div class="card">
     <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-            <button pButton pRipple [label]="'Delete'" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
-        </ng-template>
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="New"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          [label]="'Delete'"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedProducts()"
+          [disabled]="!selectedProducts || !selectedProducts.length"
+        ></button>
+      </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['productName','originalPrice']" responsiveLayout="scroll"
-        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" >
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage Products</h5>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon></th>
-                <th>Image</th>
-                <th >Price</th>
-                <th>Category</th>
-                <th>Quanity</th>
-                <th>Brand</th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
-                </td>
-                <td>{{product.productName}}</td>
-                <td><img [src]="product.imageLinks | safeUrl" [alt]="product.productName" width="100" class="shadow-4" /></td>
-                <td>{{product.originalPrice | currency:'USD'}}</td>
-                <td>{{product.categoryName}}</td>
-                <td>{{product.originalQuantity}}</td>
-                <td>{{product.brandName}}</td>
-                <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">
-                In total there are {{products ? products.length : 0 }} products.
-            </div>
-        </ng-template>
+    <p-table
+      #dt
+      [value]="products"
+      [rows]="10"
+      [paginator]="true"
+      [globalFilterFields]="['productName', 'originalPrice']"
+      responsiveLayout="scroll"
+      [(selection)]="selectedProducts"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <h5 class="m-0">Manage Products</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" placeholder="Search..." />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="productName">
+            Name <p-sortIcon field="productName"></p-sortIcon>
+          </th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Quanity</th>
+          <th>Brand</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+          </td>
+          <td>{{ product.productName }}</td>
+          <td>
+            <img
+              [src]="product.imageLinks | safeUrl"
+              [alt]="product.productName"
+              width="100"
+              class="shadow-4"
+            />
+          </td>
+          <td>{{ product.originalPrice | currency: "USD" }}</td>
+          <td>{{ product.categoryName }}</td>
+          <td>{{ product.originalQuantity }}</td>
+          <td>{{ product.brandName }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editProduct(product)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteProduct(product)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ products ? products.length : 0 }} products.
+        </div>
+      </ng-template>
     </p-table>
-</div>
+  </div>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+  <p-dialog
+    [(visible)]="productDialog"
+    [style]="{ width: '450px' }"
+    header="Product Details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
     <ng-template pTemplate="content">
-        <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.image">
-        <div class="field">
-            <label for="name">Name</label>
-            <input type="text" pInputText id="name" [(ngModel)]="product['productName']" required autofocus />
-            <small class="p-error" *ngIf="submitted && !product.productName" >Name is required.</small>
-        </div>
-        <div class="field">
-            <label for="image">Image</label>
-            <br>
-            <input type="file" id="image" [(ngModel)]="selectedImage" required>
-        </div>
-        <div class="field">
-            <label class="mb-3">Category</label>
-            <div class="formgrid grid">
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.categoryName"></p-radioButton>
-                    <label for="category1">Accessories</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category2" name="category" value="ao" [(ngModel)]="product.categoryName"></p-radioButton>
-                    <label for="category2">ao</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.categoryName"></p-radioButton>
-                    <label for="category3">Slacks</label>
-                </div>
-            </div>
-        </div>
-
+      <img
+        [src]="'assets/showcase/images/demo/product/' + product.image"
+        [alt]="product.image"
+        class="product-image"
+        *ngIf="product.image"
+      />
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          [(ngModel)]="product['productName']"
+          required
+          autofocus
+        />
+        <small class="p-error" *ngIf="submitted && !product.productName"
+          >Name is required.</small
+        >
+      </div>
+      <div class="field">
+        <label for="image">Image</label>
+        <br />
+        <input type="file" id="image" [(ngModel)]="selectedImage" required />
+      </div>
+      <div class="field">
+        <label class="mb-3">Category</label>
         <div class="formgrid grid">
-            <div class="field col">
-                <label for="price">Price</label>
-                <p-inputNumber id="originalPrice" [(ngModel)]="product.originalPrice" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
-            </div>
-            <!-- <div class="field col">
+          <div class="field-radiobutton col-6">
+            <p-radioButton
+              id="category1"
+              name="category"
+              value="Accessories"
+              [(ngModel)]="product.categoryName"
+            ></p-radioButton>
+            <label for="category1">Accessories</label>
+          </div>
+          <div class="field-radiobutton col-6">
+            <p-radioButton
+              id="category2"
+              name="category"
+              value="Vests"
+              [(ngModel)]="product.categoryName"
+            ></p-radioButton>
+            <label for="category2">Vests</label>
+          </div>
+          <div class="field-radiobutton col-6">
+            <p-radioButton
+              id="category3"
+              name="category"
+              value="Slacks"
+              [(ngModel)]="product.categoryName"
+            ></p-radioButton>
+            <label for="category3">Slacks</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="price">Price</label>
+          <p-inputNumber
+            id="originalPrice"
+            [(ngModel)]="product.originalPrice"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+          ></p-inputNumber>
+        </div>
+        <!-- <div class="field col">
                 <label for="quantity">Quantity</label>
                 <p-inputNumber id="quantity" [(ngModel)]="product.originalQuantity"></p-inputNumber>
             </div> -->
-            <div class="field col">
-                <label for="brandName">Brand</label>
-                <!-- <input type="text" pInputText id="brandName" [(ngModel)]="product['brandName']" required /> -->
-                <p-dropdown [options]="brands" [(ngModel)]="product.brandName" [ngModelOptions]="{standalone: true}" optionLabel="name" optionValue="name"></p-dropdown>
+        <div class="field col">
+          <label for="brandName">Brand</label>
+          <!-- <input type="text" pInputText id="brandName" [(ngModel)]="product['brandName']" required /> -->
+          <p-dropdown
+            [options]="brands"
+            [(ngModel)]="product.brandName"
+            [ngModelOptions]="{ standalone: true }"
+            optionLabel="name"
+            optionValue="name"
+          ></p-dropdown>
+        </div>
+        <div class="field col size-wrapper">
+          <form #sizeForm="ngForm">
+            <div class="size-form">
+              <ng-template
+                ngFor
+                let-sizeItem
+                [ngForOf]="sizeArray"
+                let-index="index"
+                let-isLast="last"
+              >
+                <div class="size-group">
+                  <div class="size-control">
+                    <label>Size</label>
+                    <p-dropdown
+                      name="size_{{ index }}"
+                      [options]="sizes"
+                      [(ngModel)]="sizeItem.size_id"
+                      optionLabel="name"
+                      optionValue="name"
+                    ></p-dropdown>
+                  </div>
+                  <div class="size-control">
+                    <label>Quantity</label>
+                    <p-inputNumber
+                      name="quantity_{{ index }}"
+                      [(ngModel)]="sizeItem.quantity"
+                    ></p-inputNumber>
+                  </div>
+                  <button
+                    pButton
+                    pRipple
+                    label="&times;"
+                    class="p-button-text size-btn size-btn-remove"
+                    (click)="removeSize(index)"
+                  ></button>
+                </div>
+              </ng-template>
             </div>
-            <div class="field col size-wrapper">
-                <form #sizeForm="ngForm">
-                    <div class="size-form">
-                        <ng-template ngFor let-sizeItem [ngForOf]="sizeArray" let-index="index" let-isLast="last">
-                            <div class="size-group">
-                                <div class="size-control">
-                                    <label>Size</label>
-                                    <p-dropdown name="size_{{ sizeItem.id }}" [options]="sizes" [(ngModel)]="sizeItem.size_id"  optionLabel="name" optionValue="name"></p-dropdown>
-                                </div>
-                                <div class="size-control">
-                                    <label>Quantity</label>
-                                    <p-inputNumber name="quantity_{{ sizeItem.id }}" [(ngModel)]="sizeItem.quantity"></p-inputNumber>
-                                </div>
-                                <button pButton pRipple label="&times;" class="p-button-text size-btn size-btn-remove" (click)="removeSize(index)"></button>
-                            </div>
-                        </ng-template>
-                    </div>
-                </form>
-                <button pButton pRipple label="+" class="p-button-text size-btn size-btn-add" (click)="addSize()"></button>
-            </div>
-          <!-- <div class="field col">
+          </form>
+          <button
+            pButton
+            pRipple
+            label="+"
+            class="p-button-text size-btn size-btn-add"
+            (click)="addSize()"
+          ></button>
+        </div>
+        <!-- <div class="field col">
             <div class="label" style="display: flex ; align-items: center;">
             <label>Attribute</label>  <button pButton pRipple icon="pi pi-plus" class="p-button-text" (click)="addAttribute()"></button>
               </div>
@@ -133,14 +253,28 @@ Products
             </div>
             <input type="text" pInputText id="brandName" [(ngModel)]="product['brandName']" required />
           </div> -->
-        </div>
+      </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveProduct()"
+      ></button>
     </ng-template>
-</p-dialog>
+  </p-dialog>
 
-<p-confirmDialog></p-confirmDialog>
+  <p-confirmDialog></p-confirmDialog>
 </div>
