@@ -35,6 +35,7 @@ public class CartConverter {
                 .quantity(cartItem.getQuantity())
                 .productPrice(cartItem.getProduct().getOriginalPrice())
                 .size(cartItem.getSize())
+                .imageLink(cartItem.getProduct().getThumbnails().get(0).getImageLink())
                 .cartId(cartItem.getId())
                 .build();
     }

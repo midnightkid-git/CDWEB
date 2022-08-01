@@ -3,33 +3,20 @@
     <h2 class="banner-title">Shopping cart</h2>
   </div>
   <div class="list-cart-item">
+    <ng-container *ngIf="cart.length > 0">
     <div *ngFor="let item of cart; let i = index" class="item">
       <app-cart-item   [item]="item" (removeElement)="remove($event,i)"></app-cart-item>
     </div>
+  </ng-container>
+  <ng-container *ngIf="cart.length == 0">
+    "There are nothing in your cart, please buy something"
+  </ng-container>
     <div class="total">
     </div>
   </div>
   <div #sidebar [ngStyle]="{top:isSidebarSticky ? '0' : sidebarOffset+'px'}" [ngClass]="isSidebarSticky? 'sticky' :''" class="sidebar-container">
     <h2 class="title">Shopping cart detail</h2>
     <div class="detail-info">
-      <!-- <ng-container *ngFor="let info of detailInfo" [ngSwitch]="info.id">
-      <div class="info-item" >
-        <div class="header">
-          {{info.header}}:
-        </div>
-        <div *ngSwitchCase="'price'" class="content">
-          ${{info.info}}
-        </div>
-        <div *ngSwitchDefault="" class="content">
-          {{info.info}}
-        </div>
-      </div>
-    </ng-container> -->
-    <!-- <br>
-    <div class="location">
-      Full Name
-      <input type="text" pInputText required />
-    </div> -->
     <div class="location">
       Phone
       <input type="text" pInputText required   [(ngModel)]="phone" />

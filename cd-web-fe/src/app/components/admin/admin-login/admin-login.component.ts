@@ -13,7 +13,7 @@ export class AdminLoginComponent implements OnInit {
   public isRemember: boolean = false;
   public errorMessage: string = '';
 
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.errorMessage = '';
@@ -30,12 +30,12 @@ export class AdminLoginComponent implements OnInit {
       isRememberMe: this.isRemember
     };
     this.authService.adminLogin(param).then(() => {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/admin/products']);
     }).catch((err: any) => {
       this.errorMessage = err.error.message;
     });
   }
-  
+
   navigateToRegister(): void {
     this.router.navigate(['/register']);
   }

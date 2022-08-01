@@ -22,9 +22,6 @@ export class HeaderComponent implements OnInit {
   public menuItems: MenuItem[] = []
   public userItems: MenuItem[] = [
     {
-      label: 'Profile', icon: 'pi pi-user-edit'
-    },
-    {
       label: 'List Ordered', icon: 'pi pi-book', routerLink: '/order'
     },
     {
@@ -142,7 +139,7 @@ export class HeaderComponent implements OnInit {
       };
       this.authService.login(param).then(() => {
         this.displayLoginPopup = false;
-      }).catch((err) => { 
+      }).catch((err) => {
         this.errorMessage = err.error.message;
       });
     }
