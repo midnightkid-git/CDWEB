@@ -2,24 +2,29 @@
   <div class="container">
     <div class="left-container">
       <!-- [ngStyle]="{background:'url('+ item.thumbnails[0] + ')','background-size': 'cover'}" -->
-      <div class="image" >
+      <div class="image">
       </div>
     </div>
     <div class="right-container">
       <h2 class="label">{{item.productName}}</h2>
       <!-- <p class="right-item">Category: <a class="category inf" href="#">{{item.categoryLabel}}</a></p> -->
-      <p class="right-item">Price: <span class="price inf">${{item.productPrice}}</span></p>
+      <p class="right-item">Price: <span class="price inf">${{item.productPrice || item.price}}</span></p>
       <p class="right-item">Size: <span class="size inf">{{item.size}}</span></p>
-      <p-inputNumber [disabled]="!isEdit" class="right-item" [min]="1" [max]="item.itemLeft" [(ngModel)]="item.quantity" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1"
-      decrementButtonClass="p-button-text" incrementButtonClass="p-button-text" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+      <p-inputNumber [disabled]="!isEdit" class="right-item" [min]="1" [max]="item.itemLeft" [(ngModel)]="item.quantity"
+        [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1"
+        decrementButtonClass="p-button-text" incrementButtonClass="p-button-text" incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus">
       </p-inputNumber>
     </div>
   </div>
   <div class="actions">
     <div class="list-btn">
-    <button  *ngIf="isEdit" pButton class="p-button-rounded p-button-outlined remove-button" icon="pi pi-times" (click)=removeItem(item)></button>
-  </div>
-    <div class="total-price"><h3>Total price: <span class="total-price-inf">${{item.quantity * item.productPrice}}</span> </h3>
+      <button *ngIf="isEdit" pButton class="p-button-rounded p-button-outlined remove-button" icon="pi pi-times"
+        (click)=removeItem(item)></button>
+    </div>
+    <div class="total-price">
+      <h3>Total price: <span class="total-price-inf">${{item.quantity * item.productPrice || item.quantity *
+          item.price}}</span> </h3>
     </div>
   </div>
-<!-- </div> -->
+  <!-- </div> -->

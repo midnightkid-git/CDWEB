@@ -74,7 +74,7 @@ export class CartComponent implements OnInit {
     }
     this.productsService.order(body).subscribe(res => {
       console.log(res);
-      this.router.navigateByUrl(`order/${this.orderId}`)
+      this.router.navigateByUrl(`success`)
     });
   }
 

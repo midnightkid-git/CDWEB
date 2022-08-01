@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class OrderComponent implements OnInit {
   public detailInfo: any;
   public isDisabledOrder: boolean = false;
   public orderId: string = 'safa13-3-ras'
-
+  order: any;
+  id: any;
   @HostListener("window:scroll", ['$event'])
   onWindowScroll(event: any) {
     if (window.pageYOffset > this.sidebarOffset) {
@@ -33,159 +35,17 @@ export class OrderComponent implements OnInit {
   ];
   public activeIndex = 0;
 
-  constructor( private productsService:ProductService) { }
+  constructor(private productsService: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.fetchStep();
+    this.id = this.route.snapshot.paramMap.get('id');
     this.getOrder();
-  }
 
-  fetchStep(): void {
-    this.activeIndex = 1;
   }
-  getOrder(){
-    this.productsService.getOrder().subscribe(data=>{
-      console.log(data);
-
+  getOrder() {
+    this.productsService.getOrder().subscribe(data => {
+      this.order = data.data[this.id - 1];
+      console.log("checking order ", this.order);
     })
   }
-  initMockCart(): void {
-    this.cart = {
-      listProducts: [
-        {
-          productId: "asbsa",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "XL",
-          totalItem: 2,
-          itemLeft: 7,
-          price: 15,
-          totalPrice: 30,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        },
-        {
-          productId: "asbsa",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 1,
-          itemLeft: 2,
-          price: 15,
-          totalPrice: 15,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        },
-        {
-          productId: "itemabc",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 3,
-          itemLeft: 5,
-          price: 25,
-          totalPrice: 75,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        }
-        ,
-        {
-          productId: "itemabc",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 1,
-          itemLeft: 1,
-          price: 25,
-          totalPrice: 25
-        }
-        ,
-        {
-          productId: "itemabc",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 1,
-          itemLeft: 2,
-          price: 25,
-          totalPrice: 25,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        }
-        ,
-        {
-          productId: "itemabc",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 1,
-          itemLeft: 5,
-          price: 25,
-          totalPrice: 25,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        }
-        ,
-        {
-          productId: "itemabc",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 1,
-          itemLeft: 2,
-          price: 25,
-          totalPrice: 25,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        }
-        ,
-        {
-          productId: "itemabc",
-          productLabel: "ASGGAS",
-          thumbnails: ["https://cdn.shopify.com/s/files/1/0613/8662/1177/products/Cillian-Murphy-Peaky-Blinders-Thomas-Shelby-Coat_1024x1024@2x.jpg"],
-          size: "L",
-          totalItem: 5,
-          itemLeft: 7,
-          price: 10,
-          totalPrice: 50,
-          categoryId: "asgas",
-          categoryLabel: "Vest",
-        }
-      ],
-      totalPrice: 70
-    }
-    this.user = {
-      username: "huongnx2",
-      address: "ABC",
-      phoneNumber: "213154712"
-    }
-    this.detailInfo = [
-      {
-        id: 'orderId',
-        header: 'Order number',
-        info: this.orderId
-      },
-      {
-        id: 'name',
-        header: 'Name',
-        info: this.user.username
-      },
-      {
-        id: 'address',
-        header: 'Address',
-        info: this.user.address
-      },
-      {
-        id: 'phone',
-        header: 'Phone',
-        info: this.user.phoneNumber
-      },
-      {
-        id: 'price',
-        header: 'Total price',
-        info: this.cart.totalPrice
-      }
-    ]
-  }
-
 }
