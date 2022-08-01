@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController(value="brandsControllerOfAdmin")
@@ -23,25 +24,9 @@ public class BrandsController {
 
     public final IBrandService brandService;
 
-    @GetMapping("/page/{page}/limit/{limit}")
-    ResponseEntity<?> getAll(@PathVariable("page") int page, @PathVariable("limit") int limit) {
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        int totalItem = brandService.totalItem();
-        PageResponse<BrandResponse> response = PageResponse.<BrandResponse>builder()
-                .page(page)
-                .totalPages((int) Math.ceil((double) (totalItem) / limit))
-                .totalItems(totalItem)
-                .data(brandService.findAll(pageable))
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(
-                (response.getData() != null)
-                        ? new ResponseObject("Success", null, response)
-                        : new ResponseObject("Success", "Have no brand", null));
-    }
-
     @GetMapping("")
-    ResponseEntity<?> getAllIsActiveBrands(){
-        List<BrandResponse> response = brandService.findByIsActiveTrue();
+    ResponseEntity<?> getAll() {
+        List<BrandResponse> response = brandService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(
                 (response != null)
                         ? new ResponseObject("Success", null, response)
@@ -50,37 +35,27 @@ public class BrandsController {
 
     @PostMapping("")
     ResponseEntity<?> insertBrand(@RequestBody BrandRequest request) {
-        BrandResponse response = brandService.save(request);
-        return
-                ResponseEntity.status(HttpStatus.OK).body((response != null)
-                        ? new ResponseObject("Success", "Insert Brand Successfully", response)
-                        : new ResponseObject("Failed", "Brand name already taken", null));
+        Boolean exists = brandService.existsByNameAndIsActiveTrue(request.getName());
+        if(!exists) {
+            BrandResponse response = brandService.save(null,request);
+            return
+                    ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Insert Brand Successfully", response));
+        }else{
+           return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Brand name already taken", null));
+        }
     }
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateBrand(@PathVariable("id") Long id,@RequestBody BrandRequest request) {
-        request.setId(id);
-        BrandResponse response = brandService.save(request);
-        return
-                ResponseEntity.status(HttpStatus.OK).body((response != null)
-                        ? new ResponseObject("Success", null, response)
-                        : new ResponseObject("Failed", "Brand name already taken", null));
-    }
-
-    @GetMapping("/exists/{name}")
-    ResponseEntity<?> existsBrandByName(@PathVariable("name") String name) {
-        log.info("pn {}", name);
-        Boolean exists = brandService.existsByNameAndIsActiveTrue(name);
-        log.info("kq {}", exists);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "", exists));
-    }
-
-    @GetMapping("/existsCode/{code}")
-    ResponseEntity<?> existsBrandByCode(@PathVariable("code") String code) {
-        log.info("pn {}", code);
-        Boolean exists = brandService.existsByCodeAndIsActiveTrue(code);
-        log.info("kq {}", exists);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "", exists));
+        Boolean exists = brandService.existsByNameAndIsActiveTrue(request.getName());
+        if(!exists) {
+            BrandResponse response = brandService.save(id,request);
+            return
+                    ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, response));
+        }else{
+            return
+                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Brand name already taken", null));
+        }
     }
 
     @DeleteMapping("")

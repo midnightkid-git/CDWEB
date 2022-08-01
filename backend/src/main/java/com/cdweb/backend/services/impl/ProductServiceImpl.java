@@ -44,10 +44,9 @@ public class ProductServiceImpl implements IProductService {
 
 
     @Override
-    public List<ProductResponse> findAllForAdmin(Pageable pageable) {
+    public List<ProductResponse> findAllForAdmin() {
         List<ProductResponse> response = new ArrayList<>();
-        List<Products> entities = productRepository.findByIsActiveTrueOrderByModifiedDateDesc(pageable).getContent();
-        if(entities.size() > 0){
+        List<Products> entities = productRepository.findAll();
             entities.forEach((entity) -> {
                 List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
                 List<String> imageLinks = new ArrayList<>();
@@ -72,14 +71,13 @@ public class ProductServiceImpl implements IProductService {
                         .originalPrice(String.valueOf(entity.getOriginalPrice()))
                         .originalQuantity(entity.getOriginalQuantity())
                         .discount(entity.getDiscount())
+                        .isActive(entity.isActive())
                         .imageLinks(imageLinks)
                         .listSizes(productSizeRespone)
                         .build();
                 response.add(responseProduct);
             });
             return response;
-        }
-        return null;
     }
 
     @Override
@@ -107,6 +105,7 @@ public class ProductServiceImpl implements IProductService {
                             .description(entity.getDescription())
                             .originalPrice(String.valueOf(entity.getOriginalPrice()))
                             .originalQuantity(entity.getOriginalQuantity())
+                            .isActive(entity.isActive())
                             .discount(entity.getDiscount())
                             .imageLinks(imageLinks)
                             .listSizes(productSizeRespone)
@@ -149,6 +148,7 @@ public class ProductServiceImpl implements IProductService {
                    .originalQuantity(entity.getOriginalQuantity())
                    .discount(entity.getDiscount())
                    .imageLinks(imageLinks)
+                   .isActive(entity.isActive())
                    .categoryName(category.getName())
                    .brandName(brand.getName())
                    .listSizes(productSizeRespone)
@@ -213,7 +213,7 @@ public class ProductServiceImpl implements IProductService {
 
             //lưu product combination
 //            return productConverter.toResponse(savedEntity, thumbnailRespons);
-            return productConverter.toResponse(entity);
+            return productConverter.toResponse(updatedEntity);
         }
         return null;
     }
@@ -371,6 +371,23 @@ public class ProductServiceImpl implements IProductService {
             });
         }
         return response;
+    }
+
+    @Override
+    public boolean active(Long[] ids) {
+        boolean exists = true;
+        for (Long id : ids) {
+            if (!productRepository.existsByIdAndIsActiveFalse(id)) exists = false;
+        }
+        if (exists) {
+            for (Long id :
+                    ids) {
+                Products entity = productRepository.findByIdAndIsActiveFalse(id);
+                entity.setActive(true);
+                productRepository.save(entity);
+            }
+        }
+        return exists;
     }
 
 }

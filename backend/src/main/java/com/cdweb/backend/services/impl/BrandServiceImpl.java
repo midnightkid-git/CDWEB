@@ -28,10 +28,10 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public BrandResponse save(BrandRequest request) {
+    public BrandResponse save(Long id,BrandRequest request) {
         BrandResponse response = null;
         // id null mean insert, otherwise mean update
-        if(request.getId() == null) {
+        if(id == null) {
             Brands brand = brandRepository.findByCodeAndIsActiveTrue(request.getCode());
             if (brand == null) {
                 Brands newBrands = brandConverter.toEntity(request);
@@ -40,10 +40,11 @@ public class BrandServiceImpl implements IBrandService {
                 response =  brandConverter.toResponse(entity);
             } return response;
         } else {
-            Brands newEntity = brandConverter.toEntity(request);
-            newEntity.setId(request.getId());
-            Brands entity = brandRepository.save(newEntity);
-            return brandConverter.toResponse(entity);
+            Brands brand = brandRepository.findById(id).get();
+            brand.setCode(request.getCode());
+            brand.setName(request.getName());
+            brand = brandRepository.save(brand);
+            return brandConverter.toResponse(brand);
         }
     }
 
@@ -53,8 +54,8 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public List<BrandResponse> findAll(Pageable pageable) {
-        List<BrandResponse> responses = brandRepository.findByIsActiveTrueOrderByModifiedDateDesc(pageable).getContent()
+    public List<BrandResponse> findAll() {
+        List<BrandResponse> responses = brandRepository.findByIsActiveTrue()
                 .stream().map(brandConverter :: toResponse)
                 .collect(Collectors.toList());
         return responses;

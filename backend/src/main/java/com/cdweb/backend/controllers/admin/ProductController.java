@@ -28,16 +28,10 @@ public class ProductController {
 
 
     // this request is: http://localhost:8081/api/v1/products?page=1&limit=3
-    @GetMapping("getListProduct/{page}/{limit}")
-    ResponseEntity<?> showAllProduct(@PathVariable("page") int page, @PathVariable("limit") int limit) {
-        PageResponse<ProductResponse> response = new PageResponse<>();
-        response.setPage(page);
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        int totalItem = productService.totalItem();
-        response.setTotalItems(totalItem);
-        response.setTotalPages((int) Math.ceil((double) (totalItem) / limit));
-        response.setData(productService.findAllForAdmin(pageable));
-        return response.getData().size()>0 ?
+    @GetMapping("getListProduct")
+    ResponseEntity<?> showAllProduct() {
+        List<ProductResponse> response = productService.findAllForAdmin();
+        return response.size()>0 ?
                 ResponseEntity.status(HttpStatus.OK).body(
                         new ResponseObject("Success", null, response)) :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -49,12 +43,11 @@ public class ProductController {
         Boolean exists = productService.existsByProductNameAndIsActive(request.getProductName());
         if(exists){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Fail", "Product named '" + request.getProductName() + "' already exists", exists));
-        }
+        }else{
         ProductResponse response = productService.save(request);
         return ResponseEntity.status(HttpStatus.OK).body(
-               response==null ?
-                        new ResponseObject("Failed", "Product name already taken", "") :
                         new ResponseObject("Success", "Insert Product Successfully", response));
+        }
     }
 
     @PutMapping("/{id}")
@@ -69,6 +62,13 @@ public class ProductController {
     ResponseEntity<?> deleteProduct(@PathVariable("ids") Long[] ids) {
         return ResponseEntity.status(HttpStatus.OK).body(productService.delete(ids) ?
                 new ResponseObject("Success", "Delete Product successfully", true) :
+                new ResponseObject("Failed", "Can not find product", false));
+    }
+
+    @PostMapping("/active/{ids}")
+    ResponseEntity<?> activeProduct(@PathVariable("ids") Long[] ids) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.active(ids) ?
+                new ResponseObject("Success", "Active Product successfully", true) :
                 new ResponseObject("Failed", "Can not find product", false));
     }
 

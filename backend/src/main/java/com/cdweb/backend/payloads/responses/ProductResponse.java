@@ -17,6 +17,7 @@ public class ProductResponse {
     private String productName;
     private String description;
     private String originalPrice;
+    private boolean isActive;
     private int originalQuantity;
     private int discount;
     private List<String> imageLinks;

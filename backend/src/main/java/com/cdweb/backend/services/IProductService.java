@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface IProductService {
 
-    List<ProductResponse> findAllForAdmin(Pageable pageable);
+    List<ProductResponse> findAllForAdmin();
 
     List<ProductResponse> findAllForUser();
 
@@ -35,5 +35,6 @@ public interface IProductService {
     List<ProductResponse> findBySize(String size);
 
     List<ProductResponse> findBySizeAndCategory(String sizeName, Long categoryId);
-    
+
+    boolean active(Long[] ids);
 }

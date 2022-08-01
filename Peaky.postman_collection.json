@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7ca8b806-9f81-40f6-80a7-b4f38c560d5f",
+		"_postman_id": "a1a429ee-e893-4392-8f0e-77247ee82552",
 		"name": "Peaky",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17694510"
+		"_exporter_id": "16991352"
 	},
 	"item": [
 		{
@@ -374,6 +374,39 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{basicToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/user/brand/no-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"brand",
+								"no-token"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -535,7 +568,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/v1/admin/product/getListProduct/1/5",
+							"raw": "http://localhost:8081/api/v1/admin/product/getListProduct",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -546,21 +579,81 @@
 								"v1",
 								"admin",
 								"product",
-								"getListProduct",
-								"1",
-								"5"
+								"getListProduct"
 							]
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Admin",
-			"item": [
+				},
 				{
-					"name": "Save product - Admin",
+					"name": "Active product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/product/active/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product",
+								"active",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactive product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/product/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post product",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -576,7 +669,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"productName\": \"ao sieu nhan do\",\r\n    \"description\": \"ao sieu nhan do\",\r\n    \"originalPrice\": \"37.0\",\r\n    \"originalQuantity\": 0,\r\n    \"discount\": 30,\r\n    \"imageLinks\": [],\r\n    \"sizes\": [\r\n        {\r\n            \"size_id\": \"XL\",\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"size_id\": \"L\",\r\n            \"quantity\": 3\r\n        }\r\n\r\n    ],\r\n    \"brandName\": \"Nike\",\r\n    \"categoryName\": \"Slacks\",\r\n    \"createdDate\": null,\r\n    \"modifiedDate\": null\r\n}",
+							"raw": "{    \r\n    \"productName\": \"ao sieu nhan aaabb4tb\",\r\n    \"description\": \"ao sieu nhan aaa\",\r\n    \"originalPrice\": \"37.0\",\r\n    \"originalQuantity\": 0,\r\n    \"discount\": 30,\r\n    \"imageLinks\": [],\r\n    \"sizes\": [\r\n        {\r\n            \"size_id\": \"XL\",\r\n            \"quantity\": 3\r\n        },\r\n         {\r\n            \"size_id\": \"L\",\r\n            \"quantity\": 1\r\n        }\r\n\r\n    ],\r\n    \"attributeAndVariants\": null,\r\n    \"combinations\": null,\r\n    \"brandName\": \"Nike\",\r\n    \"categoryName\": \"Slacks\",\r\n    \"createdDate\": null,\r\n    \"modifiedDate\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -597,6 +690,212 @@
 								"product"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"productName\": \"Put product\",\r\n    \"description\": \"ao sieu nhan aaa\",\r\n    \"originalPrice\": \"37.0\",\r\n    \"originalQuantity\": 0,\r\n    \"discount\": 30,\r\n    \"imageLinks\": [],\r\n    \"sizes\": [\r\n        {\r\n            \"size_id\": \"XL\",\r\n            \"quantity\": 3\r\n        },\r\n         {\r\n            \"size_id\": \"L\",\r\n            \"quantity\": 1\r\n        }\r\n\r\n    ],\r\n    \"attributeAndVariants\": null,\r\n    \"combinations\": null,\r\n    \"brandName\": \"Nike\",\r\n    \"categoryName\": \"Slacks\",\r\n    \"createdDate\": null,\r\n    \"modifiedDate\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/product/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"product",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/brand",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Nike\",\r\n    \"code\":\"N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/brand",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Adidas\",\r\n    \"code\":\"A\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/brand/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"brand",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    4,5,6\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/admin/brand",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Products",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}

@@ -38,6 +38,7 @@ public class ProductConverter {
                 .originalPrice(String.valueOf(entity.getOriginalPrice()))
                 .originalQuantity(entity.getOriginalQuantity())
                 .discount(entity.getDiscount())
+                .isActive(entity.isActive())
                 .imageLinks(imageLinks)
                 .categoryName(entity.getCategories().getName())
                 .brandName(entity.getBrands().getName())

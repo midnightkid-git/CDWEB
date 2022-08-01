@@ -10,11 +10,11 @@ public interface IBrandService {
 
     List<BrandResponse> findByIsActiveTrue();
 
-    BrandResponse save(BrandRequest request);
+    BrandResponse save(Long id,BrandRequest request);
 
     int totalItem();
 
-    List<BrandResponse> findAll(Pageable pageable);
+    List<BrandResponse> findAll();
 
     boolean existsByNameAndIsActiveTrue(String name);
     boolean existsByCodeAndIsActiveTrue(String code);
