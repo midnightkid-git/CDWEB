@@ -15,6 +15,10 @@ $bannerHeight : 130px;
       color: var(--primary-color);
     }
   }
+  .location{
+    display: flex;
+    justify-content: space-between;
+  }
   .list-cart-item{
     width: 65%;
     margin-left: 50px;
