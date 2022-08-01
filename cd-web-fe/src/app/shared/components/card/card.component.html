@@ -1,19 +1,39 @@
 <div class="card">
-  <div class="thumbnail" [ngStyle]="{background:'url('+ item.thumbnails[0] + ')','background-size': 'cover','background-position': 'center'}">
-  </div>
+  <div
+    class="thumbnail"
+    [ngStyle]="{
+      background: 'url(' + item.thumbnails[0] + ')',
+      'background-size': 'cover',
+      'background-position': 'center'
+    }"
+  ></div>
   <div class="detail-infor">
     <div class="title">
-    <a [routerLink]="'/detail-item/'+ item.productId" class="label">{{item.productLabel}}</a>
-    <p class="price">${{item.price}}</p>
-  </div>
+      <a [routerLink]="'/detail-item/' + item.productId" class="label">{{
+        item.productLabel
+      }}</a>
+      <p class="price">${{ item.price }}</p>
+    </div>
     <div class="actions">
       <div class="sizes right-item">
         <ng-container *ngFor="let size of item.size">
-      <p-radioButton class="size-item" [disabled]="size.quantity <= 0"  name="size" [value]="size" [(ngModel)]="selectedSize" [label]="size.sizeId"></p-radioButton>
-    </ng-container>
+          <p-radioButton
+            class="size-item"
+            [disabled]="size.quantity <= 0"
+            name="size"
+            [value]="size"
+            [(ngModel)]="selectedSize"
+            [label]="size.size_id"
+          ></p-radioButton>
+        </ng-container>
+      </div>
+      <button
+        [disabled]="!selectedSize"
+        pButton
+        icon="pi pi-shopping-cart"
+        class="action"
+        (click)="addToCart()"
+      ></button>
     </div>
-      <button [disabled]="!selectedSize" pButton icon="pi pi-shopping-cart" class="action" (click)="addToCart()"></button>
-    </div>
-
   </div>
 </div>

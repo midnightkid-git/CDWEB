@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
   httpOptions = {
@@ -12,9 +12,7 @@ export class ProductsService {
       Authorization: 'Bearer ' + sessionStorage.getItem('adminToken')
     })
   };
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
   getProducts() {
     return this.http.get<any>(`${environment.apiUrl}/admin/product/getListProduct`, this.httpOptions);
   }
@@ -31,7 +29,10 @@ export class ProductsService {
     return this.http.delete<any>(`${environment.apiUrl}/admin/product/${ids}`, this.httpOptions)
   }
   getBrands() {
-    return this.http.get<any>(`${environment.apiUrl}/user/brand/no-token`, this.httpOptions);
+    return this.http.get<any>(
+      `${environment.apiUrl}/user/brand/no-token`,
+      this.httpOptions
+    );
   }
 
 }

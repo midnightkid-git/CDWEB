@@ -38,12 +38,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   statuses: any[] = [];
 
-  sizes: any[] = [
-    { name: 'XL' },
-    { name: 'L' },
-    { name: 'S' },
-    { name: 'M' },
-  ];
+  sizes: any[] = [{ name: 'XL' }, { name: 'L' }, { name: 'S' }, { name: 'M' }];
 
   sizeArray: any[] = [];
 
@@ -84,53 +79,24 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   addAttribute() { }
 
-  initMockData() {
-    this.products = [
-      {
-        id: 1,
-        productName: 'Áo Polo',
-        description:
-          'Sản phẩm được sản xuất chất liệu cotton, chất lượng, giá rẻ',
-        originalPrice: 50000.0,
-        originalQuantity: 20,
-        discount: 0,
-        imageLinks: ['link-hinh-1', 'link-hinh-2'],
-        attributeAndVariants: [
-          {
-            attributeId: 1,
-            attributeName: 'Kích Thước',
-            variantNames: ['M', 'S'],
-          },
-          {
-            attributeId: 2,
-            attributeName: 'Màu Sắc',
-            variantNames: ['Đỏ', 'Xanh'],
-          },
-        ],
-        brandName: 'Nike',
-        categoryName: 'Áo',
-        createdDate: '2022-06-21T04:42:33.197+00:00',
-        modifiedDate: '2022-06-21T04:42:33.197+00:00',
-      },
-    ];
-  }
-
   openNew() {
     this.product = {};
     this.submitted = false;
     this.productDialog = true;
-    this.sizeArray = [{
-      id: Date.now(),
-      size_id: this.sizes[0].name,
-      quantity: 0
-    }];
+    this.sizeArray = [
+      {
+        id: Date.now(),
+        size_id: this.sizes[0].name,
+        quantity: 0,
+      },
+    ];
   }
 
   deleteSelectedProducts() {
     let listProductToDel: any[] = [];
     this.selectedProducts.forEach(e => {
       listProductToDel.push(e.id);
-    })
+    });
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected products?',
       header: 'Confirm',
@@ -156,6 +122,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   editProduct(product: any) {
     this.product = { ...product };
+    this.sizeArray = product.listSizes;
+    console.log(product.listSizes);
+    console.log(this.sizeArray);
     this.productDialog = true;
   }
 
@@ -258,19 +227,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
               });
             }));
       } else {
-        console.log(this.product);
-        // this.product.id = this.createId();
-        this.product.imageLinks = [];
-        this.products.push(this.product);
-        console.log(this.product)
         const uploadTask = this.storage.upload(this.selectedImage?.name, this.selectedImage).then((x) => {
-          console.log(x)
           x.ref.getDownloadURL().then(_x => {
             this.product.imageLinks = [_x];
             this.subscriptions.push(
               this.productsService.saveProduct(this.product).subscribe((data) => {
-                this.product = {};
                 this.fetchProducts();
+                this.product = {};
                 this.productDialog = false;
                 this.messageService.add({
                   severity: 'dark',
@@ -313,7 +276,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.sizeArray.push({
       id: Date.now(), // <--- uniqueness hook.
       size_id: this.sizes[0].name,
-      quantity: 0
+      quantity: 0,
     });
   }
 

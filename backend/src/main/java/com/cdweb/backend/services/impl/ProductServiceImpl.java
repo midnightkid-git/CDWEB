@@ -55,7 +55,7 @@ public class ProductServiceImpl implements IProductService {
                 entity.getSizes().forEach((size) -> {
                     productSizeRespone.add(ProductSizeRespone.builder()
                                     .quantity(size.getQuantity())
-                                    .sizeId(size.getSizes().getSizeId())
+                                    .size_id(size.getSizes().getSizeId())
                             .build());
                 });
                 entity.getThumbnails().forEach(img->{
@@ -93,7 +93,7 @@ public class ProductServiceImpl implements IProductService {
                     entity.getSizes().forEach((size) -> {
                         productSizeRespone.add(ProductSizeRespone.builder()
                                 .quantity(size.getQuantity())
-                                .sizeId(size.getSizes().getSizeId())
+                                .size_id(size.getSizes().getSizeId())
                                 .build());
                     });
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
@@ -137,7 +137,7 @@ public class ProductServiceImpl implements IProductService {
            entity.getSizes().forEach((size) -> {
                productSizeRespone.add(ProductSizeRespone.builder()
                        .quantity(size.getQuantity())
-                       .sizeId(size.getSizes().getSizeId())
+                       .size_id(size.getSizes().getSizeId())
                        .build());
            });
            ProductResponse product = ProductResponse.builder()
@@ -208,6 +208,9 @@ public class ProductServiceImpl implements IProductService {
             //lưu san phẩm
             Products updatedEntity = productRepository.save(entity);
 
+            productSizeConverter.toEntity(request).forEach((_x) -> {
+                ProductSizes savedProductSizes = productSizeRepository.save(_x);
+            });
             //Lưu hình
 //            List<ThumbnailResponse> thumbnailResponse = productGalleryService.save(updatedEntity, request.getImageLinks());
 
@@ -259,7 +262,7 @@ public class ProductServiceImpl implements IProductService {
                     entity.getSizes().forEach((size) -> {
                         productSizeRespone.add(ProductSizeRespone.builder()
                                 .quantity(size.getQuantity())
-                                .sizeId(size.getSizes().getSizeId())
+                                .size_id(size.getSizes().getSizeId())
                                 .build());
                     });
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
@@ -303,7 +306,7 @@ public class ProductServiceImpl implements IProductService {
                     entity.getSizes().forEach((size) -> {
                         productSizeRespone.add(ProductSizeRespone.builder()
                                 .quantity(size.getQuantity())
-                                .sizeId(size.getSizes().getSizeId())
+                                .size_id(size.getSizes().getSizeId())
                                 .build());
                     });
                     productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
@@ -349,7 +352,7 @@ public class ProductServiceImpl implements IProductService {
                         entity.getSizes().forEach((size) -> {
                             productSizeRespone.add(ProductSizeRespone.builder()
                                     .quantity(size.getQuantity())
-                                    .sizeId(size.getSizes().getSizeId())
+                                    .size_id(size.getSizes().getSizeId())
                                     .build());
                         });
                         productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
