@@ -82,7 +82,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
             severity: 'success',
             summary: 'Successful',
             detail: 'Create brand successfully',
-            life: 3000,
+            life: 500,
           });
         })
       )
@@ -95,8 +95,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'success',
             summary: 'Successful',
-            detail: 'Update brand successfully',
-            life: 3000,
+            detail: 'Update brand successfully', life: 500
           });
         })
       )

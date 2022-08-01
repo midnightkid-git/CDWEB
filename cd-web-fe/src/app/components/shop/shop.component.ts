@@ -50,7 +50,7 @@ export class ShopComponent implements OnInit {
     if (sizeParam) {
       this.filteredProducts = this.filteredProducts.filter((_x) => {
         return _x.size.some((_size: any) => {
-          return _size.sizeId == sizeParam
+          return _size.size_id == sizeParam
         })
       })
     }
@@ -89,7 +89,7 @@ export class ShopComponent implements OnInit {
       if (sizeParam) {
         this.filteredProducts = this.filteredProducts.filter((_x) => {
           return _x.size.some((_size: any) => {
-            return _size.sizeId == sizeParam
+            return _size.size_id == sizeParam
           })
         })
       }

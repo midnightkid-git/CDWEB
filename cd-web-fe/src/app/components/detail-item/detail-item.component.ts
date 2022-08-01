@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -13,15 +14,24 @@ export class DetailItemComponent implements OnInit {
   public selectedSize: any;
   public totalItem: number = 0;
   public selectedQuantity: number = 1;
+  public isLogin: boolean = false;
 
   constructor(
     private activateeRoute: ActivatedRoute,
     private productService: ProductService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.fetchLogin();
     this.fetchDataByRoute();
+  }
+
+  fetchLogin() {
+    this.authService.isLogin$.subscribe(_x => {
+      this.isLogin = _x
+    })
   }
 
   fetchDataByRoute() {
@@ -38,20 +48,34 @@ export class DetailItemComponent implements OnInit {
   }
 
   addToCart(): void {
-    const payload = {
-      productId: this.item.id,
-      size: this.selectedSize.sizeId,
-      quantity: this.selectedQuantity,
-    };
-    console.log(this.selectedSize)
-    this.productService.addToCart(payload).subscribe((res) => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Successful',
-        detail: res.message,
-        life: 3000,
+    if (this.isLogin) {
+      const payload = {
+        productId: this.item.id,
+        size: this.selectedSize.size_id,
+        quantity: this.selectedQuantity,
+      };
+      this.productService.addToCart(payload).subscribe((res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: res.message,
+          life: 500,
+        });
+      }, error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: "Add item to cart failed",
+          life: 500,
+        });
       });
-    });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: "You must login first",
+        life: 500,
+      });
+    }
   }
-
 }

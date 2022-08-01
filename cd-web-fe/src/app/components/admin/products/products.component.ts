@@ -112,7 +112,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 severity: 'success',
                 summary: 'Successful',
                 detail: 'Deactivated Product',
-                life: 3000,
+                life: 500,
               });
             }));
 
@@ -147,8 +147,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
               this.messageService.add({
                 severity: 'succes',
                 summary: 'Successful',
-                detail: 'Product Deleted',
-                life: 3000,
+                detail: 'Product Deleted'
               });
             }));
 
@@ -222,8 +221,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
-                detail: 'Product Updated',
-                life: 3000,
+                detail: 'Product Updated'
               });
             }));
       } else {
@@ -238,8 +236,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 this.messageService.add({
                   severity: 'success',
                   summary: 'Successful',
-                  detail: 'Product Created',
-                  life: 3000,
+                  detail: 'Product Created'
                 });
               }));
           })
@@ -287,8 +284,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.messageService.add({
         severity: 'sucess',
         summary: 'Successful',
-        detail: 'Product Activated',
-        life: 3000,
+        detail: 'Product Activated'
       });
     });
   }

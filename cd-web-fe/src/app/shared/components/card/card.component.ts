@@ -39,7 +39,7 @@ export class CardComponent implements OnInit {
           severity: 'success',
           summary: 'Successful',
           detail: res.message,
-          life: 3000,
+          life: 500,
         });
       });
     } else {
@@ -48,7 +48,7 @@ export class CardComponent implements OnInit {
         severity: 'error',
         summary: 'Failed',
         detail: "You must log in first",
-        life: 3000,
+        life: 500,
       });
     }
 
