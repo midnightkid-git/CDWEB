@@ -33,6 +33,7 @@ import { AdminLoginComponent } from './components/admin/admin-login/admin-login.
 import { AdminRegisterComponent } from './components/admin/admin-register/admin-register.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrandsComponent } from './components/admin/brands/brands.component';
+import { SuccessNotiPageComponent } from './components/success-noti-page/success-noti-page.component';
 import { OrdersComponent } from './components/admin/orders/orders.component';
 
 @NgModule({
@@ -57,6 +58,7 @@ import { OrdersComponent } from './components/admin/orders/orders.component';
     AdminLoginComponent,
     AdminRegisterComponent,
     BrandsComponent,
+    SuccessNotiPageComponent,
     OrdersComponent,
   ],
 
