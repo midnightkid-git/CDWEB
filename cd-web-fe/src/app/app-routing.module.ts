@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ListOrdersComponent } from './components/list-orders/list-orders.component';
 import { OrderComponent } from './components/order/order.component';
 import { ShopComponent } from './components/shop/shop.component';
+import { SuccessNotiPageComponent } from './components/success-noti-page/success-noti-page.component';
 import { AdminGuard } from './guards/admin.guard';
 import { CartGuard } from './guards/cart.guard';
 import { OrderGuard } from './guards/order.guard';
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'success',
+    component: SuccessNotiPageComponent
   },
   {
     path: 'shop',

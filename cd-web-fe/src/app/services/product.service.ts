@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,8 @@ export class ProductService {
     }),
   };
 
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient) { }
+  orderDetail = new BehaviorSubject(null);
   getCategories() {
     return this.http.get<any>(
       `${environment.apiUrl}/user/category/no-token`,
@@ -50,23 +51,23 @@ export class ProductService {
       this.httpOptions_Token
     );
   }
-  getCart(){
+  getCart() {
     return this.http.get<any>(
-      `${environment.apiUrl}/user/cart`,this.httpOptions_Token);
+      `${environment.apiUrl}/user/cart`, this.httpOptions_Token);
   }
-  removeCartItem(id:any){
+  removeCartItem(id: any) {
     return this.http.delete<any>(
-      `${environment.apiUrl}/user/cart/${id}`,this.httpOptions_Token);
+      `${environment.apiUrl}/user/cart/${id}`, this.httpOptions_Token);
   }
-  order(param: any){
+  order(param: any) {
     return this.http.post<any>(
       `${environment.apiUrl}/user/cart/order`,
       param,
       this.httpOptions_Token
     );
   }
-  getOrder(){
+  getOrder() {
     return this.http.get<any>(
-      `${environment.apiUrl}/user/order`,this.httpOptions_Token);
+      `${environment.apiUrl}/user/order`, this.httpOptions_Token);
   }
 }
