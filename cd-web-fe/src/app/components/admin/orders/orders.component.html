@@ -1,1 +1,62 @@
-<p>orders works!</p>
+
+<h1>Orders Manager</h1>
+<div class="admin-manager">
+<p-toast></p-toast>
+<div class="card">
+
+    <p-table #dt [value]="orders" [rows]="5" [paginator]="true" [globalFilterFields]="['name','code']" responsiveLayout="scroll"
+       [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText [(ngModel)]="searchContent" type="text" (input)="dt.filterGlobal( searchContent, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">Id <p-sortIcon field="productName"></p-sortIcon></th>
+                <th pSortableColumn="code">User <p-sortIcon field="originalPrice"></p-sortIcon></th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+            <tr>
+                <td>{{order.orderId}}</td>
+                <td>{{order.userId}}</td>
+                <td [ngClass]="order.status + ' status'">{{order.status}}</td>
+                <td >
+                    <button pButton pRipple icon="pi pi-exclamation-circle" class="p-button-rounded p-button-warning mr-2" (click)="viewOrder(order)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateStatus(order)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{orders ? orders.length : 0 }} Orders.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="showDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div *ngFor="let status of STATUS" class="field-radiobutton col-6" style="margin-bottom:15px">
+      <p-radioButton id="status" [name]="status" [value]="status" [(ngModel)]="selectedStatus">
+      </p-radioButton>
+      <label for="status">{{status}}</label>
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveStatus()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>
+</div>

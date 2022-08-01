@@ -23,6 +23,7 @@ export class AdminComponent implements OnInit {
     {
       label: 'Orders',
       icon: 'pi pi-book',
+      routerLink: '/admin/orders',
     },
   ]
 

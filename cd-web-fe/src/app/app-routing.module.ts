@@ -4,6 +4,7 @@ import { AdminLoginComponent } from './components/admin/admin-login/admin-login.
 import { AdminRegisterComponent } from './components/admin/admin-register/admin-register.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { BrandsComponent } from './components/admin/brands/brands.component';
+import { OrdersComponent } from './components/admin/orders/orders.component';
 import { ProductsComponent } from './components/admin/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DetailItemComponent } from './components/detail-item/detail-item.component';
@@ -71,6 +72,10 @@ const routes: Routes = [
       {
         path: 'brands',
         component: BrandsComponent
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent
       }
     ]
   },

@@ -282,7 +282,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsService.activeProduct(product.id).subscribe(() => {
       this.fetchProducts();
       this.messageService.add({
-        severity: 'sucess',
+        severity: 'success',
         summary: 'Successful',
         detail: 'Product Activated'
       });
