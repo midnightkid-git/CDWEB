@@ -10,8 +10,9 @@ export class AdminComponent implements OnInit {
 
   public listMenu: MenuItem[] = [
     {
-      label: 'Dashboard',
-      icon: 'pi pi-percentage',
+      label: 'Brands',
+      icon: 'pi pi-bookmark-fill',
+      routerLink: '/admin/brands'
     },
     {
       label: 'Products',

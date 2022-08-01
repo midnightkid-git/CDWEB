@@ -1,0 +1,70 @@
+
+<div class="admin-manager">
+<p-toast></p-toast>
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="brands" [rows]="5" [paginator]="true" [globalFilterFields]="['name','code']" responsiveLayout="scroll"
+        [(selection)]="selectedBrands" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText [(ngModel)]="searchContent" type="text" (input)="dt.filterGlobal( searchContent, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">Name <p-sortIcon field="productName"></p-sortIcon></th>
+                <th  pSortableColumn="code">Code <p-sortIcon field="originalPrice"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-brand>
+            <tr>
+                <td>{{brand.name}}</td>
+                <td>{{brand.code}}</td>
+                <td >
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editBrand(brand)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{brands ? brands.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="brandDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+      <div class="field">
+          <label for="name">Brand Name</label>
+          <input type="text" pInputText id="name" [(ngModel)]="brand['name']" required autofocus />
+          <small class="p-error" *ngIf="submitted && !brand.name" >Name is required.</small>
+      </div>
+      <div class="field">
+        <label for="name">Brand Code</label>
+        <input type="text" pInputText id="name" [(ngModel)]="brand['code']" required autofocus />
+        <small class="p-error" *ngIf="submitted && !brand.code" >Name is required.</small>
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBrand()"></button>
+  </ng-template>
+</p-dialog>
+
+
+<p-confirmDialog></p-confirmDialog>
+</div>

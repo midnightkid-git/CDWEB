@@ -32,6 +32,7 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { AdminRegisterComponent } from './components/admin/admin-register/admin-register.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { BrandsComponent } from './components/admin/brands/brands.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { DropdownModule } from 'primeng/dropdown';
     SafeUrlPipe,
     AdminLoginComponent,
     AdminRegisterComponent,
+    BrandsComponent,
   ],
 
   imports: [

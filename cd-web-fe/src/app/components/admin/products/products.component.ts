@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsService } from '../services/products.service';
+
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   productDialog?: boolean;
 
   products: any[] = [];
 
+  subscriptions: Subscription[] = []
+
+  searchContent: string = ''
+
   product: any;
 
   selectedProducts: any[] = [];
+
+  categories = [
+    "Slacks",
+    "Vests",
+    "Accessories"
+  ]
 
   brands: any[] = [];
 
@@ -38,25 +51,38 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private storage: AngularFireStorage,
     private authService: AuthService
-  ) {}
-
-  ngOnInit() {
-    this.authService.token.subscribe((data) => {
-      console.log(data);
-    });
-
-    this.productsService.getProducts().subscribe((data) => {
-      this.products = data.data.data;
-      console.log('checking data', data);
-    });
-
-    this.productsService.getBrands().subscribe((data) => {
-      this.brands = data.data;
-    });
+  ) { }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(_x => {
+      _x.unsubscribe();
+    })
   }
 
-  addAttribute() {}
+  ngOnInit() {
+    this.subscriptions.push(
+      this.authService.token.subscribe((data) => {
+        console.log(data);
+      }));
+
+
+    this.fetchProducts();
+    this.subscriptions.push(
+      this.productsService.getBrands().subscribe((data) => {
+        this.brands = data.data;
+      }));
+  }
+
+  fetchProducts() {
+    this.subscriptions.push(
+      this.productsService.getProducts().subscribe((data) => {
+        this.products = data.data;
+        console.log('checking data', data);
+      }));
+  }
+
+  addAttribute() { }
 
   initMockData() {
     this.products = [
@@ -102,7 +128,7 @@ export class ProductsComponent implements OnInit {
 
   deleteSelectedProducts() {
     let listProductToDel: any[] = [];
-    this.selectedProducts.forEach(e=>{
+    this.selectedProducts.forEach(e => {
       listProductToDel.push(e.id);
     })
     this.confirmationService.confirm({
@@ -110,21 +136,20 @@ export class ProductsComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.productsService
-        .deleteProduct(listProductToDel)
-        .subscribe((data) => {
-          console.log('delete successfully', data);
-        });
-        this.products = this.products.filter(
-          (val) => !this.selectedProducts.includes(val)
-        );
-        this.selectedProducts = [];
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Products Deleted',
-          life: 3000,
-        });
+        this.subscriptions.push(
+          this.productsService
+            .deleteProduct(listProductToDel)
+            .subscribe((data) => {
+              this.fetchProducts();
+              this.selectedProducts = [];
+              this.messageService.add({
+                severity: 'dark',
+                summary: 'Successful',
+                detail: 'Deactivated Product',
+                life: 3000,
+              });
+            }));
+
       },
     });
   }
@@ -136,27 +161,28 @@ export class ProductsComponent implements OnInit {
 
   deleteProduct(product: any) {
     let listProductToDel: any[] = [];
-      this.selectedProducts.forEach(e=>{
-        listProductToDel.push(e.id);
-      })
+    this.selectedProducts.forEach(e => {
+      listProductToDel.push(e.id);
+    })
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
+      message: 'Are you sure you want to deactive this product ?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.productsService
-          .deleteProduct(listProductToDel)
-          .subscribe((data) => {
-            console.log('delete successfully', data);
-          });
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Deleted',
-          life: 3000,
-        });
+        this.subscriptions.push(
+          this.productsService
+            .deleteProduct(product.id)
+            .subscribe((data) => {
+              this.fetchProducts();
+              this.product = {};
+              this.messageService.add({
+                severity: 'dark',
+                summary: 'Successful',
+                detail: 'Product Deleted',
+                life: 3000,
+              });
+            }));
+
       },
     });
   }
@@ -182,7 +208,17 @@ export class ProductsComponent implements OnInit {
     this.productDialog = false;
     this.submitted = false;
   }
-  
+
+  handleFileInput(event: any) {
+    this.selectedImage = event.target.files[0];
+  }
+
+  testUpload() {
+    console.log(this.selectedImage)
+    console.log("uploading", this.selectedImage?.name)
+    const storageRef = this.storage.ref("/");
+  }
+
   saveProduct() {
     // Validate form
     // if (!this.validateProduct()) {
@@ -194,10 +230,9 @@ export class ProductsComponent implements OnInit {
     //   });
     //   return;
     // }
-
     this.submitted = true;
     this.product.sizes = this.sizeArray.map((size: any) => {
-      const result = {size_id: '', quantity: 0};
+      const result = { size_id: '', quantity: 0 };
       result['size_id'] = size.size_id;
       result['quantity'] = size.quantity;
       return result;
@@ -206,36 +241,47 @@ export class ProductsComponent implements OnInit {
     if (this.product.productName.trim()) {
       if (this.product.id) {
         this.products[this.findIndexById(this.product.id)] = this.product;
-        this.messageService.add({
-          severity: 'dark',
-          summary: 'Successful',
-          detail: 'Product Updated',
-          life: 3000,
-        });
-        this.productsService
-          .updateProduct(this.product, this.product.id)
-          .subscribe((data) => {
-            console.log('update response', data);
-            this.products = [...this.products];
-            this.product = {};
-            this.productDialog = false;
-          });
+        this.subscriptions.push(
+          this.productsService
+            .updateProduct(this.product, this.product.id)
+            .subscribe((data) => {
+              console.log('update response', data);
+              this.fetchProducts();
+              this.product = {};
+              this.productDialog = false;
+              this.hideDialog();
+              this.messageService.add({
+                severity: 'dark',
+                summary: 'Successful',
+                detail: 'Product Updated',
+                life: 3000,
+              });
+            }));
       } else {
         console.log(this.product);
         // this.product.id = this.createId();
-        this.product.imageLinks = [this.selectedImage];
+        this.product.imageLinks = [];
         this.products.push(this.product);
-        this.messageService.add({
-          severity: 'dark',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000,
-        });
-        this.productsService.saveProduct(this.product).subscribe((data) => {
-          console.log('response', data);
-          this.products = [...this.products];
-          this.product = {};
-        });
+        console.log(this.product)
+        const uploadTask = this.storage.upload(this.selectedImage?.name, this.selectedImage).then((x) => {
+          console.log(x)
+          x.ref.getDownloadURL().then(_x => {
+            this.product.imageLinks = [_x];
+            this.subscriptions.push(
+              this.productsService.saveProduct(this.product).subscribe((data) => {
+                this.product = {};
+                this.fetchProducts();
+                this.productDialog = false;
+                this.messageService.add({
+                  severity: 'dark',
+                  summary: 'Successful',
+                  detail: 'Product Created',
+                  life: 3000,
+                });
+              }));
+          })
+        })
+
       }
     }
   }
@@ -252,6 +298,7 @@ export class ProductsComponent implements OnInit {
     return index;
   }
 
+
   createId(): string {
     let id = '';
     var chars =
@@ -267,6 +314,19 @@ export class ProductsComponent implements OnInit {
       id: Date.now(), // <--- uniqueness hook.
       size_id: this.sizes[0].name,
       quantity: 0
+    });
+  }
+
+  activeProduct(product: any) {
+    console.log(product.id);
+    this.productsService.activeProduct(product.id).subscribe(() => {
+      this.fetchProducts();
+      this.messageService.add({
+        severity: 'dark',
+        summary: 'Successful',
+        detail: 'Product Activated',
+        life: 3000,
+      });
     });
   }
 

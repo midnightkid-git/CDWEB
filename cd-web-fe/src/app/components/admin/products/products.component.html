@@ -1,4 +1,4 @@
-Products
+
 <div class="admin-manager">
 <p-toast></p-toast>
 <div class="card">
@@ -9,7 +9,7 @@ Products
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['productName','originalPrice']" responsiveLayout="scroll"
+    <p-table #dt [value]="products" [rows]="5" [paginator]="true" [globalFilterFields]="['productName','originalPrice']" responsiveLayout="scroll"
         [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" >
         <ng-template pTemplate="caption">
@@ -17,7 +17,7 @@ Products
                 <h5 class="m-0">Manage Products</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." />
+                    <input pInputText [(ngModel)]="searchContent" type="text" (input)="dt.filterGlobal( searchContent, 'contains')" placeholder="Search..." />
                 </span>
             </div>
         </ng-template>
@@ -28,26 +28,25 @@ Products
                 </th>
                 <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon></th>
                 <th>Image</th>
-                <th >Price</th>
+                <th  pSortableColumn="originalPrice">Price <p-sortIcon field="originalPrice"></p-sortIcon></th>
                 <th>Category</th>
-                <th>Quanity</th>
                 <th>Brand</th>
                 <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
-            <tr>
+            <tr [ngClass]="product.active? 'active' : 'deactive'">
                 <td>
                     <p-tableCheckbox [value]="product"></p-tableCheckbox>
                 </td>
                 <td>{{product.productName}}</td>
-                <td><img [src]="product.imageLinks | safeUrl" [alt]="product.productName" width="100" class="shadow-4" /></td>
+                <td><img [src]="product.imageLinks[0] | safeUrl" [alt]="product.productName" width="150" class="shadow-4" /></td>
                 <td>{{product.originalPrice | currency:'USD'}}</td>
                 <td>{{product.categoryName}}</td>
-                <td>{{product.originalQuantity}}</td>
                 <td>{{product.brandName}}</td>
-                <td>
+                <td >
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-warning" (click)="activeProduct(product)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
                 </td>
             </tr>
@@ -71,22 +70,14 @@ Products
         <div class="field">
             <label for="image">Image</label>
             <br>
-            <input type="file" id="image" [(ngModel)]="selectedImage" required>
+            <input type="file" id="image" (change)="handleFileInput($event)" required>
         </div>
         <div class="field">
             <label class="mb-3">Category</label>
             <div class="formgrid grid">
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.categoryName"></p-radioButton>
-                    <label for="category1">Accessories</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category2" name="category" value="ao" [(ngModel)]="product.categoryName"></p-radioButton>
-                    <label for="category2">ao</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.categoryName"></p-radioButton>
-                    <label for="category3">Slacks</label>
+                <div *ngFor="let category of categories" class="field-radiobutton col-6">
+                    <p-radioButton id="category1" [name]="category" [value]="category" [(ngModel)]="product.categoryName"></p-radioButton>
+                    <label for="category1">{{category}}</label>
                 </div>
             </div>
         </div>
