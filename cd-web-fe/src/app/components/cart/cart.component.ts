@@ -59,9 +59,9 @@ export class CartComponent implements OnInit {
     this.getCart();
     // this.sidebarOffset = this.sidebar.nativeElement.offsetTop
   }
-  remove(e: any) {
+  remove(e: any, i: any) {
     this.productsService.removeCartItem(e.cartId).subscribe(data => {
-      this.cart.splice(e, 1)
+      this.cart.splice(i, 1)
       this.totals = this.totals - (e.quantity * e.productPrice)
     })
   }
