@@ -3,8 +3,8 @@
     <h2 class="banner-title">Shopping cart</h2>
   </div>
   <div class="list-cart-item">
-    <div *ngFor="let item of cart" class="item">
-      <app-cart-item   [item]="item" (removeElement)="remove($event)"></app-cart-item>
+    <div *ngFor="let item of cart; let i = index" class="item">
+      <app-cart-item   [item]="item" (removeElement)="remove($event,i)"></app-cart-item>
     </div>
     <div class="total">
     </div>
