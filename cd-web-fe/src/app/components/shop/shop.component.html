@@ -6,41 +6,59 @@
     <div class="left-container">
       <div class="side-bar">
         <div class="search-input side-bar-item">
-          <input pInputText placeholder="Input product name"><span class="pi pi-search"></span>
+          <input pInputText placeholder="Input product name" /><span
+            class="pi pi-search"
+          ></span>
         </div>
       </div>
       <div class="categories side-bar-item">
         <div class="label">
-        <h3>Categories</h3>
-        <a routerLink="/shop" class="item-link">Show all</a>
-      </div>
+          <h3>Categories</h3>
+          <a routerLink="/shop" class="item-link">Show all</a>
+        </div>
         <div class="list-category">
-          <div routerLinkActive="category-activated" *ngFor="let category of categories"class="category-item">
-            <a [routerLink]="'/shop/category/'+category.categoryId" class="item-link">{{category.categoryLabel}}</a>
+          <div
+            routerLinkActive="category-activated"
+            *ngFor="let category of categories"
+            class="category-item"
+          >
+            <a
+              [routerLink]="'/shop/category/' + category.categoryId"
+              class="item-link"
+              >{{ category.categoryLabel }}</a
+            >
           </div>
         </div>
       </div>
       <div class="size side-bar-item">
         <h3>Size</h3>
         <div class="list-size">
-          <div *ngFor="let size of listOfSize"class="size-item">
-            <button pButton class="">{{size}}</button>
+          <div *ngFor="let size of listOfSize" class="size-item">
+            <button pButton class="">{{ size }}</button>
           </div>
         </div>
       </div>
       <div class="price-range side-bar-item">
         <h3>Price Range</h3>
         <div class="range">
-          <p class="range-label">Range: {{rangeValues[0] + '$ - ' + rangeValues[1] + '$'}}</p>
-          <p-slider (onSlideEnd)="onFilterByPrice()" [step]="10" [max]="1000" [(ngModel)]="rangeValues" [range]="true"></p-slider>
+          <p class="range-label">
+            Range: {{ rangeValues[0] + "$ - " + rangeValues[1] + "$" }}
+          </p>
+          <p-slider
+            (onSlideEnd)="onFilterByPrice()"
+            [step]="10"
+            [max]="1000"
+            [(ngModel)]="rangeValues"
+            [range]="true"
+          ></p-slider>
         </div>
       </div>
     </div>
     <div class="right-container">
       <div class="list-item">
         <ng-container *ngFor="let item of listProducts">
-      <app-card class="item" [item]="item" ></app-card>
-    </ng-container>
+          <app-card class="item" [item]="item"></app-card>
+        </ng-container>
       </div>
       <p-paginator [rows]="10" [totalRecords]="100"></p-paginator>
     </div>

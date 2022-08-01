@@ -2,20 +2,46 @@
   <div class="left-container">
     <p-carousel [value]="item.imageLinks" [numVisible]="1" [numScroll]="1">
       <ng-template let-thumbnail pTemplate="item">
-          <p-image [src]="thumbnail" height="350px" [preview]="true"></p-image>
+        <p-image [src]="thumbnail" height="350px" [preview]="true"></p-image>
       </ng-template>
-  </p-carousel>
+    </p-carousel>
   </div>
   <div class="right-container">
-    <h2 class="label right-item">{{item.productName}}</h2>
-    <p class="right-item">Category: <a class="category" href="#">{{item.categoryName}}</a></p>
-    <p class="right-item">Price: <span class="price">${{item.originalPrice}}</span></p>
+    <h2 class="label right-item">{{ item.productName }}</h2>
+    <p class="right-item">
+      Category: <a class="category" href="#">{{ item.categoryName }}</a>
+    </p>
+    <p class="right-item">
+      Price: <span class="price">${{ item.originalPrice }}</span>
+    </p>
     <div class="sizes right-item">
       <ng-container *ngFor="let size of item.listSizes">
-    <p-radioButton class="size-item"  name="size" [value]="size" [(ngModel)]="selectedSize" [label]="size.sizeId"></p-radioButton>
-  </ng-container>
-  </div>
-  <p class="right-item">Item left: <span class="size-total-item" [ngClass]="item.totalItem == 0 || selectedSize?.quantity === 0 ? 'error' : ''">{{selectedSize ? selectedSize.quantity : item.totalItem }}</span></p>
-    <button [disabled]="!selectedSize || selectedSize?.quantity === 0" class="right-item add-to-cart" (click)="addToCart()" pButton><span class="pi pi-shopping-cart"></span> Add to cart</button>
+        <p-radioButton
+          class="size-item"
+          name="size"
+          [value]="size"
+          [(ngModel)]="selectedSize"
+          [label]="size.size_id"
+        ></p-radioButton>
+      </ng-container>
+    </div>
+    <p class="right-item">
+      Item left:
+      <span
+        class="size-total-item"
+        [ngClass]="
+          item.totalItem == 0 || selectedSize?.quantity === 0 ? 'error' : ''
+        "
+        >{{ selectedSize ? selectedSize.quantity : item.totalItem }}</span
+      >
+    </p>
+    <button
+      [disabled]="!selectedSize || selectedSize?.quantity === 0"
+      class="right-item add-to-cart"
+      (click)="addToCart()"
+      pButton
+    >
+      <span class="pi pi-shopping-cart"></span> Add to cart
+    </button>
   </div>
 </div>
