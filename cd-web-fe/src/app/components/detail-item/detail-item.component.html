@@ -1,6 +1,6 @@
 <div class="detail-card">
   <div class="left-container">
-    <p-carousel [value]="item.imageLinks" [numVisible]="1" [numScroll]="1">
+    <p-carousel [value]="item.imageLinks" [numVisible]="1" [numScroll]="1" [showIndicators]="false" [showNavigators]="false">
       <ng-template let-thumbnail pTemplate="item">
         <p-image [src]="thumbnail" height="350px" [preview]="true"></p-image>
       </ng-template>
@@ -21,9 +21,14 @@
           name="size"
           [value]="size"
           [(ngModel)]="selectedSize"
-          [label]="size.size_id"
+          [label]="size.sizeId"
         ></p-radioButton>
       </ng-container>
+    </div>
+    <div class="sizes right-item">
+      <label for="minmax-buttons">Quantity: </label>
+      <p-inputNumber [disabled]="!selectedSize" [(ngModel)]="selectedQuantity" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="selectedSize?.quantity">
+      </p-inputNumber>
     </div>
     <p class="right-item">
       Item left:

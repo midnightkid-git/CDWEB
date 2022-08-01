@@ -6,7 +6,7 @@
     <div class="left-container">
       <div class="side-bar">
         <div class="search-input side-bar-item">
-          <input pInputText placeholder="Input product name" /><span
+          <input [(ngModel)]="searchContent" pInputText placeholder="Input product name" /><span (click)="findByName()"
             class="pi pi-search"
           ></span>
         </div>
@@ -23,9 +23,9 @@
             class="category-item"
           >
             <a
-              [routerLink]="'/shop/category/' + category.categoryId"
+              [routerLink]="'/shop/category/' + category"
               class="item-link"
-              >{{ category.categoryLabel }}</a
+              >{{ category }}</a
             >
           </div>
         </div>
@@ -34,33 +34,18 @@
         <h3>Size</h3>
         <div class="list-size">
           <div *ngFor="let size of listOfSize" class="size-item">
-            <button pButton class="">{{ size }}</button>
+            <a pButton (click)="filterBySize(size)" class="">{{ size }}</a>
           </div>
-        </div>
-      </div>
-      <div class="price-range side-bar-item">
-        <h3>Price Range</h3>
-        <div class="range">
-          <p class="range-label">
-            Range: {{ rangeValues[0] + "$ - " + rangeValues[1] + "$" }}
-          </p>
-          <p-slider
-            (onSlideEnd)="onFilterByPrice()"
-            [step]="10"
-            [max]="1000"
-            [(ngModel)]="rangeValues"
-            [range]="true"
-          ></p-slider>
         </div>
       </div>
     </div>
     <div class="right-container">
       <div class="list-item">
-        <ng-container *ngFor="let item of listProducts">
+        <ng-container *ngFor="let item of filteredProducts">
           <app-card class="item" [item]="item"></app-card>
         </ng-container>
       </div>
-      <p-paginator [rows]="10" [totalRecords]="100"></p-paginator>
+      <p-paginator [rows]="10" [totalRecords]="filteredProducts.length"></p-paginator>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="card">
-  <div
+  <div [routerLink]="'/detail-item/' + item.productId"
     class="thumbnail"
     [ngStyle]="{
       background: 'url(' + item.thumbnails[0] + ')',
@@ -23,7 +23,7 @@
             name="size"
             [value]="size"
             [(ngModel)]="selectedSize"
-            [label]="size.size_id"
+            [label]="size.sizeId"
           ></p-radioButton>
         </ng-container>
       </div>

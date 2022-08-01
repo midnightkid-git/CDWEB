@@ -15,17 +15,17 @@ export class CardComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  initMockProduct() {}
+  initMockProduct() { }
 
   addToCart(): void {
     const payload = {
       productId: this.item.productId,
       size: this.selectedSize.size_id,
-      quantity: this.selectedSize.quantity,
+      quantity: 1,
     };
     this.productService.addToCart(payload).subscribe((res) => {
       this.messageService.add({

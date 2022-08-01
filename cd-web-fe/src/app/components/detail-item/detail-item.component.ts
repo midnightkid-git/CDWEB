@@ -12,12 +12,13 @@ export class DetailItemComponent implements OnInit {
   public item: any;
   public selectedSize: any;
   public totalItem: number = 0;
+  public selectedQuantity: number = 1;
 
   constructor(
     private activateeRoute: ActivatedRoute,
     private productService: ProductService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchDataByRoute();
@@ -39,9 +40,10 @@ export class DetailItemComponent implements OnInit {
   addToCart(): void {
     const payload = {
       productId: this.item.id,
-      size: this.selectedSize.size_id,
-      quantity: this.selectedSize.quantity,
+      size: this.selectedSize.sizeId,
+      quantity: this.selectedQuantity,
     };
+    console.log(this.selectedSize)
     this.productService.addToCart(payload).subscribe((res) => {
       this.messageService.add({
         severity: 'success',

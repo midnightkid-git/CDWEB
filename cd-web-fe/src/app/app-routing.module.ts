@@ -29,6 +29,18 @@ const routes: Routes = [
     component: ShopComponent
   },
   {
+    path: 'shop/size/:size',
+    component: ShopComponent
+  },
+  {
+    path: 'shop/category/:category/size/:size',
+    component: ShopComponent
+  },
+  {
+    path: 'shop/size/:size/category/:category',
+    component: ShopComponent
+  },
+  {
     path: 'detail-item/:id',
     component: DetailItemComponent
   },
