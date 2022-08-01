@@ -1,3 +1,5 @@
+
+<p-steps [model]="steps" [activeIndex]="activeIndex"></p-steps>
 <div class="order">
   <div class="list-cart-item">
     <div *ngFor="let item of order.listItem" class="item">
@@ -11,7 +13,7 @@
     <h2 class="title">Order detail</h2>
     <div class="detail-info">
       <div class="info-item">
-        <b>Status: </b>{{this.order.status}}
+        <b>Status: </b><h2 [ngClass]="this.order.status">{{this.order.status}}</h2>
         <b>Address: </b> {{this.order.address}}
         {{this.order.phone}}
       </div>

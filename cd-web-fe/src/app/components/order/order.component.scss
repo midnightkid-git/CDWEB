@@ -67,3 +67,27 @@ $bannerHeight : 130px;
   }
   }
 }
+
+:host::ng-deep{
+  .order{
+
+  .Verifying{
+    color: paleturquoise !important;
+  }
+  .Packaging{
+  color: rgb(212, 212, 59) !important;
+  }
+  .Delivering{
+  color: orange !important;
+  }
+  .Receiving{
+  color: rgb(61, 61, 211) !important;
+  }
+  .Completed{
+    color: rgb(72, 173, 72) !important;
+  }
+  .Failed{
+    color: rgb(248, 48, 48) !important;
+  }
+}
+}

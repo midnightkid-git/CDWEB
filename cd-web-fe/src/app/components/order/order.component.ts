@@ -8,6 +8,16 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
+
+
+  STATUS = [
+    "Verifying",
+    "Packaging",
+    "Delivering",
+    "Receiving",
+    "Completed",
+    "Failed"
+  ]
   public cart: any
   public isSidebarSticky = false;
   public sidebarOffset = 175;
@@ -29,11 +39,21 @@ export class OrderComponent implements OnInit {
 
 
   public steps = [
-    { label: 'Packaging' },
-    { label: 'Delivering' },
-    { label: 'Completed' }
+    { label: "Verifying" },
+    { label: "Packaging" },
+    { label: "Delivering" },
+    { label: "Receiving" },
+    { label: "Completed" },
   ];
-  public activeIndex = 0;
+  get activeIndex() {
+    let result: any;
+    this.steps.forEach((_x, index) => {
+      if (_x.label == this.order.status) {
+        result = index
+      }
+    })
+    return result;
+  };
 
   constructor(private productsService: ProductService, private route: ActivatedRoute) { }
 
