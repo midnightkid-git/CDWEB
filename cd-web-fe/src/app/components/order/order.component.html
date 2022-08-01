@@ -13,9 +13,16 @@
     <h2 class="title">Order detail</h2>
     <div class="detail-info">
       <div class="info-item">
-        <b>Status: </b><h2 [ngClass]="this.order.status">{{this.order.status}}</h2>
+<b>Status: </b><h2 [ngClass]="this.order.status">{{this.order.status}}</h2>
+      </div>
+      <div class="info-item">
         <b>Address: </b> {{this.order.address}}
-        {{this.order.phone}}
+      </div>
+      <div class="info-item">
+        <b>Phone: </b> {{this.order.phoneNumber}}
+      </div>
+      <div class="info-item">
+        <b>Total Price: </b> ${{this.totals}}
       </div>
     </div>
   </div>

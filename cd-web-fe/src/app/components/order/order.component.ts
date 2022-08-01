@@ -27,6 +27,8 @@ export class OrderComponent implements OnInit {
   public orderId: string = 'safa13-3-ras'
   order: any;
   id: any;
+  totalPrice: any[] = [];
+  totals: number = 0;
   @HostListener("window:scroll", ['$event'])
   onWindowScroll(event: any) {
     if (window.pageYOffset > this.sidebarOffset) {
@@ -66,6 +68,16 @@ export class OrderComponent implements OnInit {
     this.productsService.getOrder().subscribe(data => {
       this.order = data.data[this.id - 1];
       console.log("checking order ", this.order);
+      this.totalPriceCal();
     })
+  }
+  totalPriceCal() {
+    if (this.order.listItem) {
+      this.order.listItem.forEach((item: any) => {
+        let total = item.quantity * item.price
+        this.totalPrice.push(total);
+      })
+      this.totals = this.totalPrice.reduce((a, b) => a + b, 0);
+    }
   }
 }
