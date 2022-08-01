@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-order',
@@ -32,15 +33,21 @@ export class OrderComponent implements OnInit {
   ];
   public activeIndex = 0;
 
-  constructor() { }
+  constructor( private productsService:ProductService) { }
 
   ngOnInit(): void {
     this.fetchStep();
-    this.initMockCart();
+    this.getOrder();
   }
 
   fetchStep(): void {
     this.activeIndex = 1;
+  }
+  getOrder(){
+    this.productsService.getOrder().subscribe(data=>{
+      console.log(data);
+
+    })
   }
   initMockCart(): void {
     this.cart = {
