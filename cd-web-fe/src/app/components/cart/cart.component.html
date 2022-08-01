@@ -3,8 +3,8 @@
     <h2 class="banner-title">Shopping cart</h2>
   </div>
   <div class="list-cart-item">
-    <div *ngFor="let item of cart.listProducts" class="item">
-      <app-cart-item [item]="item" ></app-cart-item>
+    <div *ngFor="let item of cart" class="item">
+      <app-cart-item   [item]="item" (removeElement)="remove($event)"></app-cart-item>
     </div>
     <div class="total">
     </div>
@@ -12,7 +12,7 @@
   <div #sidebar [ngStyle]="{top:isSidebarSticky ? '0' : sidebarOffset+'px'}" [ngClass]="isSidebarSticky? 'sticky' :''" class="sidebar-container">
     <h2 class="title">Shopping cart detail</h2>
     <div class="detail-info">
-      <ng-container *ngFor="let info of detailInfo" [ngSwitch]="info.id">
+      <!-- <ng-container *ngFor="let info of detailInfo" [ngSwitch]="info.id">
       <div class="info-item" >
         <div class="header">
           {{info.header}}:
@@ -24,7 +24,23 @@
           {{info.info}}
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
+    <!-- <br>
+    <div class="location">
+      Full Name
+      <input type="text" pInputText required />
+    </div> -->
+    <div class="location">
+      Phone
+      <input type="text" pInputText required   [(ngModel)]="phone" />
+    </div>
+    <div class="location">
+      Address
+      <input type="text" pInputText required [(ngModel)]="address" />
+    </div>
+    <div class="location">
+      Total Price:
+      <div>$ {{ this.totals}}</div>
     </div>
     <div class="actions">
       <button [disabled]="isDisabledOrder" (click)="onOrder()" pButton class="p-button order-btn" label="Order" ><span class="pi pi-shopping-cart"></span></button>

@@ -50,4 +50,23 @@ export class ProductService {
       this.httpOptions_Token
     );
   }
+  getCart(){
+    return this.http.get<any>(
+      `${environment.apiUrl}/user/cart`,this.httpOptions_Token);
+  }
+  removeCartItem(id:any){
+    return this.http.delete<any>(
+      `${environment.apiUrl}/user/cart/${id}`,this.httpOptions_Token);
+  }
+  order(param: any){
+    return this.http.post<any>(
+      `${environment.apiUrl}/user/cart/order`,
+      param,
+      this.httpOptions_Token
+    );
+  }
+  getOrder(){
+    return this.http.get<any>(
+      `${environment.apiUrl}/user/order`,this.httpOptions_Token);
+  }
 }

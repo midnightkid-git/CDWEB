@@ -19,7 +19,6 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  initMockProduct() { }
 
   addToCart(): void {
     const payload = {
