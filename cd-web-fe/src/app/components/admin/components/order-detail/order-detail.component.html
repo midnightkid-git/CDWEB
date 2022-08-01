@@ -1,1 +1,28 @@
-<p>order-detail works!</p>
+
+<div class="order">
+  <div class="list-cart-item">
+    <div *ngFor="let item of order.listItem" class="item">
+      <app-cart-item [isEdit]="false" [item]="item"></app-cart-item>
+    </div>
+    <div class="total">
+    </div>
+  </div>
+  <div #sidebar [ngStyle]="{top:isSidebarSticky ? '0' : sidebarOffset+'px'}" [ngClass]="isSidebarSticky? 'sticky' :''"
+    class="sidebar-container">
+    <h2 class="title">Order detail</h2>
+    <div class="detail-info">
+      <div class="info-item">
+<b>Status: </b><h2 [ngClass]="this.order.status">{{this.order.status}}</h2>
+      </div>
+      <div class="info-item">
+        <b>Address: </b> {{this.order.address}}
+      </div>
+      <div class="info-item">
+        <b>Phone: </b> {{this.order.phoneNumber}}
+      </div>
+      <div class="info-item">
+        <b>Total Price: </b> ${{this.totals}}
+      </div>
+    </div>
+  </div>
+</div>

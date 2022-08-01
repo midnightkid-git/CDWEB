@@ -19,18 +19,18 @@
     <div class="detail-info">
     <div class="location">
       Phone
-      <input type="text" pInputText required   [(ngModel)]="phone" />
+      <input [ngClass]="(isDisabledOrder && !phone) ? 'p-error':''" type="text" pInputText required   [(ngModel)]="phone" />
     </div>
     <div class="location">
       Address
-      <input type="text" pInputText required [(ngModel)]="address" />
+      <input [ngClass]="(isDisabledOrder && !address) ? 'p-error':''"  type="text" pInputText required [(ngModel)]="address" />
     </div>
     <div class="location">
       Total Price:
       <div>$ {{ this.totals}}</div>
     </div>
     <div class="actions">
-      <button [disabled]="isDisabledOrder" (click)="onOrder()" pButton class="p-button order-btn" label="Order" ><span class="pi pi-shopping-cart"></span></button>
+      <button (click)="onOrder()" pButton class="p-button order-btn" label="Order" ><span class="pi pi-shopping-cart"></span></button>
     </div>
   </div>
 

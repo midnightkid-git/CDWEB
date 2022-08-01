@@ -45,19 +45,27 @@ export class CartComponent implements OnInit {
   }
 
   onOrder(): void {
-    let body = {
-      "phoneNumber": this.phone,
-      "address": this.address,
-      "status": "Verifying"
+    this.isDisabledOrder = true;
+    if (this.phone && this.address) {
+      let body = {
+        "phoneNumber": this.phone,
+        "address": this.address,
+        "status": "Verifying"
+      }
+      this.productsService.order(body).subscribe(res => {
+        console.log(res);
+        this.router.navigateByUrl(`success`)
+      });
+    } else {
+
     }
-    this.productsService.order(body).subscribe(res => {
-      console.log(res);
-      this.router.navigateByUrl(`success`)
-    });
+
   }
 
   validateOrder(): void {
+
   }
+
   getCart() {
     this.productsService.getCart().subscribe(data => {
       this.cart = data.data

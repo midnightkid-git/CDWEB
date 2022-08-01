@@ -10,6 +10,7 @@ import { OrdersService } from '../services/orders.service';
 })
 export class OrdersComponent implements OnInit, OnDestroy {
 
+  showDetailDialog = false;
   STATUS = [
     "Verifying",
     "Packaging",
@@ -29,6 +30,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   order: any;
 
+
   orders: any[] = []
 
   constructor(private ordersService: OrdersService,
@@ -44,7 +46,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   viewOrder(order: any) {
-
+    this.order = order;
+    this.showDetailDialog = true;
   }
 
   updateStatus(order: any) {
