@@ -48,6 +48,7 @@ public class CartServiceImpl implements ICartService {
                             .discount(_x.getProduct().getDiscount())
                             .quantity(_x.getQuantity())
                             .size(_x.getSize())
+                            .imageLink(_x.getProduct().getThumbnails().get(0).getImageLink())
                             .productPrice(_x.getProduct().getOriginalPrice())
                             .productName(_x.getProduct().getProductName())
                             .productId(_x.getProduct().getId())

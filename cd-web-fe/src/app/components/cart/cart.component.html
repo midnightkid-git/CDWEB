@@ -12,24 +12,6 @@
   <div #sidebar [ngStyle]="{top:isSidebarSticky ? '0' : sidebarOffset+'px'}" [ngClass]="isSidebarSticky? 'sticky' :''" class="sidebar-container">
     <h2 class="title">Shopping cart detail</h2>
     <div class="detail-info">
-      <!-- <ng-container *ngFor="let info of detailInfo" [ngSwitch]="info.id">
-      <div class="info-item" >
-        <div class="header">
-          {{info.header}}:
-        </div>
-        <div *ngSwitchCase="'price'" class="content">
-          ${{info.info}}
-        </div>
-        <div *ngSwitchDefault="" class="content">
-          {{info.info}}
-        </div>
-      </div>
-    </ng-container> -->
-    <!-- <br>
-    <div class="location">
-      Full Name
-      <input type="text" pInputText required />
-    </div> -->
     <div class="location">
       Phone
       <input type="text" pInputText required   [(ngModel)]="phone" />

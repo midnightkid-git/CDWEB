@@ -109,7 +109,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
               this.fetchProducts();
               this.selectedProducts = [];
               this.messageService.add({
-                severity: 'dark',
+                severity: 'success',
                 summary: 'Successful',
                 detail: 'Deactivated Product',
                 life: 3000,
@@ -145,7 +145,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
               this.fetchProducts();
               this.product = {};
               this.messageService.add({
-                severity: 'dark',
+                severity: 'succes',
                 summary: 'Successful',
                 detail: 'Product Deleted',
                 life: 3000,
@@ -220,7 +220,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
               this.productDialog = false;
               this.hideDialog();
               this.messageService.add({
-                severity: 'dark',
+                severity: 'success',
                 summary: 'Successful',
                 detail: 'Product Updated',
                 life: 3000,
@@ -236,7 +236,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 this.product = {};
                 this.productDialog = false;
                 this.messageService.add({
-                  severity: 'dark',
+                  severity: 'success',
                   summary: 'Successful',
                   detail: 'Product Created',
                   life: 3000,
@@ -285,7 +285,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsService.activeProduct(product.id).subscribe(() => {
       this.fetchProducts();
       this.messageService.add({
-        severity: 'dark',
+        severity: 'sucess',
         summary: 'Successful',
         detail: 'Product Activated',
         life: 3000,

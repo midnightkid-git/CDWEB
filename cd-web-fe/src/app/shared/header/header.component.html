@@ -74,6 +74,7 @@
 </p-dialog>
 <p-dialog [closable]="true" [closeOnEscape]="true" header="OTP Verify" *ngIf="displayOtpPopup" [(visible)]="displayOtpPopup"
   [style]="{width: '35  vw'}">
+  Please input your OTP which you received by your email
   <form *ngIf="otpForm" [formGroup]="otpForm" (submit)="onSubmitVerifyOtp()" class="form-container">
     <input formControlName="otp" pInputText class="input">
     <div class="submit-item">

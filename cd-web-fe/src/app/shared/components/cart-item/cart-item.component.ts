@@ -10,14 +10,11 @@ export class CartItemComponent implements OnInit {
   @Input() item: any
   @Input() isEdit: boolean = true;
   @Output() removeElement = new EventEmitter<any>();
-  constructor(private productsService:ProductService) { }
+  constructor(private productsService: ProductService) { }
 
   ngOnInit(): void {
+    console.log(this.item)
   }
-  // remove(id:string){
-  //   this.productsService.removeCartItem(id).subscribe(data=>{console.log(data);
-  //   });
-  // }
   removeItem(value: any) {
     this.removeElement.emit(value);
   }

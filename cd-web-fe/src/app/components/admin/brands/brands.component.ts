@@ -79,7 +79,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
           this.hideDialog();
           this.fetchBrands();
           this.messageService.add({
-            severity: 'dark',
+            severity: 'success',
             summary: 'Successful',
             detail: 'Create brand successfully',
             life: 3000,
@@ -93,7 +93,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
           this.hideDialog();
           this.fetchBrands();
           this.messageService.add({
-            severity: 'dark',
+            severity: 'success',
             summary: 'Successful',
             detail: 'Update brand successfully',
             life: 3000,

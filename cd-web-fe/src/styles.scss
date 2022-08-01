@@ -7,6 +7,13 @@
   color:var(--text-color);
 }
 
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail{
+  color:black !important;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-summary{
+  color:black !important;
+}
 body{
   background-color: var(--surface-a);
 }
