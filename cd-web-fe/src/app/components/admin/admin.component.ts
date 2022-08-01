@@ -12,21 +12,18 @@ export class AdminComponent implements OnInit {
     {
       label: 'Brands',
       icon: 'pi pi-bookmark-fill',
-      routerLink: '/admin/brands'
+      routerLink: '/admin/brands',
+
     },
     {
       label: 'Products',
       icon: 'pi pi-database',
-      routerLink: '/admin/products'
+      routerLink: '/admin/products',
     },
     {
       label: 'Orders',
-      icon: 'pi pi-book'
+      icon: 'pi pi-book',
     },
-    {
-      label: 'Users',
-      icon: 'pi pi-users'
-    }
   ]
 
   constructor() { }

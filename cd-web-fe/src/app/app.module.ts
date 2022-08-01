@@ -34,6 +34,7 @@ import { AdminRegisterComponent } from './components/admin/admin-register/admin-
 import { DropdownModule } from 'primeng/dropdown';
 import { BrandsComponent } from './components/admin/brands/brands.component';
 import { SuccessNotiPageComponent } from './components/success-noti-page/success-noti-page.component';
+import { OrdersComponent } from './components/admin/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { SuccessNotiPageComponent } from './components/success-noti-page/success
     AdminRegisterComponent,
     BrandsComponent,
     SuccessNotiPageComponent,
+    OrdersComponent,
   ],
 
   imports: [

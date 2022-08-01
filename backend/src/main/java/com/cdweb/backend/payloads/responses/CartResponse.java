@@ -12,6 +12,7 @@ public class CartResponse {
     private Long productId;
     private String productName;
     private Double productPrice;
+    private String imageLink;
     private int discount;
     private int quantity;
     private String size;

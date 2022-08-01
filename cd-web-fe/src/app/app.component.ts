@@ -18,9 +18,9 @@ export class AppComponent implements OnInit {
     this.initLoading();
     const token = '' + window.sessionStorage.getItem('basicToken')
     console.log(token)
-    if (token != '') {
+    if (token != '' && token != null) {
       this.authService.token.next(token);
-      console.log(this.authService.decodeToken(token))
+      this.authService.isLogin$.next(true);
     }
   }
 
