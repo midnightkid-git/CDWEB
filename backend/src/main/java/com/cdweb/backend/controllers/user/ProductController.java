@@ -1,5 +1,7 @@
 package com.cdweb.backend.controllers.user;
 
+import com.cdweb.backend.payloads.requests.ProductFilterRequest;
+import com.cdweb.backend.payloads.requests.ProductRequest;
 import com.cdweb.backend.payloads.responses.PageResponse;
 import com.cdweb.backend.payloads.responses.ProductResponse;
 import com.cdweb.backend.payloads.responses.ResponseObject;
@@ -10,10 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController(value = "productControllerOfUser")
 @RequestMapping("/api/v1/user/product")
@@ -24,13 +26,34 @@ public class ProductController {
 
     private final IProductService productService;
 
-    @GetMapping("/no-token/{page}/{limit}")
-    ResponseEntity<?> getAllProduct(@PathVariable("page") int page, @PathVariable("limit") int limit) {
-        PageResponse<ProductResponse> response = new PageResponse<>();
-        response.setPage(page);
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        response.setTotalPages((int) Math.ceil((double) (productService.totalItem()) / limit));
-        response.setData(productService.findAllForUser(pageable));
+    @GetMapping("/no-token")
+    ResponseEntity<?> getAllProduct() {
+        List<ProductResponse> response = new ArrayList<>();
+        response = productService.findAllForUser();
+        log.info("{}", response);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, response));
+    }
+
+    @GetMapping("/no-token/category/{categoryId}")
+    ResponseEntity<?> getProductByFilter(@PathVariable("categoryId") Long categoryId) {
+        List<ProductResponse> response = new ArrayList<>();
+        response = productService.findByCategoryId(categoryId);
+        log.info("{}", response);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, response));
+    }
+
+    @GetMapping("/no-token/size/{size}")
+    ResponseEntity<?> getProductByFilter(@PathVariable("size") String size) {
+        List<ProductResponse> response = new ArrayList<>();
+        response = productService.findBySize(size);
+        log.info("{}", response);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, response));
+    }
+
+    @GetMapping("/no-token/category/{categoryId}/size/{size}")
+    ResponseEntity<?> getProductByFilter(@PathVariable("size") String size, @PathVariable("categoryId") Long categoryId) {
+        List<ProductResponse> response = new ArrayList<>();
+        response = productService.findBySizeAndCategory(size, categoryId);
         log.info("{}", response);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", null, response));
     }

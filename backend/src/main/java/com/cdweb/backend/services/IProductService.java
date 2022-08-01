@@ -2,6 +2,7 @@ package com.cdweb.backend.services;
 
 
 import com.cdweb.backend.entities.Products;
+import com.cdweb.backend.payloads.requests.ProductFilterRequest;
 import com.cdweb.backend.payloads.requests.ProductRequest;
 import com.cdweb.backend.payloads.responses.ProductResponse;
 import com.cdweb.backend.repositories.ProductRepository;
@@ -14,7 +15,7 @@ public interface IProductService {
 
     List<ProductResponse> findAllForAdmin(Pageable pageable);
 
-    List<ProductResponse> findAllForUser(Pageable pageable);
+    List<ProductResponse> findAllForUser();
 
     int totalItem();
 
@@ -29,5 +30,10 @@ public interface IProductService {
 
     List<ProductResponse> getArrivalProducts();
 
+    List<ProductResponse> findByCategoryId(Long categoryId);
 
+    List<ProductResponse> findBySize(String size);
+
+    List<ProductResponse> findBySizeAndCategory(String sizeName, Long categoryId);
+    
 }

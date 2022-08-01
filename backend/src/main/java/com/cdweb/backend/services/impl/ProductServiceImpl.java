@@ -5,6 +5,7 @@ import com.cdweb.backend.converters.ProductConverter;
 import com.cdweb.backend.converters.ProductSizeConverter;
 import com.cdweb.backend.entities.*;
 import com.cdweb.backend.payloads.requests.AttributeAndVariantsRequest;
+import com.cdweb.backend.payloads.requests.ProductFilterRequest;
 import com.cdweb.backend.payloads.requests.ProductRequest;
 import com.cdweb.backend.payloads.responses.*;
 import com.cdweb.backend.repositories.*;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 
@@ -35,6 +37,8 @@ public class ProductServiceImpl implements IProductService {
     private final BrandRepository brandRepository;
 
     private  final ProductSizeRepository productSizeRepository;
+
+    private final SizeRepository sizeRepository;
 
     private final IThumbnailService productGalleryService;
 
@@ -79,9 +83,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductResponse> findAllForUser(Pageable pageable) {
+    public List<ProductResponse> findAllForUser() {
         List<ProductResponse> response = new ArrayList<>();
-        List<Products> entities = productRepository.findAll(pageable).getContent();
+        List<Products> entities = productRepository.findAll();
         if (entities.size() > 0) {
             entities.forEach(entity -> {
                 if (entity.isActive()) {
@@ -233,5 +237,132 @@ public class ProductServiceImpl implements IProductService {
         return null;
     }
 
+    @Override
+    public List<ProductResponse> findByCategoryId(Long categoryId) {
+        List<ProductResponse> response = new ArrayList<>();
+        Categories categories = categoryRepository.findByIdAndIsActiveTrue(categoryId);
+        List<Products> entities = productRepository.findByCategoriesAndIsActiveTrue(categories);
+        if (entities.size() > 0) {
+            entities.forEach(entity -> {
+                if (entity.isActive()) {
+                    List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
+                    List<String> imageLinks = new ArrayList<>();
+                    List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
+                    entity.getSizes().forEach((size) -> {
+                        productSizeRespone.add(ProductSizeRespone.builder()
+                                .quantity(size.getQuantity())
+                                .sizeId(size.getSizes().getSizeId())
+                                .build());
+                    });
+                    productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
+                    ProductResponse responseProduct = ProductResponse.builder()
+                            .id(entity.getId())
+                            .brandName(entity.getBrands().getName())
+                            .categoryName(entity.getCategories().getName())
+                            .productName(entity.getProductName())
+                            .description(entity.getDescription())
+                            .originalPrice(String.valueOf(entity.getOriginalPrice()))
+                            .originalQuantity(entity.getOriginalQuantity())
+                            .discount(entity.getDiscount())
+                            .imageLinks(imageLinks)
+                            .listSizes(productSizeRespone)
+                            .build();
+                    response.add(responseProduct);
+                }
+            });
+        }
+        return response;
+    }
+
+    @Override
+    public List<ProductResponse> findBySize(String sizeName) {
+        List<ProductResponse> response = new ArrayList<>();
+        List<ProductResponse> finalResponse = new ArrayList<>();
+        List<Products> entities = productRepository.findAll();
+        if (entities.size() > 0) {
+            entities.forEach(entity -> {
+                if (entity.isActive()) {
+                    AtomicBoolean isContainSize = new AtomicBoolean(false);
+                    entity.getSizes().forEach((_x) -> {
+                        if(_x.getSizes().getSizeId().equals(sizeName)){
+                            isContainSize.set(true);
+                        }
+                    });
+                    if(isContainSize.get()){
+                    List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
+                    List<String> imageLinks = new ArrayList<>();
+                    List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
+                    entity.getSizes().forEach((size) -> {
+                        productSizeRespone.add(ProductSizeRespone.builder()
+                                .quantity(size.getQuantity())
+                                .sizeId(size.getSizes().getSizeId())
+                                .build());
+                    });
+                    productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
+                    ProductResponse responseProduct = ProductResponse.builder()
+                            .id(entity.getId())
+                            .brandName(entity.getBrands().getName())
+                            .categoryName(entity.getCategories().getName())
+                            .productName(entity.getProductName())
+                            .description(entity.getDescription())
+                            .originalPrice(String.valueOf(entity.getOriginalPrice()))
+                            .originalQuantity(entity.getOriginalQuantity())
+                            .discount(entity.getDiscount())
+                            .imageLinks(imageLinks)
+                            .listSizes(productSizeRespone)
+                            .build();
+                    response.add(responseProduct);
+                    }
+                }
+            });
+        }
+        return response;
+    }
+
+    @Override
+    public List<ProductResponse> findBySizeAndCategory(String sizeName, Long categoryId) {
+        List<ProductResponse> response = new ArrayList<>();
+        List<ProductResponse> finalResponse = new ArrayList<>();
+        Categories categories = categoryRepository.findByIdAndIsActiveTrue(categoryId);
+        List<Products> entities = productRepository.findByCategoriesAndIsActiveTrue(categories);
+        if (entities.size() > 0) {
+            entities.forEach(entity -> {
+                if (entity.isActive()) {
+                    AtomicBoolean isContainSize = new AtomicBoolean(false);
+                    entity.getSizes().forEach((_x) -> {
+                        if (_x.getSizes().getSizeId().equals(sizeName)) {
+                            isContainSize.set(true);
+                        }
+                    });
+                    if (isContainSize.get()) {
+                        List<ThumbnailResponse> productThumbnails = productGalleryService.findByProductAndIsActiveTrue(entity);
+                        List<String> imageLinks = new ArrayList<>();
+                        List<ProductSizeRespone> productSizeRespone = new ArrayList<>();
+                        entity.getSizes().forEach((size) -> {
+                            productSizeRespone.add(ProductSizeRespone.builder()
+                                    .quantity(size.getQuantity())
+                                    .sizeId(size.getSizes().getSizeId())
+                                    .build());
+                        });
+                        productThumbnails.forEach(p -> imageLinks.add(p.getImageLink()));
+                        ProductResponse responseProduct = ProductResponse.builder()
+                                .id(entity.getId())
+                                .brandName(entity.getBrands().getName())
+                                .categoryName(entity.getCategories().getName())
+                                .productName(entity.getProductName())
+                                .description(entity.getDescription())
+                                .originalPrice(String.valueOf(entity.getOriginalPrice()))
+                                .originalQuantity(entity.getOriginalQuantity())
+                                .discount(entity.getDiscount())
+                                .imageLinks(imageLinks)
+                                .listSizes(productSizeRespone)
+                                .build();
+                        response.add(responseProduct);
+                    }
+                }
+            });
+        }
+        return response;
+    }
 
 }
